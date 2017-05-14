@@ -1,6 +1,7 @@
 package hr.mstuban.homeexchange.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by mstuban on 11.05.17..
@@ -27,15 +28,18 @@ public class User {
     @Column(name = "enabled")
     private int enabled;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<UserRole> roles;
 
-    public User(String userName, String password, String email, int enabled) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.enabled = enabled;
+    public User() {
     }
 
     public User(User user) {
+        this.userId = user.userId;
+        this.userName = user.userName;
+        this.email = user.email;
+        this.password = user.password;
+        this.enabled = user.enabled;
     }
 
     public Long getUserId() {
@@ -77,4 +81,13 @@ public class User {
     public void setEnabled(int enabled) {
         this.enabled = enabled;
     }
+
+    public Set<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
+    }
+
 }

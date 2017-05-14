@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Home Exchange</title>
+    <th:block th:include="fragments/headerincludes :: head"></th:block>
+</head>
+<body>
+<th:block th:include="fragments/header :: header"></th:block>
+<header>
+    <div class="header-content">
+        <div class="header-content-inner vcenter">
+            <h1 id="homeHeading">Welcome!</h1>
+
+            <p>Where would you like to move?</p>
+            <form th:action="@{/searchForHomes}" method="POST">
+                <input class="form-control" type="text" name="location"/>
+                <input type="submit" class="btn btn-primary" value="Search"/>
+            </form>
+        </div>
+
+    </div>
+</header>
+<div class="container-fluid text-center">
+    <div class="row-fluid">
+        <div class="col col-md-12">
+        </div>
+    </div>
+</div>
+</body>
+</html>

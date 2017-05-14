@@ -4,14 +4,13 @@ package hr.mstuban.homeexchange.domain;
  * Created by marko on 11.05.17..
  */
 
-import java.util.Collection;
-import java.util.List;
-
-import hr.mstuban.homeexchange.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
+
+import java.util.Collection;
+import java.util.List;
 
 public class CustomUserDetails extends hr.mstuban.homeexchange.domain.User implements UserDetails {
 
