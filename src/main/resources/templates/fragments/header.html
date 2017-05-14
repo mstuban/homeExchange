@@ -12,7 +12,8 @@
                     <ul class="nav navbar-nav text-center">
                         <li><a href="#" th:href="@{/home}"><b>HomeExchange</b></a></li>
                         <li><a href="#" th:href="@{/myPosts}" sec:authorize="hasRole('ROLE_ADMIN')">All posts</a></li>
-                        <li><a href="#" th:href="@{/myPosts}" sec:authorize="hasRole('ROLE_USER')">My posts</a></li>
+                        <li><a href="#" th:href="@{/homes}" sec:authorize="hasRole('ROLE_USER')">Search for homes</a>
+                        </li>
                         <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/login}">Sign in</a></li>
                     </ul>
                 </div>

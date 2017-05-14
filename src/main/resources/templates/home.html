@@ -8,11 +8,9 @@
 <header>
     <div class="header-content">
         <div class="header-content-inner vcenter">
-            <h1 id="homeHeading">Welcome!</h1>
-
-            <p>Where would you like to move?</p>
+            <h1>Where would you like to move?</h1>
             <form th:action="@{/searchForHomes}" method="POST">
-                <input class="form-control" type="text" name="location"/>
+                <input class="form-control" type="text" name="searchParameter"/>
                 <input type="submit" class="btn btn-primary" value="Search"/>
             </form>
         </div>
@@ -22,8 +20,50 @@
 <div class="container-fluid text-center">
     <div class="row-fluid">
         <div class="col col-md-12">
+            <ul>
+                <li th:each="home : ${homeList}">
+                    <span th:text="${home.description}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-6">
+            <div id="testimonial-slider" class="owl-carousel">
+                <div class="testimonial">
+                    <div class="pic">
+                        <img src="images/img-1.jpg" alt="">
+                    </div>
+                    <h3 class="testimonial-title">
+                        Williamson
+                        <small>, Web Developer</small>
+                    </h3>
+                    <p class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam enim diam, tempus vel ultricies
+                        viverra, luctus in elit. Aliquam tempus blandit velit, in pharetra ex volutpat a. Cras eu augue
+                        ac nisl tempor commodo.
+                    </p>
+                </div>
+
+                <div class="testimonial">
+                    <div class="pic">
+                        <img src="images/img-2.jpg" alt="">
+                    </div>
+                    <h3 class="testimonial-title">
+                        kristiana
+                        <small>, Web Designer</small>
+                    </h3>
+                    <p class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam enim diam, tempus vel ultricies
+                        viverra, luctus in elit. Aliquam tempus blandit velit, in pharetra ex volutpat a. Cras eu augue
+                        ac nisl tempor commodo.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
 </body>
 </html>

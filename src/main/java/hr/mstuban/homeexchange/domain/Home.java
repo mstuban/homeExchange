@@ -15,6 +15,7 @@ public class Home {
     @Column(name = "home_id", nullable = false)
     private Long homeId;
 
+    @OneToOne(mappedBy = "home")
     private Address address;
 
     private Integer sizeInSquareMeters;

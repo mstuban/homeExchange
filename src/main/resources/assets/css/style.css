@@ -1,0 +1,121 @@
+header {
+    min-height: 90vh;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background: url(../img/header-image-1.jpeg) no-repeat center center fixed;
+    color: #fff;
+}
+
+header, header .header-content {
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+header .header-content {
+    position: absolute;
+    top: 50%;
+    /* -webkit-transform: translateY(-50%);
+     -ms-transform: translateY(-50%);
+     transform: translateY(-50%);*/
+    padding: 0 50px;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+article, aside, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+
+.header-content .header-content-inner {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 2rem;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+#navbar-top {
+    margin-bottom: 0px;
+}
+
+.testimonial {
+    text-align: center;
+}
+
+.testimonial .pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-bottom: 15px;
+}
+
+.testimonial .pic img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.testimonial .testimonial-title {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: 600;
+    color: #0c4767;
+    margin: 0 0 70px 0;
+}
+
+.testimonial .testimonial-title small {
+    font-size: 15px;
+    font-weight: 600;
+    color: #787878;
+}
+
+.testimonial .description {
+    font-size: 14px;
+    color: #787878;
+    line-height: 27px;
+    position: relative;
+    margin: 0;
+}
+
+.testimonial .description:before {
+    content: "\f10d";
+    font-family: fontawesome;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: 46%;
+    font-size: 20px;
+    color: #fa7921;
+    line-height: 33px;
+    border: 2px solid #fa7921;
+}
+
+.owl-theme .owl-controls .owl-page span {
+    background: #fff;
+    border: 2px solid #0c4767;
+    opacity: 1;
+}
+
+.owl-theme .owl-controls .owl-page.active span,
+.owl-theme .owl-controls .owl-page:hover span {
+    border: 2px solid #fa7921;
+}

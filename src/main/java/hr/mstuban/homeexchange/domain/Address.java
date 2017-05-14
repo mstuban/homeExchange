@@ -15,8 +15,13 @@ public class Address {
     @Column(name = "address_id", nullable = false)
     private Long addressId;
 
-    @Column(name = "home")
+    @OneToOne
+    @JoinColumn(name = "frn_home_id")
     private Home home;
+
+    private String country;
+
+    private String street;
 
     private String city;
 
@@ -55,5 +60,21 @@ public class Address {
 
     public void setHome(Home home) {
         this.home = home;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
