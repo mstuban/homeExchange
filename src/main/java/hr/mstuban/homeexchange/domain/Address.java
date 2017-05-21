@@ -7,24 +7,28 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "address")
+@Table(name = "ADDRESS")
 public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "address_id", nullable = false)
+    @Column(name = "ADDRESS_ID", nullable = false)
     private Long addressId;
 
     @OneToOne
-    @JoinColumn(name = "frn_home_id")
+    @JoinColumn(name = "FRN_HOME_ID")
     private Home home;
 
+    @Column(name = "COUNTRY")
     private String country;
 
+    @Column(name = "STREET")
     private String street;
 
+    @Column(name = "CITY")
     private String city;
 
+    @Column(name = "POSTAL_CODE")
     private Long postalCode;
 
     public Address() {

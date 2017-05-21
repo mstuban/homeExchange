@@ -9,19 +9,19 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "USER_ROLES")
 public class UserRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_role_id", nullable = false)
+    @Column(name = "USER_ROLE_ID", nullable = false)
     private Long userroleid;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid")
+    @JoinColumn(name = "USERID")
     private User user;
 
-    @Column(name = "role")
+    @Column(name = "ROLE")
     private String role;
 
     public String getRole() {

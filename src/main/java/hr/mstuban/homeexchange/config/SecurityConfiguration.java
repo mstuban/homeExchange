@@ -22,8 +22,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ComponentScan(basePackageClasses = CustomUserDetailsService.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final UserDetailsService userDetailsService;
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    public SecurityConfiguration(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -33,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/")
+                .antMatchers("/", "/home", "/homes")
                 .authenticated()
                 .and()
                 .formLogin()
@@ -55,4 +59,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordencoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

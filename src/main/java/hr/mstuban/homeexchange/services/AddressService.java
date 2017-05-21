@@ -11,6 +11,6 @@ public interface AddressService {
 
     List<Address> findAll();
 
-    List<Address> findByParameter(String parameter);
+    List<Address> findAvailableAddressesBySearchParameter(String parameter);
 
 }

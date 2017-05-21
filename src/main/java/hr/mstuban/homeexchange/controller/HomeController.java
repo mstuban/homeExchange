@@ -19,11 +19,15 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    @Autowired
-    private HomeService homeService;
+    private final HomeService homeService;
+
+    private final AddressService addressService;
 
     @Autowired
-    private AddressService addressService;
+    public HomeController(HomeService homeService, AddressService addressService) {
+        this.homeService = homeService;
+        this.addressService = addressService;
+    }
 
     @GetMapping("/home")
     public String getHome(Model model) {
@@ -32,7 +36,7 @@ public class HomeController {
 
     @PostMapping("/searchForHomes")
     public String searchForHomes(Model model, @RequestParam(value = "searchParameter") String searchParameter) {
-        List<Address> addresses = addressService.findByParameter(searchParameter);
+        List<Address> addresses = addressService.findAvailableAddressesBySearchParameter(searchParameter);
         model.addAttribute("addresses", addresses);
 
         return "home-search-results";

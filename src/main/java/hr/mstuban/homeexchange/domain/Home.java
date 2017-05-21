@@ -7,23 +7,27 @@ package hr.mstuban.homeexchange.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "home")
+@Table(name = "HOME")
 public class Home {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "home_id", nullable = false)
+    @Column(name = "HOME_ID", nullable = false)
     private Long homeId;
 
     @OneToOne(mappedBy = "home")
     private Address address;
 
+    @Column(name = "SIZE_IN_SQUARE_METERS")
     private Integer sizeInSquareMeters;
 
+    @Column(name = "TYPE")
     private String type;
 
+    @Column(name = "DESCRIPTION")
     private String description;
 
+    @Column(name = "AVAILABLE")
     private boolean available;
 
     public Home() {

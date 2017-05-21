@@ -2,6 +2,7 @@ package hr.mstuban.homeexchange.services;
 
 
 import hr.mstuban.homeexchange.domain.User;
+import hr.mstuban.homeexchange.domain.form.NewUserForm;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +21,7 @@ public interface UserService {
     void delete(Long id);
 
     Object find(Pageable pageable);
+
+    User createUser(NewUserForm form);
+
 }

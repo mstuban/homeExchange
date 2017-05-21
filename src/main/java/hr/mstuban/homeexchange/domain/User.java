@@ -8,25 +8,26 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "userid", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "USER_SEQUENCE", sequenceName = "USER_SEQUENCE", initialValue = 3, allocationSize = 1)
+    @Column(name = "USERID", nullable = false)
     private Long userId;
 
-    @Column(name = "username")
+    @Column(name = "USERNAME")
     private String userName;
 
-    @Column(name = "password")
+    @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "email")
+    @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "enabled")
-    private int enabled;
+    @Column(name = "ENABLED")
+    private boolean enabled;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserRole> roles;
@@ -74,11 +75,11 @@ public class User {
         this.email = email;
     }
 
-    public int getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(int enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 

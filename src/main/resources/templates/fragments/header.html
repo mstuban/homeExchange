@@ -5,36 +5,40 @@
 </head>
 <body>
 
-    <div th:fragment="header">
-        <nav id="navbar-top" class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <ul class="nav navbar-nav text-center">
-                        <li><a href="#" th:href="@{/home}"><b>HomeExchange</b></a></li>
-                        <li><a href="#" th:href="@{/myPosts}" sec:authorize="hasRole('ROLE_ADMIN')">All posts</a></li>
-                        <li><a href="#" th:href="@{/homes}" sec:authorize="hasRole('ROLE_USER')">Search for homes</a>
-                        </li>
-                        <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/login}">Sign in</a></li>
-                    </ul>
-                </div>
-                <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-user"></span>
-                            <strong sec:authentication="name"></strong>
-                            <span class="glyphicon glyphicon-chevron-down"></span>
-                        </a>
-                        <ul class="dropdown-menu text-center">
-                            <li class="center-block">
-                                <form id="logoutform" th:action="@{/logout}" method="POST">
-                                    <input type="submit" class="btn btn-danger center-block align-middle" value="Logout" />
-                                </form>
-                            </li>
-                        </ul>
+<div th:fragment="header">
+    <nav id="navbar-top" class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav text-center">
+                    <li><a href="#" th:href="@{/home}"><i class="glyphicon glyphicon-home"></i></a></li>
+                    <li><a href="#" th:href="@{/home}"><b>Home Exchange</b></a></li>
+                    <!--
+                                        <li><a href="#" th:href="@{/myPosts}" sec:authorize="hasRole('ROLE_ADMIN')">All posts</a></li>
+                    -->
+                    <li><a href="#" th:href="@{/homes}" sec:authorize="hasRole('ROLE_USER')">Search for homes</a>
                     </li>
+                    <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/login}">Sign in</a></li>
+                    <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/register}">Create an account</a></li>
                 </ul>
             </div>
-        </nav>
+            <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <strong sec:authentication="name"></strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu text-center">
+                        <li class="center-block">
+                            <form id="logoutform" th:action="@{/logout}" method="POST">
+                                <input type="submit" class="btn btn-danger center-block align-middle" value="Logout"/>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
 </body>
 </html>

@@ -1,14 +1,20 @@
-package hr.mstuban.homeexchange.services;
+package hr.mstuban.homeexchange.services.impl;
 
 import hr.mstuban.homeexchange.domain.User;
+import hr.mstuban.homeexchange.domain.UserRole;
+import hr.mstuban.homeexchange.domain.form.NewUserForm;
 import hr.mstuban.homeexchange.repositories.UserRepository;
+import hr.mstuban.homeexchange.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,7 +29,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> listAll() {
         List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add); //fun with Java 8
+        //fun with Java 8
+        users.addAll(userRepository.findAll());
         return users;
     }
 
@@ -54,6 +61,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUserName(username);
+    }
+
+    @Override
+    public User createUser(NewUserForm form) {
+        User user = new User();
+        user.setUserName(form.getUsername());
+        user.setEmail(form.getEmail());
+        user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
+        Set<UserRole> userRoles = new HashSet<>();
+        UserRole userRole = new UserRole();
+        userRole.setRole(form.getRole());
+        userRoles.add(userRole);
+        user.setRoles(userRoles);
+        return userRepository.save(user);
     }
 
 }
