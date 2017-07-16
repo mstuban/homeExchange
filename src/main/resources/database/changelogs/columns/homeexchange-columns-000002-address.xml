@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="00001-20170716000000" author="mstuban" dbms="postgresql">
+        <createSequence sequenceName="ADDRESS_SEQUENCE"/>
+    </changeSet>
+
+    <changeSet id="00002-20170716000000" author="mstuban" dbms="postgresql">
+        <createTable tableName="ADDRESS">
+            <column name="ADDRESS_ID" type="BIGINT" defaultValueComputed="nextval('ADDRESS_SEQUENCE')">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="ADDRESS_PK"/>
+            </column>
+            <column name="COUNTRY" type="VARCHAR(60)">
+            </column>
+            <column name="FRN_HOME_ID" type="BIGINT">
+            </column>
+            <column name="STREET" type="VARCHAR(60)"/>
+            <column name="CITY" type="VARCHAR(60)"/>
+            <column name="POSTAL_CODE" type="VARCHAR(60)">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="00003-20170716000000" author="mstuban" dbms="postgresql">
+        <addForeignKeyConstraint baseTableName="ADDRESS" baseColumnNames="FRN_HOME_ID" constraintName="ADDRESS_FK"
+                                 referencedTableName="HOME"
+                                 referencedColumnNames="HOME_ID"/>
+    </changeSet>
+</databaseChangeLog>

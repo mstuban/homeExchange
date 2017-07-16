@@ -37,7 +37,10 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-social-twitter', version:'1.5.3.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.5.3.RELEASE'
     compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version:'2.1.2'
-    compile group: 'org.springframework.security', name: 'spring-security-core', version:'4.2.2.RELEASE'
+    compile 'org.springframework.security:spring-security-core:4.2.3.RELEASE'
+    compile 'org.liquibase:liquibase-core:3.5.3'
+    compile 'org.mapstruct:mapstruct:1.2.0.CR1'
+
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.5.3.RELEASE') {
 exclude(module: 'commons-logging')
     }

@@ -11,11 +11,13 @@ import javax.persistence.*;
 public class Home {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "HOME_SEQUENCE", sequenceName = "HOME_SEQUENCE")
     @Column(name = "HOME_ID", nullable = false)
     private Long homeId;
 
-    @OneToOne(mappedBy = "home")
+    @OneToOne
+    @JoinColumn(name = "ADDRESS_ID")
     private Address address;
 
     @Column(name = "SIZE_IN_SQUARE_METERS")
@@ -29,6 +31,10 @@ public class Home {
 
     @Column(name = "AVAILABLE")
     private boolean available;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USERID")
+    private User user;
 
     public Home() {
     }
@@ -79,5 +85,13 @@ public class Home {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

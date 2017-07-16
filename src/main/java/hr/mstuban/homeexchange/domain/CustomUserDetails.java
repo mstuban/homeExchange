@@ -1,7 +1,7 @@
 package hr.mstuban.homeexchange.domain;
 
 /**
- * Created by marko on 11.05.17..
+ * Created by marko on 11.05.17.
  */
 
 import org.springframework.security.core.GrantedAuthority;

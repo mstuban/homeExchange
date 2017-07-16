@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="00001-20170716000000" author="mstuban">
+        <insert tableName="ADDRESS">
+            <column name="COUNTRY" type="VARCHAR(60)">Croatia</column>
+            <column name="FRN_HOME_ID" type="BIGINT">1</column>
+            <column name="STREET" type="VARCHAR(60)">Basaricekova 10</column>
+            <column name="CITY" type="VARCHAR(60)">Zagreb</column>
+            <column name="POSTAL_CODE" type="VARCHAR(60)">10000</column>
+        </insert>
+    </changeSet>
+
+
+</databaseChangeLog>

@@ -1,6 +1,7 @@
 package hr.mstuban.homeexchange.domain;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,12 +14,18 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "USER_SEQUENCE", sequenceName = "USER_SEQUENCE", initialValue = 3, allocationSize = 1)
+    @SequenceGenerator(name = "USER_SEQUENCE", sequenceName = "USER_SEQUENCE")
     @Column(name = "USERID", nullable = false)
     private Long userId;
 
     @Column(name = "USERNAME")
     private String userName;
+
+    @Column(name = "FIRST_NAME")
+    private String firstName;
+
+    @Column(name = "LAST_NAME")
+    private String lastName;
 
     @Column(name = "PASSWORD")
     private String password;
@@ -32,12 +39,17 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserRole> roles;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Home> homes;
+
     public User() {
     }
 
     public User(User user) {
         this.userId = user.userId;
         this.userName = user.userName;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
         this.email = user.email;
         this.password = user.password;
         this.enabled = user.enabled;
@@ -91,4 +103,27 @@ public class User {
         this.roles = roles;
     }
 
+    public List<Home> getHomes() {
+        return homes;
+    }
+
+    public void setHomes(List<Home> homes) {
+        this.homes = homes;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

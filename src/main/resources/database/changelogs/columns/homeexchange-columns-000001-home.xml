@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="00001-20170716000000" author="mstuban" dbms="postgresql">
+        <createSequence sequenceName="HOME_SEQUENCE"/>
+    </changeSet>
+
+    <changeSet id="00002-20170716000000" author="mstuban" dbms="postgresql">
+        <createTable tableName="HOME">
+            <column name="HOME_ID" type="BIGINT" defaultValueComputed="nextval('HOME_SEQUENCE')">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="HOME_PK"/>
+            </column>
+            <column name="ADDRESS" type="BIGINT">
+            </column>
+            <column name="SIZE_IN_SQUARE_METERS" type="INT">
+            </column>
+            <column name="TYPE" type="VARCHAR(80)"/>
+            <column name="DESCRIPTION" type="VARCHAR(80)"/>
+            <column name="AVAILABLE" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USERID" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="00003-20170716000000" author="mstuban" dbms="postgresql">
+        <addForeignKeyConstraint baseTableName="HOME" baseColumnNames="USERID" constraintName="USER_FK"
+                                 referencedTableName="USERS"
+                                 referencedColumnNames="USERID"/>
+    </changeSet>
+</databaseChangeLog>
