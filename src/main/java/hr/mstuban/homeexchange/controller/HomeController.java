@@ -95,6 +95,13 @@ public class HomeController {
         return "redirect:/homes";
     }
 
+
+    @ResponseBody
+    @RequestMapping("/get-addresses")
+    public List<Address> getHomes(@RequestParam(name = "q") String query) {
+        return addressService.findAvailableAddressesBySearchParameter(query);
+    }
+
 }
 
 

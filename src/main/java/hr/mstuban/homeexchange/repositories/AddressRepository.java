@@ -19,4 +19,6 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
             " or LOWER(a.street) LIKE LOWER(CONCAT('%',:searchParameter,'%'))")
     List<Address> findAddressesBySearchParameter(@Param("searchParameter") String searchParameter);
 
+    Address findByAddressId(Long addressId);
+
 }
