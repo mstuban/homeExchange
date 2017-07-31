@@ -13,7 +13,9 @@
             <column name="HOME_ID" type="BIGINT" defaultValueComputed="nextval('HOME_SEQUENCE')">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="HOME_PK"/>
             </column>
-            <column name="ADDRESS" type="BIGINT">
+            <column name="ADDRESS_ID" type="BIGINT">
+            </column>
+            <column name="NAME" type="VARCHAR(80)">
             </column>
             <column name="SIZE_IN_SQUARE_METERS" type="INT">
             </column>

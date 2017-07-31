@@ -6,6 +6,8 @@
 
     <changeSet id="00001-20170716000000" author="mstuban">
         <insert tableName="HOME">
+            <column name="ADDRESS_ID">1</column>
+            <column name="NAME">Family home in Zagreb</column>
             <column name="SIZE_IN_SQUARE_METERS">250</column>
             <column name="TYPE">Family home</column>
             <column name="DESCRIPTION">House in the centre of Zagreb.</column>

@@ -15,7 +15,7 @@
                     <!--
                                         <li><a href="#" th:href="@{/myPosts}" sec:authorize="hasRole('ROLE_ADMIN')">All posts</a></li>
                     -->
-                    <li><a href="#" th:href="@{/homes}" sec:authorize="hasRole('ROLE_USER')">Search for homes</a>
+                    <li><a href="#" th:href="@{/homes}">Search for homes</a>
                     </li>
                     <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/login}">Sign in</a></li>
                     <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/register}">Create an account</a></li>

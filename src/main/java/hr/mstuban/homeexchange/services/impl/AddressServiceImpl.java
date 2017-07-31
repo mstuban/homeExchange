@@ -23,12 +23,17 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<Address> findAll() {
-        return (List<Address>) addressRepository.findAll();
+        return addressRepository.findAll();
     }
 
     @Override
     public List<Address> findAvailableAddressesBySearchParameter(String parameter) {
         return addressRepository.findAddressesBySearchParameter(parameter);
+    }
+
+    @Override
+    public Address findById(Long addressId) {
+        return addressRepository.findByAddressId(addressId);
     }
 }
 

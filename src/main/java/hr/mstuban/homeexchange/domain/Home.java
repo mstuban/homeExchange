@@ -16,6 +16,9 @@ public class Home {
     @Column(name = "HOME_ID", nullable = false)
     private Long homeId;
 
+    @Column(name = "NAME")
+    private String name;
+
     @OneToOne
     @JoinColumn(name = "ADDRESS_ID")
     private Address address;
@@ -93,5 +96,13 @@ public class Home {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -13,4 +13,6 @@ public interface AddressService {
 
     List<Address> findAvailableAddressesBySearchParameter(String parameter);
 
+    Address findById(Long addressId);
+
 }
