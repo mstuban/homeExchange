@@ -1,5 +1,8 @@
 package hr.mstuban.homeexchange.domain;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 /**
@@ -16,7 +19,8 @@ public class Address {
     @Column(name = "ADDRESS_ID", nullable = false)
     private Long addressId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "FRN_HOME_ID")
     private Home home;
 

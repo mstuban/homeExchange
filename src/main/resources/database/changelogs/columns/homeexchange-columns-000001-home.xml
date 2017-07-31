@@ -13,6 +13,8 @@
             <column name="HOME_ID" type="BIGINT" defaultValueComputed="nextval('HOME_SEQUENCE')">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="HOME_PK"/>
             </column>
+            <column name="NAME" type="VARCHAR(80)">
+            </column>
             <column name="ADDRESS" type="BIGINT">
             </column>
             <column name="SIZE_IN_SQUARE_METERS" type="INT">
@@ -24,6 +26,8 @@
             </column>
             <column name="USERID" type="BIGINT">
                 <constraints nullable="true"/>
+            </column>
+            <column name="TIME_OF_EXCHANGE_IN_MONTHS" type="INT">
             </column>
         </createTable>
     </changeSet>

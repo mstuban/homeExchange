@@ -4,6 +4,7 @@ import hr.mstuban.homeexchange.domain.User;
 import hr.mstuban.homeexchange.domain.UserRole;
 import hr.mstuban.homeexchange.domain.form.NewUserForm;
 import hr.mstuban.homeexchange.repositories.UserRepository;
+import hr.mstuban.homeexchange.repositories.UserRoleRepository;
 import hr.mstuban.homeexchange.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,9 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -67,13 +71,23 @@ public class UserServiceImpl implements UserService {
     public User createUser(NewUserForm form) {
         User user = new User();
         user.setUserName(form.getUsername());
+        user.setFirstName(form.getFirstName());
+        user.setLastName(form.getLastName());
         user.setEmail(form.getEmail());
         user.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
         Set<UserRole> userRoles = new HashSet<>();
         UserRole userRole = new UserRole();
-        userRole.setRole(form.getRole());
+        userRole.setRole("ROLE_USER");
+        userRole.setUser(user);
         userRoles.add(userRole);
         user.setRoles(userRoles);
+        user.setPhoneNumber(form.getPhoneNumber());
+        user.setEnabled(true);
+
+        userRepository.save(user);
+
+        userRoleRepository.save(userRole);
+
         return userRepository.save(user);
     }
 

@@ -27,8 +27,18 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<Address> findAvailableAddressesBySearchParameter(String parameter) {
+    public List<Address> findAddressesBySearchParameter(String parameter) {
         return addressRepository.findAddressesBySearchParameter(parameter);
+    }
+
+    @Override
+    public Address save(Address address) {
+        return addressRepository.save(address);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        addressRepository.delete(id);
     }
 }
 

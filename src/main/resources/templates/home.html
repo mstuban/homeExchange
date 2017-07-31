@@ -11,7 +11,7 @@
             <h1>Where would you like to move?</h1>
             <form th:action="@{/searchForHomes}" method="POST">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="searchParameter"/>
+                    <input placeholder="Type in a country, city, or street"  class="form-control" type="text" name="searchParameter"/>
                     <br/>
                     <input type="submit" class="col-md-12 btn btn-primary" value="Search"/>
                 </div>
@@ -20,5 +20,6 @@
 
     </div>
 </header>
+<th:block th:include="fragments/footer :: footer"></th:block>
 </body>
 </html>

@@ -119,3 +119,34 @@ article, aside, footer, header, hgroup, main, nav, section {
 .owl-theme .owl-controls .owl-page:hover span {
     border: 2px solid #fa7921;
 }
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+footer {
+    font-size: small;
+    padding-top: 3px;
+    position: absolute;
+    height: 30px;
+    margin-bottom: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+#profileModal img {
+    width: 100%;
+}
+
+.label {
+    font-size: 100%;
+}
+
+.top-buffer {
+    margin-top: 10px;
+}
+
+.bottom-buffer {
+    margin-bottom: 10px;
+}

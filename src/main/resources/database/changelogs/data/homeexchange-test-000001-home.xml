@@ -6,11 +6,22 @@
 
     <changeSet id="00001-20170716000000" author="mstuban">
         <insert tableName="HOME">
+            <column name="NAME">Family house in Zagreb</column>
             <column name="SIZE_IN_SQUARE_METERS">250</column>
             <column name="TYPE">Family home</column>
             <column name="DESCRIPTION">House in the centre of Zagreb.</column>
             <column name="AVAILABLE">true</column>
             <column name="USERID">1</column>
+            <column name="TIME_OF_EXCHANGE_IN_MONTHS">3</column>
+        </insert>
+        <insert tableName="HOME">
+            <column name="NAME">Condo in Čazma</column>
+            <column name="SIZE_IN_SQUARE_METERS">35</column>
+            <column name="TYPE">Condo</column>
+            <column name="DESCRIPTION">Condo in the centre of Čazma.</column>
+            <column name="AVAILABLE">false</column>
+            <column name="USERID">2</column>
+            <column name="TIME_OF_EXCHANGE_IN_MONTHS">12</column>
         </insert>
     </changeSet>
 

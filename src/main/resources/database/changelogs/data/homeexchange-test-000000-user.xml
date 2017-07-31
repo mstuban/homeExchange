@@ -7,11 +7,21 @@
     <changeSet id="00001-20170716000000" author="mstuban">
         <insert tableName="USERS">
             <column name="EMAIL">stuban.marko@gmail.com</column>
+            <column name="PHONE_NUMBER">+385 98 1789 833</column>
             <column name="ENABLED">true</column>
             <column name="FIRST_NAME">Marko</column>
             <column name="LAST_NAME">Stuban</column>
             <column name="PASSWORD">$2a$04$CdzGvmpW.q.Fjt1zNFKsq.20uBXWfxOqOO9Fs./SDQ.a/lgOPlAk2</column>
             <column name="USERNAME">mstuban</column>
+        </insert>
+        <insert tableName="USERS">
+            <column name="EMAIL">admin@gmail.com</column>
+            <column name="PHONE_NUMBER">+385 98 178 233</column>
+            <column name="ENABLED">true</column>
+            <column name="FIRST_NAME">Adminko</column>
+            <column name="LAST_NAME">Adminkovic</column>
+            <column name="PASSWORD">$2a$04$CdzGvmpW.q.Fjt1zNFKsq.20uBXWfxOqOO9Fs./SDQ.a/lgOPlAk2</column>
+            <column name="USERNAME">admin</column>
         </insert>
     </changeSet>
 

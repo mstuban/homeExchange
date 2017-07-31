@@ -33,6 +33,9 @@ public class User {
     @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
+
     @Column(name = "ENABLED")
     private boolean enabled;
 
@@ -53,6 +56,7 @@ public class User {
         this.email = user.email;
         this.password = user.password;
         this.enabled = user.enabled;
+        this.phoneNumber = user.phoneNumber;
     }
 
     public Long getUserId() {
@@ -125,5 +129,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

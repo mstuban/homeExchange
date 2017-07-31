@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="00001-20170731000200" author="mstuban" dbms="postgresql">
+        <createSequence sequenceName="IMAGE_SEQUENCE"/>
+    </changeSet>
+
+    <changeSet id="00002-20170731000200" author="mstuban" dbms="postgresql">
+        <createTable tableName="IMAGE">
+            <column name="ID" type="BIGINT" defaultValueComputed="nextval('IMAGE_SEQUENCE')">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="IMAGE_PK"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+
+            <column name="DATA" type="bytea">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONTENT_TYPE" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="HOME_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="IMAGE"
+                                 baseColumnNames="HOME_ID"
+                                 constraintName="IMAGE_TO_HOME_ID"
+                                 referencedTableName="HOME"
+                                 referencedColumnNames="HOME_ID" />
+    </changeSet>
+</databaseChangeLog>

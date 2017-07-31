@@ -5,47 +5,160 @@
 </head>
 <body>
 <th:block th:include="fragments/header :: header"></th:block>
-<div class="container-fluid text-center">
-    <div class="row-fluid">
-        <div class="col col-md-12">
-            <table class="table table-bordered table-striped table-hover table-condensed table-responsive">
-                <thead>
-                <tr>
-                    <th>
-                        Country
-                    </th>
-                    <th>
-                        City
-                    </th>
-                    <th>
-                        Street
-                    </th>
-                    <th>
-                        Postal Code
-                    </th>
-                    <th>
-                        Owner
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="address : ${addresses}">
-                    <td th:text="${address.country}">
-                    </td>
-                    <td th:text="${address.city}">
-                    </td>
-                    <td th:text="${address.street}">
-                    </td>
-                    <td th:text="${address.postalCode}">
-                    </td>
-                    <td th:text="${address.home.user.firstName + ' ' + address.home.user.lastName}">
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+<div class="container-fluid">
+    <div class="row top-buffer bottom-buffer">
+        <div th:if="${#lists.isEmpty(addresses)}" class="col col-md-12 text-center">
+            <div class="alert alert-info">
+                <strong>Info!</strong> No addresses found by that search parameter.
+            </div>
+            <a th:href="@{/}">
+                <button class="btn btn-primary">Search again</button>
+            </a>
+        </div>
+        <div class="col col-md-8" th:each="address : ${addresses}">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="pull-left justify" th:inline="text">
+                        [[${address.home.name}]] &nbsp;
+                        <span th:if="${address.home.available}" class="label label-success pull-right">Available</span>
+                        <span th:unless="${address.home.available}"
+                              class="label label-danger pull-right">Not available</span>
+                    </h3>
+                    <button th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
+                            th:attr="data-home-id=${address.home.homeId}" class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteHomeModal"><i class="glyphicon glyphicon-trash"></i>&nbsp;Delete home
+                    </button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col col-md-6">
+                            <div class="row">
+                                <h4 class="col-md-12">Address Information</h4>
+                            </div>
+                            <div class="row">
+                                <span class="col-md-2 text-muted">Country:</span>
+                                <span class="col-md-10" th:text="${address.country}"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 text-muted">Address:</div>
+                                <div class="col-md-10"
+                                     th:text="${address.street + ', ' + address.postalCode + ' ' + address.city}"></div>
+                            </div>
+                            <div class="row">
+                                <hr class="col col-md-8"/>
+                            </div>
+                            <div class="row">
+                                <h4 class="col-md-12">Home Information</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 text-muted">Description:</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10
+                        well" th:text="${address.home.description}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 text-muted">Type:</div>
+                                <div class="col-md-5" th:text="${address.home.type}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 text-muted">Size In Square Meters:</div>
+                                <div class="col-md-5" th:inline="text">[[${address.home.sizeInSquareMeters}]]
+                                    m<sup>2</sup></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 text-muted">Time Of Exchange:</div>
+                                <div class="col-md-5"
+                                     th:text="${address.home.timeOfExchangeInMonths + ' months'}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-12">
+                                    <button th:if="${address.home.available}" data-toggle="modal"
+                                            data-target="#profileModal"
+                                            class="col text-center btn btn-primary contactOwnerButton top-buffer">
+                                        Contact
+                                        Owner
+                                    </button>
+                                    <span hidden="hidden"
+                                          th:text="${address.home.user.firstName + ' ' + address.home.user.lastName}"></span>
+                                    <span hidden="hidden" th:text="${address.home.user.userName}"></span>
+                                    <span hidden="hidden" th:text="${address.home.user.email}"></span>
+                                    <span hidden="hidden" th:text="${address.home.user.phoneNumber}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-md-6">
+                            <div class="row">
+                                <img class="col col-md-10" src="http://via.placeholder.com/400x200">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+<th:block th:include="fragments/footer :: footer"></th:block>
+<!-- Modal -->
+<div id="profileModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Owner Profile</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Full Name:</label>
+                        <p id="modalUserFullName"></p>
+                        <label>Username:</label>
+                        <p id="modalUserName"></p>
+                        <label>E-mail Address:</label>
+                        <p id="modalUserEmail"></p>
+                        <label>Phone Number:</label>
+                        <p id="modalUserPhoneNumber"></p>
+                    </div>
+                    <div class="col-md-5">
+                        <img th:src="@{/resources/static/img/default_avatar.png}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="emailButton">
+                    <button type="button" class="btn btn-success pull-left">E-mail</button>
+                </a>
+                <button id="phoneButton" type="button" class="btn btn-success pull-left">Call</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal -->
+<div id="deleteHomeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this home?</p>
+            </div>
+            <div class="modal-footer">
+                <a id="deleteHomeButton">
+                    <button type="button" class="btn btn-danger">Delete this home</button>
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>

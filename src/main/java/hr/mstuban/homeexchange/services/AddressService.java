@@ -11,6 +11,9 @@ public interface AddressService {
 
     List<Address> findAll();
 
-    List<Address> findAvailableAddressesBySearchParameter(String parameter);
+    List<Address> findAddressesBySearchParameter(String parameter);
 
+    Address save(Address address);
+
+    void deleteById(Long id);
 }

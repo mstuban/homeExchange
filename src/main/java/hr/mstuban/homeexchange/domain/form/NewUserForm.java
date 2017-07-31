@@ -15,6 +15,14 @@ public class NewUserForm {
 
     @NotNull
     @NotEmpty
+    private String firstName;
+
+    @NotNull
+    @NotEmpty
+    private String lastName;
+
+    @NotNull
+    @NotEmpty
     private String password;
 
     @NotNull
@@ -27,7 +35,7 @@ public class NewUserForm {
 
     @NotNull
     @NotEmpty
-    private String role;
+    private String phoneNumber;
 
     public String getUsername() {
         return username;
@@ -61,11 +69,23 @@ public class NewUserForm {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 }

@@ -25,4 +25,21 @@ public class HomeServiceImpl implements HomeService {
     public List<Home> findAll() {
         return homeRepository.findAll();
     }
+
+    @Override
+    public Home save(Home home) {
+        return homeRepository.save(home);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+         homeRepository.delete(id);
+    }
+
+    @Override
+    public Home findById(Long id) {
+        return homeRepository.getOne(id);
+    }
+
+
 }

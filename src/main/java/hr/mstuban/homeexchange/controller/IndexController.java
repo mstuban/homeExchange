@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class IndexController {
@@ -34,13 +35,12 @@ public class IndexController {
     public String getRegister(Model model) {
 
         model.addAttribute("registerForm", new NewUserForm());
-        model.addAttribute("userRoles", userRoleService.findAll());
 
         return "register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String handleUserCreateForm(@ModelAttribute("registerForm") NewUserForm form, BindingResult bindingResult) {
+    public String handleUserCreateForm(@ModelAttribute("registerForm") NewUserForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "register";
         }
@@ -50,6 +50,9 @@ public class IndexController {
             bindingResult.reject("email.exists", "Email already exists");
             return "register";
         }
-        return "redirect:/";
+
+        redirectAttributes.addFlashAttribute("registrationSuccess", "You have successfully created an account! Please login!");
+
+        return "redirect:/login";
     }
 }
