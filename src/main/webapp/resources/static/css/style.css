@@ -135,7 +135,7 @@ footer {
     width: 100%;
 }
 
-#profileModal img {
+#profileModal img, #profilePanelBody img {
     width: 100%;
 }
 
@@ -149,4 +149,17 @@ footer {
 
 .bottom-buffer {
     margin-bottom: 10px;
+}
+
+#descriptionWell{
+    margin-left: 10px;
+}
+
+#editButton{
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#emailBtn{
+    margin-right: 5px;
 }

@@ -1,5 +1,7 @@
 package hr.mstuban.homeexchange.domain;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+
 import javax.persistence.*;
 
 /**
@@ -25,7 +27,7 @@ public class Image {
     @Column(name = "CONTENT_TYPE")
     private String contentType;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "HOME_ID")
     private Home home;
 
@@ -78,4 +80,9 @@ public class Image {
     public void setHome(Home home) {
         this.home = home;
     }
+
+    public String generateBase64Image() {
+        return Base64.encodeBase64String(this.getData());
+    }
+
 }

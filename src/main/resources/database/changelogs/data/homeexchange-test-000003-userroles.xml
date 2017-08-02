@@ -17,6 +17,10 @@
             <column name="ROLE" type="VARCHAR(60)">ROLE_ADMIN</column>
             <column name="USERID" type="BIGINT">2</column>
         </insert>
+        <insert tableName="USER_ROLES">
+            <column name="ROLE" type="VARCHAR(60)">ROLE_USER</column>
+            <column name="USERID" type="BIGINT">3</column>
+        </insert>
     </changeSet>
 
 

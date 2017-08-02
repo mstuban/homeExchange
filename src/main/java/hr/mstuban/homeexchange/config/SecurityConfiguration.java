@@ -37,14 +37,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/home", "/homes")
-                .authenticated()
+                .antMatchers("/", "/home", "/homes", "/home/new", "/profile", "/editProfile", "/home/edit", "/searchForHomes", "/searchForMyHomes")
+                .fullyAuthenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .successForwardUrl("/")
+                .defaultSuccessUrl("/?loginSuccess=true")
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login?logout")

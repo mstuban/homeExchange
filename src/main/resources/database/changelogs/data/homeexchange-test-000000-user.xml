@@ -23,6 +23,15 @@
             <column name="PASSWORD">$2a$04$CdzGvmpW.q.Fjt1zNFKsq.20uBXWfxOqOO9Fs./SDQ.a/lgOPlAk2</column>
             <column name="USERNAME">admin</column>
         </insert>
+        <insert tableName="USERS">
+            <column name="EMAIL">ivo.nikolic@gmail.com</column>
+            <column name="PHONE_NUMBER">+385 91 832 643</column>
+            <column name="ENABLED">true</column>
+            <column name="FIRST_NAME">Ivo</column>
+            <column name="LAST_NAME">Nikolić</column>
+            <column name="PASSWORD">$2a$04$CdzGvmpW.q.Fjt1zNFKsq.20uBXWfxOqOO9Fs./SDQ.a/lgOPlAk2</column>
+            <column name="USERNAME">inikolic</column>
+        </insert>
     </changeSet>
 
 

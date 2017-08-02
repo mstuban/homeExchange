@@ -5,17 +5,21 @@ package hr.mstuban.homeexchange.controller;
  */
 
 import hr.mstuban.homeexchange.domain.form.NewUserForm;
-import hr.mstuban.homeexchange.services.UserRoleService;
 import hr.mstuban.homeexchange.services.UserService;
+import hr.mstuban.homeexchange.validator.NewUserFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 public class IndexController {
@@ -24,7 +28,7 @@ public class IndexController {
     private UserService userService;
 
     @Autowired
-    private UserRoleService userRoleService;
+    private NewUserFormValidator newUserFormValidator;
 
     @RequestMapping("/")
     String getHome() {
@@ -34,13 +38,13 @@ public class IndexController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String getRegister(Model model) {
 
-        model.addAttribute("registerForm", new NewUserForm());
+        model.addAttribute("newUserForm", new NewUserForm());
 
         return "register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String handleUserCreateForm(@ModelAttribute("registerForm") NewUserForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String handleUserCreateForm(@Valid @ModelAttribute("newUserForm") NewUserForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "register";
         }
@@ -55,4 +59,10 @@ public class IndexController {
 
         return "redirect:/login";
     }
+
+    @InitBinder("newUserForm")
+    public void addNewUserFormValidator(WebDataBinder dataBinder) {
+        dataBinder.addValidators(newUserFormValidator);
+    }
+
 }

@@ -1,0 +1,62 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Your Profile Information</title>
+    <th:block th:include="fragments/headerincludes :: head"></th:block>
+</head>
+<body>
+<th:block th:include="fragments/header :: header"></th:block>
+<div class="container-fluid">
+    <div class="row top-buffer">
+        <div class="col col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="pull-left"><i class="glyphicon glyphicon-user"></i>&nbsp;Your Profile Information</h4>
+                    <a th:href="@{/editProfile}">
+                        <button class="btn btn-warning pull-right"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit
+                            Profile
+                        </button>
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body" id="profilePanelBody">
+                    <div class="row">
+                        <div class="col col-md-4">
+                            <label for="username">Username:</label>
+                            <p id="username" th:text="${user.userName}"></p>
+                            <label for="firstName">First Name:</label>
+                            <p id="firstName" th:text="${user.firstName}"></p>
+                            <label for="lastName">Last Name:</label>
+                            <p id="lastName" th:text="${user.lastName}"></p>
+                            <label for="roles">Roles:</label>
+                            <p id="roles" th:each="authority : ${#authentication.authorities}"
+                                  th:if="${authority.getAuthority().startsWith('ROLE_')}"
+                                  th:text="${authority.getAuthority().replaceFirst('ROLE_', '')}">
+                            </p>
+                            <label for="email">E-mail Address:</label>
+                            <p id="email" th:text="${user.email}"></p>
+                        </div>
+                        <div class="col col-md-4">
+                            <label for="phoneNumber">Phone Number:</label>
+                            <p id="phoneNumber" th:text="${user.phoneNumber}"></p>
+                            <label for="userHomes">Number Of Homes:</label>
+                            <p id="userHomes" th:text="${numberOfHomes + ' homes added'}"></p>
+                            <a th:href="@{/searchForMyHomes}" th:if="${numberOfHomes > 0}">
+                                <button class="btn btn-primary">View My Homes</button>
+                            </a>
+                            <a th:href="@{/home/new}">
+                                <button class="btn btn-success">Add A New Home</button>
+                            </a>
+                        </div>
+                        <div class="col col-md-3">
+                            <img th:src="@{/resources/static/img/default_avatar.png}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="fragments/footer :: footer"></th:block>
+</body>
+</html>

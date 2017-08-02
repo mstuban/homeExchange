@@ -22,15 +22,31 @@
             </div>
             <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-user"></span>
+                    <a href="#" class="text-center dropdown-toggle" data-toggle="dropdown">
+                        <div th:if="${loginSuccess}" class="col col-md-12 text-center">
+                            <div class="alert alert-success">
+                                <strong>Success!</strong> <span th:text="${loginSuccess}"></span>
+                            </div>
+                        </div>
+                        <i class="glyphicon glyphicon-user"></i>
                         <strong sec:authentication="name"></strong>
-                        <span class="glyphicon glyphicon-chevron-down"></span>
+                        <i class="glyphicon glyphicon-chevron-down"></i>
                     </a>
                     <ul class="dropdown-menu text-center">
+                        <li>
+                            <a th:href="@{/profile}" class="text-center">
+                                <i class="glyphicon glyphicon-user"></i>
+                                &nbsp;My Profile
+                            </a> 
+                        </li>
+                        <li>
+                            <a th:href="@{/searchForMyHomes}" class="text-center">
+                                <i class="glyphicon glyphicon-home"></i>&nbsp;My Homes
+                            </a> 
+                        </li>
                         <li class="center-block">
                             <form id="logoutform" th:action="@{/logout}" method="POST">
-                                <input type="submit" class="btn btn-danger center-block align-middle" value="Logout"/>
+                                <input type="submit" class="btn btn-danger center-block align-middle" value="Logout">
                             </form>
                         </li>
                     </ul>

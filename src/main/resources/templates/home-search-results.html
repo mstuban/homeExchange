@@ -7,6 +7,11 @@
 <th:block th:include="fragments/header :: header"></th:block>
 <div class="container-fluid">
     <div class="row top-buffer bottom-buffer">
+        <div th:if="${deleteSuccess}" class="col col-md-12 text-center">
+            <div class="alert alert-success">
+                <strong>Success!</strong> <span th:text="${deleteSuccess}"></span>
+            </div>
+        </div>
         <div th:if="${#lists.isEmpty(addresses)}" class="col col-md-12 text-center">
             <div class="alert alert-info">
                 <strong>Info!</strong> No addresses found by that search parameter.
@@ -15,7 +20,32 @@
                 <button class="btn btn-primary">Search again</button>
             </a>
         </div>
-        <div class="col col-md-8" th:each="address : ${addresses}">
+        <div th:if="${failedToDeleteError}" class="col col-md-12 text-center">
+            <div class="alert alert-danger">
+                <strong>Warning!</strong> <span th:text="${failedToDeleteError}"></span>
+            </div>
+        </div>
+        <div th:if="${homeCreatedSuccess}" class="col col-md-12 text-center">
+            <div class="alert alert-success">
+                <strong>Success!</strong> <span th:text="${homeCreatedSuccess}"></span>
+            </div>
+        </div>
+        <div th:if="${imageDeletedSuccessfully}" class="col col-md-12 text-center">
+            <div class="alert alert-success">
+                <strong>Success!</strong> <span th:text="${imageDeletedSuccessfully}"></span>
+            </div>
+        </div>
+        <div th:if="${imageAddedSuccessfully}" class="col col-md-12 text-center">
+            <div class="alert alert-success">
+                <strong>Success!</strong> <span th:text="${imageAddedSuccessfully}"></span>
+            </div>
+        </div>
+        <div th:if="${failedToEditError}" class="col col-md-12 text-center">
+            <div class="alert alert-danger">
+                <strong>Warning!</strong> <span th:text="${failedToEditError}"></span>
+            </div>
+        </div>
+        <div class="col col-md-8" th:each="address, var : ${addresses}">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="pull-left justify" th:inline="text">
@@ -24,9 +54,21 @@
                         <span th:unless="${address.home.available}"
                               class="label label-danger pull-right">Not available</span>
                     </h3>
-                    <button th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
-                            th:attr="data-home-id=${address.home.homeId}" class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteHomeModal"><i class="glyphicon glyphicon-trash"></i>&nbsp;Delete home
-                    </button>
+                    <div class="btn-group pull-right">
+                        <a th:href="@{/home/edit/{id}(id=${address.home.homeId})}">
+                            <button th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
+                                    class="btn btn-warning pull-left" type="button" id="editButton"
+                            ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit home
+                            </button>
+                        </a>
+                        <button th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
+                                th:attr="data-home-id=${address.home.homeId}" class="btn btn-danger"
+                                data-toggle="modal" data-target="#deleteHomeModal" type="button"><i
+                                class="glyphicon glyphicon-trash"></i>&nbsp;Delete
+                            home
+                        </button>
+
+                    </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
@@ -54,8 +96,8 @@
                                 <div class="col-md-3 text-muted">Description:</div>
                             </div>
                             <div class="row">
-                                <div class="col-md-10
-                        well" th:text="${address.home.description}"></div>
+                                <div class="col-md-10 well well-md" id="descriptionWell"
+                                     th:text="${address.home.description}"></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 text-muted">Type:</div>
@@ -73,11 +115,11 @@
                             </div>
                             <div class="row">
                                 <div class="col col-md-12">
-                                    <button th:if="${address.home.available}" data-toggle="modal"
+                                    <button th:if="${address.home.available || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
+                                            data-toggle="modal"
                                             data-target="#profileModal"
-                                            class="col text-center btn btn-primary contactOwnerButton top-buffer">
-                                        Contact
-                                        Owner
+                                            class="col col-md-12 text-center btn btn-primary contactOwnerButton top-buffer bottom-buffer">
+                                        Contact Owner
                                     </button>
                                     <span hidden="hidden"
                                           th:text="${address.home.user.firstName + ' ' + address.home.user.lastName}"></span>
@@ -89,7 +131,60 @@
                         </div>
                         <div class="col col-md-6">
                             <div class="row">
-                                <img class="col col-md-10" src="http://via.placeholder.com/400x200">
+                                <div class="col-lg-11 well">
+                                    <h3 class="pull-left" th:inline="text"><i class="glyphicon glyphicon-camera"
+                                                                              aria-hidden="true"></i>&nbsp;Photo
+                                    </h3>
+                                    <button th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
+                                            class="btn btn-default pull-right" type="button"
+                                            data-toggle="collapse"
+                                            th:attr="data-target=${'#addImages' + var.count}"><i
+                                            class="glyphicon glyphicon-plus"></i>
+                                    </button>
+                                    <div class="row">
+                                        <div class="col-lg-12 collapse bottom-buffer"
+                                             th:id="${'addImages' + var.count}">
+                                            <form th:action="@{/upload/images/} + ${address.home.homeId}"
+                                                  enctype="multipart/form-data" method="post">
+                                                <div class="form-group">
+                                                    <input name="file" id="file" type="file"
+                                                           class="filestyle"
+                                                           data-buttonBefore="true"
+                                                           data-buttonName="btn-primary"
+                                                           th:attr="data-buttonText='&nbsp;' + 'Choose image...'"
+                                                           required/><br/>
+                                                </div>
+                                                <button class="btn btn-primary"
+                                                        type="submit">
+                                                    Upload
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div th:if="${address.home.image == null}" class="row">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-12">
+                                                <p>No image added.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div th:if="${address.home.image}" class="row">
+                                        <div class="container col-lg-12 border-bottom bottom-buffer">
+                                            <div class="imageAndComment">
+                                                <img th:name="${address.home.image.name}"
+                                                     class="homeImage"
+                                                     style="max-width:100%"
+                                                     th:src="@{'data:'+ ${address.home.image.contentType} + ';base64,' + ${address.home.image.generateBase64Image()}}"
+                                                     title="Click to enlarge"/>
+                                                <br/>
+                                                <br/>
+                                                <a type="button"
+                                                   class="btn btn-danger pull-left deleteImageButton"
+                                                   th:attr="data-image-name=${address.home.image.name},link-template=@{/home/{homeId}/deleteImage/{imageId}(homeId=${address.home.homeId},imageId=${address.home.image.id})}">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,6 +192,11 @@
             </div>
         </div>
     </div>
+</div>
+<div class="col-md-4">
+
+</div>
+</div>
 </div>
 <th:block th:include="fragments/footer :: footer"></th:block>
 <!-- Modal -->
@@ -107,7 +207,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Owner Profile</h4>
+                <h4 class="modal-title"><i class="glyphicon glyphicon-user"></i>&nbsp;Owner Profile</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -128,8 +228,9 @@
             </div>
             <div class="modal-footer">
                 <a id="emailButton">
-                    <button type="button" class="btn btn-success pull-left">E-mail</button>
+                    <button id="emailBtn" type="button" class="btn btn-success pull-left">E-mail</button>
                 </a>
+
                 <button id="phoneButton" type="button" class="btn btn-success pull-left">Call</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
@@ -158,6 +259,52 @@
             </div>
         </div>
 
+    </div>
+</div>
+<!--Modal for viewing enlarged images-->
+<div class="modal fade" id="enlargeImageModal" tabindex="-1" role="dialog" aria-labelledby="enlargeImageModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="enlargeImageModalTitle">Image title</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <img src="" class="enlargeImageModalSource" style="width: 100%;"/>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END of Enlarged Images Modal-->
+<!-- DELETE MODAL -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Delete image</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <p class="text-center">
+                        <span>You are about to delete </span> <strong id="image-name"></strong>.
+                        <br/>
+                        <span>Please confirm the operation.</span>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-lg"
+                        data-dismiss="modal">Cancel
+                </button>
+                <a type="button" class="btn btn-danger btn-lg" id="deleteImage"
+                   href="#">Delete</a>
+            </div>
+        </div>
     </div>
 </div>
 </body>

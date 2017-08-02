@@ -5,6 +5,7 @@ import hr.mstuban.homeexchange.repositories.HomeRepository;
 import hr.mstuban.homeexchange.services.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,13 +34,28 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public void deleteById(Long id) {
-         homeRepository.delete(id);
+        homeRepository.delete(id);
     }
 
     @Override
     public Home findById(Long id) {
-        return homeRepository.getOne(id);
+        return homeRepository.findByHomeId(id);
     }
 
+    @Override
+    public boolean existsByNameIgnoreCase(String name) {
+        return homeRepository.existsByNameIgnoreCase(name);
+    }
+
+    @Override
+    public Integer countByUser_UserId(Long id) {
+        return homeRepository.countByUser_UserId(id);
+    }
+
+    @Transactional
+    @Override
+    public void editHome(String name, Integer sizeInSquareMeters, String description, Integer timeOfExchangeInMonths, String type, boolean available, Long homeId) {
+        homeRepository.editHome(name, sizeInSquareMeters, description, timeOfExchangeInMonths, type, available, homeId);
+    }
 
 }

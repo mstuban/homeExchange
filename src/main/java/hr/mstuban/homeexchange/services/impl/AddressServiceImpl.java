@@ -5,6 +5,7 @@ import hr.mstuban.homeexchange.repositories.AddressRepository;
 import hr.mstuban.homeexchange.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,5 +41,27 @@ public class AddressServiceImpl implements AddressService {
     public void deleteById(Long id) {
         addressRepository.delete(id);
     }
+
+    @Override
+    public List<Address> getAddressesByHome_User_UserName(String username) {
+        return addressRepository.getAddressesByHome_User_UserName(username);
+    }
+
+    @Transactional
+    @Override
+    public void deleteByHome_HomeId(Long id) {
+        addressRepository.deleteByHome_HomeId(id);
+    }
+
+    @Transactional
+    @Override
+    public void editAddress(String city, String country, Long postalCode, String street, Long homeId) {
+        addressRepository.editAddress(city, country, postalCode, street, homeId);
+    }
+
+    public Address findByHome_HomeId(Long id) {
+        return addressRepository.findByHome_HomeId(id);
+    }
+
 }
 

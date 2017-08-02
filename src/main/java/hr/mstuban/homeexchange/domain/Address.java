@@ -19,7 +19,7 @@ public class Address {
     @Column(name = "ADDRESS_ID", nullable = false)
     private Long addressId;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "FRN_HOME_ID")
     private Home home;

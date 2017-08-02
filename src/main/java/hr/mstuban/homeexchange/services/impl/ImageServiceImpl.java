@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by mstuban on 31/07/17.
  */
@@ -21,4 +23,20 @@ public class ImageServiceImpl implements ImageService {
     public void store(Image image) {
         imageRepository.save(image);
     }
+
+    @Override
+    public Image findImageByHome(Long id) {
+        return imageRepository.findImageByHome_HomeId(id);
+    }
+
+    @Override
+    public void delete(Long id){
+        imageRepository.delete(id);
+    }
+
+    @Override
+    public List<Image> findAll() {
+        return imageRepository.findAll();
+    }
+
 }

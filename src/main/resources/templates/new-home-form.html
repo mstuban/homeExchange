@@ -4,16 +4,16 @@
     <th:block th:include="fragments/headerincludes :: head"></th:block>
 </head>
 <body>
+<th:block th:include="fragments/header :: header"></th:block>
 <div class="container-fluid">
-    <th:block th:include="fragments/header :: header"></th:block>
     <div class="row-fluid">
         <div class="col-md-4 col-md-offset-4">
             <h1 class="text-center">Add a new home</h1>
             <form th:action="@{/home/new}" th:object="${newHomeForm}" method="POST">
                 <div class="form-group">
                     <label>Name:</label>
-                    <input class="form-control" th:field="*{name}" required/>
-                    <p th:each="error: ${#fields.errors('name')}"
+                    <input class="form-control" max=100 th:field="*{name}" required/>
+                    <p class="text-danger" th:each="error: ${#fields.errors('name')}"
                        th:text="${error}">Validation error</p>
                 </div>
                 <div class="form-group">
@@ -262,80 +262,70 @@
                         <option value="Zambia">Zambia</option>
                         <option value="Zimbabwe">Zimbabwe</option>
                     </select>
-                    <p th:each="error : ${#fields.errors('country')}"
+                    <p class="text-danger" th:each="error : ${#fields.errors('country')}"
                        th:text="${error}">Validation error</p>
                 </div>
                 <div class="form-group">
                     <label>Street:</label>
                     <input class="form-control" type="text" th:field="*{street}" required/>
-                    <p th:each="error : ${#fields.errors('street')}"
+                    <p class="text-danger" th:each="error : ${#fields.errors('street')}"
                        th:text="${error}">Validation error</p>
                 </div>
                 <div class="form-group">
                     <label>City:</label>
                     <input class="form-control" type="text" th:field="*{city}" required/>
-                    <p th:each="error : ${#fields.errors('city')}"
+                    <p class="text-danger" th:each="error : ${#fields.errors('city')}"
                        th:text="${error}">Validation error</p>
                 </div>
                 <div class="form-group">
                     <label>Postal Code:</label>
-                    <input class="form-control" type="number" th:field="*{postalCode}" required/>
-                    <p th:each="error : ${#fields.errors('postalCode')}"
+                    <input class="form-control" type="number" min=0 max=500000 th:field="*{postalCode}" required/>
+                    <p class="text-danger" th:each="error : ${#fields.errors('postalCode')}"
                        th:text="${error}">Validation error</p>
                 </div>
                 <div class="form-group">
                     <label>Type:</label>
                     <select class="form-control" th:field="*{type}" required>
                         <option selected="selected" value="">Select a type</option>
-                        <option value="Home">Home</option>
+                        <option value="House">House</option>
                         <option value="Apartment">Apartment</option>
                         <option value="Condo">Condo</option>
                         <option value="Villa">Villa</option>
                     </select>
-                    <p th:each="error : ${#fields.errors('type')}"
+                    <p class="text-danger" th:each="error : ${#fields.errors('type')}"
                        th:text="${error}">Validation error</p>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12 bottom-buffer" id="addImages">
-                        <label for="file">Image:</label>
-                        <div class="form-group">
-                            <input name="file" id="file" type="file" class="filestyle"
-                                   data-buttonBefore="true" data-buttonName="btn-primary"
-                                   th:attr="data-buttonText='&nbsp;' + 'Choose images'" th:field="*{imageFile}"/><br/>
-                        </div>
-                        </button>
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <label>Size In Square Meters:</label>
-                    <input class="form-control" type="number" th:field="*{sizeInSquareMeters}" required/>
-                    <p th:each="error : ${#fields.errors('sizeInSquareMeters')}"
+                    <input class="form-control" type="number" min=1 max=100000 th:field="*{sizeInSquareMeters}" required/>
+                    <p class="text-danger" th:each="error : ${#fields.errors('sizeInSquareMeters')}"
                        th:text="${error}">Validation error</p>
                 </div>
                 <div class="form-group">
                     <label>Description:</label>
-                    <input class="form-control" type="text" th:field="*{description}" required/>
-                    <p th:each="error : ${#fields.errors('description')}"
+                    <textarea class="form-control" type="text" th:field="*{description}" required/>
+                    <p class="text-danger" th:each="error : ${#fields.errors('description')}"
                        th:text="${error}">Validation error</p>
                 </div>
                 <div class="form-group">
                     <label>Available:</label>
-                    <input type="checkbox" checked="checked" data-toggle="toggle" th:field="*{available}"
+                    <input type="checkbox" data-toggle="toggle" th:field="*{available}"
                            data-on="Yes"
-                           data-off="No" required>
-                    <p th:each="error : ${#fields.errors('available')}"
+                           data-off="No" >
+                    <p class="text-danger" th:each="error : ${#fields.errors('available')}"
                        th:text="${error}">Validation error</p>
                 </div>
                 <div class="form-group">
                     <label>Time Of Exchange (In Months):</label>
                     <input class="form-control" type="number" th:field="*{timeOfExchangeInMonths}" required/>
-                    <p th:each="error : ${#fields.errors('timeOfExchangeInMonths')}"
+                    <p class="text-danger" th:each="error : ${#fields.errors('timeOfExchangeInMonths')}"
                        th:text="${error}">Validation error</p>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-primary" type="submit">Add home</button>
+                        <button class="btn btn-primary col-md-12" type="submit">Add home</button>
+                        <br/>
+                        <br/>
                         <br/>
                     </div>
                 </div>

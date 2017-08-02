@@ -1,9 +1,11 @@
 package hr.mstuban.homeexchange.domain.form;
 
 /**
- * Created by mstuban on 21.05.17..
+ * Created by mstuban on 01/08/17.
  */
-public class NewUserForm {
+public class EditUserForm {
+
+    private Long id;
 
     private String username;
 
@@ -75,4 +77,11 @@ public class NewUserForm {
         this.firstName = firstName;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

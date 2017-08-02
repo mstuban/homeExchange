@@ -2,12 +2,15 @@ package hr.mstuban.homeexchange.services.impl;
 
 import hr.mstuban.homeexchange.domain.User;
 import hr.mstuban.homeexchange.domain.UserRole;
+import hr.mstuban.homeexchange.domain.form.EditUserForm;
 import hr.mstuban.homeexchange.domain.form.NewUserForm;
+import hr.mstuban.homeexchange.domain.mapper.UserMapper;
 import hr.mstuban.homeexchange.repositories.UserRepository;
 import hr.mstuban.homeexchange.repositories.UserRoleRepository;
 import hr.mstuban.homeexchange.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -89,6 +95,30 @@ public class UserServiceImpl implements UserService {
         userRoleRepository.save(userRole);
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public boolean existsByEmailIgnoreCase(String email) {
+        return userRepository.existsByEmailIgnoreCase(email);
+    }
+
+    @Override
+    public boolean existsByPhoneNumberIgnoreCase(String phoneNumber) {
+        return userRepository.existsByPhoneNumberIgnoreCase(phoneNumber);
+    }
+
+    @Override
+    public boolean existsByUserNameIgnoreCase(String username) {
+        return userRepository.existsByUserNameIgnoreCase(username);
+    }
+
+    @Transactional
+    @Override
+    public void editUser(EditUserForm form, Long id) {
+
+        String encryptedPassword = BCrypt.hashpw(form.getPassword(), BCrypt.gensalt());
+
+        userRepository.editUser(form.getUsername(), form.getFirstName(), form.getLastName(), encryptedPassword, form.getEmail(), form.getPhoneNumber(), id);
     }
 
 }

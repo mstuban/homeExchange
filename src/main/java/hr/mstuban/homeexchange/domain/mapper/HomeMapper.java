@@ -1,6 +1,7 @@
 package hr.mstuban.homeexchange.domain.mapper;
 
 import hr.mstuban.homeexchange.domain.Home;
+import hr.mstuban.homeexchange.domain.form.EditHomeForm;
 import hr.mstuban.homeexchange.domain.form.NewHomeForm;
 import org.mapstruct.Mapper;
 
@@ -10,8 +11,12 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface HomeMapper {
 
-    Home formToHome(NewHomeForm form);
-    NewHomeForm homeToForm(Home home);
+    Home newHomeFormToHome(NewHomeForm form);
+    NewHomeForm homeToNewHomeForm(Home home);
+
+    Home editHomeFormToHome(EditHomeForm form);
+    EditHomeForm homeToEditHomeForm(Home home);
+
 
 }
 

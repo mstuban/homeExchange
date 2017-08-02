@@ -9,7 +9,17 @@ import java.util.List;
  */
 public interface HomeService {
     List<Home> findAll();
+
     Home save(Home home);
+
     void deleteById(Long id);
+
     Home findById(Long id);
+
+    boolean existsByNameIgnoreCase(String name);
+
+    Integer countByUser_UserId(Long id);
+
+    void editHome(String name, Integer sizeInSquareMeters, String description, Integer timeOfExchangeInMonths, String type, boolean available, Long homeId);
+
 }

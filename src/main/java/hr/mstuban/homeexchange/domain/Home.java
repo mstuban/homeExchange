@@ -4,9 +4,6 @@ package hr.mstuban.homeexchange.domain;
  * Created by mstuban on 14.05.17..
  */
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 
 @Entity
@@ -22,8 +19,7 @@ public class Home {
     @Column(name = "NAME")
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ADDRESS_ID")
     private Address address;
 
@@ -45,6 +41,10 @@ public class Home {
 
     @Column(name = "TIME_OF_EXCHANGE_IN_MONTHS")
     private Integer timeOfExchangeInMonths;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IMAGE_ID")
+    private Image image;
 
     public Home() {
     }
@@ -119,5 +119,13 @@ public class Home {
 
     public void setTimeOfExchangeInMonths(Integer timeOfExchangeInMonths) {
         this.timeOfExchangeInMonths = timeOfExchangeInMonths;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }

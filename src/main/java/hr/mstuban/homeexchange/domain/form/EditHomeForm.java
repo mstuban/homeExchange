@@ -1,9 +1,12 @@
 package hr.mstuban.homeexchange.domain.form;
 
 /**
- * Created by mstuban on 31/07/17.
+ * Created by mstuban on 01/08/17.
  */
-public class NewHomeForm {
+
+public class EditHomeForm {
+
+    private Long id;
 
     private String name;
 
@@ -24,6 +27,10 @@ public class NewHomeForm {
     private boolean available;
 
     private Integer timeOfExchangeInMonths;
+/*
+    @NotNull
+    @NotEmpty
+    private MultipartFile imageFile;*/
 
     public String getName() {
         return name;
@@ -105,4 +112,20 @@ public class NewHomeForm {
         this.timeOfExchangeInMonths = timeOfExchangeInMonths;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+/*    public MultipartFile getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    }*/
 }
+

@@ -48,6 +48,7 @@ public class FileUploadController {
 
             Image image = new Image(file.getOriginalFilename(), file.getBytes(), home, file.getContentType());
             imageService.store(image);
+            home.setImage(image);
 
         } catch (FileUploadException ex) {
             redirectAttributes.addFlashAttribute("alert", ex.getMessage());
@@ -57,6 +58,7 @@ public class FileUploadController {
             return "redirect:/home/new";
         }
 
+        redirectAttributes.addFlashAttribute("imageAddedSuccessfully", "You have successfully added a photo for your home!");
 
         return "redirect:/homes";
     }

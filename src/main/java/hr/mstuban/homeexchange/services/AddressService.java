@@ -16,4 +16,12 @@ public interface AddressService {
     Address save(Address address);
 
     void deleteById(Long id);
+
+    List<Address> getAddressesByHome_User_UserName(String username);
+
+    void deleteByHome_HomeId(Long id);
+
+    void editAddress(String city, String country, Long postalCode, String street, Long addressId);
+
+    Address findByHome_HomeId(Long id);
 }

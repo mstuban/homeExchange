@@ -20,7 +20,7 @@
             <column name="SIZE_IN_SQUARE_METERS" type="INT">
             </column>
             <column name="TYPE" type="VARCHAR(80)"/>
-            <column name="DESCRIPTION" type="VARCHAR(80)"/>
+            <column name="DESCRIPTION" type="VARCHAR(100)"/>
             <column name="AVAILABLE" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
@@ -28,6 +28,8 @@
                 <constraints nullable="true"/>
             </column>
             <column name="TIME_OF_EXCHANGE_IN_MONTHS" type="INT">
+            </column>
+            <column name="IMAGE_ID" type="BIGINT">
             </column>
         </createTable>
     </changeSet>
