@@ -4,14 +4,6 @@ plugins {
     id 'net.ltgt.apt' version '0.8'
 }
 
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'HomeExchangeAppApplication'
-    }
-}
-
-
 group = 'hr.mstuban.homeexchange'
 version = '0.0.1-SNAPSHOT'
 
