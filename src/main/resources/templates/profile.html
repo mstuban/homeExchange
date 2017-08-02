@@ -41,10 +41,10 @@
                             <label for="userHomes">Number Of Homes:</label>
                             <p id="userHomes" th:text="${numberOfHomes + ' homes added'}"></p>
                             <a th:href="@{/searchForMyHomes}" th:if="${numberOfHomes > 0}">
-                                <button class="btn btn-primary">View My Homes</button>
+                                <button class="btn btn-primary"><i class="glyphicon glyphicon-home"></i>&nbsp;View My Homes</button>
                             </a>
                             <a th:href="@{/home/new}">
-                                <button class="btn btn-success">Add A New Home</button>
+                                <button class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add A New Home</button>
                             </a>
                         </div>
                         <div class="col col-md-3">
