@@ -1,7 +1,17 @@
+
 plugins {
     id 'java'
     id 'net.ltgt.apt' version '0.8'
 }
+
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'hr.mstuban.homeexchange.HomeExchangeAppApplication'
+    }
+}
+
+
 group = 'hr.mstuban.homeexchange'
 version = '0.0.1-SNAPSHOT'
 
@@ -21,14 +31,6 @@ repositories {
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
 
-jar {
-    manifest {
-        attributes(
-                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                'Main-Class': 'HomeExchangeAppApplication'
-        )
-    }
-}
 
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.5.6.RELEASE'
@@ -56,6 +58,15 @@ dependencies {
     apt 'org.mapstruct:mapstruct-processor:1.1.0.Final'
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.6.RELEASE') {
         exclude(module: 'commons-logging')
+    }
+
+    jar {
+        manifest {
+            attributes(
+                    'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                    'Main-Class': 'HomeExchangeAppApplication'
+            )
+        }
     }
 }
 
