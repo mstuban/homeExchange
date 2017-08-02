@@ -7,7 +7,7 @@ plugins {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'hr.mstuban.homeexchange.HomeExchangeAppApplication'
+        attributes 'Main-Class': 'HomeExchangeAppApplication'
     }
 }
 
