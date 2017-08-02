@@ -45,7 +45,7 @@
                 <strong>Warning!</strong> <span th:text="${failedToEditError}"></span>
             </div>
         </div>
-        <div class="col col-md-8" th:each="address, var : ${addresses}">
+        <div class="col col-md-offset-2 col-md-8" th:each="address, var : ${addresses}">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="pull-left justify" th:inline="text">

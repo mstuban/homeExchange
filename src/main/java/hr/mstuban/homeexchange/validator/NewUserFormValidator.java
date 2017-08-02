@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import static org.codehaus.plexus.util.StringUtils.isBlank;
+
 /**
  * Created by mstuban on 31/07/17.
  */
@@ -30,6 +32,53 @@ public class NewUserFormValidator implements Validator {
         validatePassword(newUserForm.getPassword(), newUserForm.getMatchingPassword(), errors);
         validateEmail(newUserForm.getEmail(), errors);
         validatePhoneNumber(newUserForm.getPhoneNumber(), errors);
+
+        validateUsernameString(newUserForm.getUsername(), errors);
+        validatePasswordString(newUserForm.getPassword(), errors);
+        validateMatchingPasswordString(newUserForm.getMatchingPassword(), errors);
+        validateEmailString(newUserForm.getEmail(), errors);
+        validatePhoneNumberString(newUserForm.getPhoneNumber(), errors);
+
+
+    }
+
+    public void validatePhoneNumberString(String phoneNumber, Errors errors) {
+
+        if (isBlank(phoneNumber)) {
+            errors.rejectValue("phoneNumber", "error.user.phoneNumber.empty", "You must enter a phone number.");
+        }
+
+    }
+
+    public void validateEmailString(String email, Errors errors) {
+
+        if (isBlank(email)) {
+            errors.rejectValue("email", "error.user.email.empty", "You must enter an email.");
+        }
+
+    }
+
+    public void validateMatchingPasswordString(String matchingPassword, Errors errors) {
+
+        if (isBlank(matchingPassword)) {
+            errors.rejectValue("matchingPassword", "error.user.matchingPassword.empty", "You must enter a matching password.");
+        }
+
+    }
+
+    public void validatePasswordString(String password, Errors errors) {
+
+        if (isBlank(password)) {
+            errors.rejectValue("password", "error.user.password.empty", "You must enter a password.");
+        }
+
+    }
+
+    public void validateUsernameString(String username, Errors errors) {
+
+        if (isBlank(username)) {
+            errors.rejectValue("username", "error.user.username.empty", "You must enter a username.");
+        }
 
     }
 
