@@ -29,7 +29,7 @@
         </createTable>
         <addForeignKeyConstraint baseTableName="IMAGE"
                                  baseColumnNames="HOME_ID"
-                                 constraintName="IMAGE_TO_HOME_ID"
+                                 constraintName="IMAGE_FK"
                                  referencedTableName="HOME"
                                  referencedColumnNames="HOME_ID" />
     </changeSet>
