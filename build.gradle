@@ -19,6 +19,8 @@ repositories {
     maven { url "http://repo.maven.apache.org/maven2" }
 }
 
+
+
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
 
@@ -28,15 +30,6 @@ task copyToLib(type: Copy) {
 }
 
 stage.dependsOn(copyToLib)
-
-jar {
-    manifest {
-        attributes(
-                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                'Main-Class': 'hr.mstuban.homeexchange.HomeExchangeAppApplication'
-        )
-    }
-}
 
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.5.6.RELEASE'
@@ -66,6 +59,15 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
+}
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'hr.mstuban.homeexchange.HomeExchangeAppApplication'
+        )
+    }
 }
 
 
