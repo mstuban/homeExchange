@@ -29,6 +29,14 @@ public class EditHomeFormValidator extends NewHomeFormValidator implements Valid
 
         validateEditedName(editHomeForm.getName(), errors, editHomeForm.getId());
         validateDescription(editHomeForm.getDescription(), errors);
+        validateDescriptionString(editHomeForm.getDescription(), errors);
+        validateNameString(editHomeForm.getName(), errors);
+        validateCityString(editHomeForm.getCity(), errors);
+        validateCountryString(editHomeForm.getCountry(), errors);
+        validatePostalCodeLong(editHomeForm.getPostalCode(), errors);
+        validateStreetString(editHomeForm.getStreet(), errors);
+        validateSizeInSquareMetersInteger(editHomeForm.getSizeInSquareMeters(), errors);
+        validateTimeOfExchangeInMonthsInteger(editHomeForm.getSizeInSquareMeters(), errors);
 
     }
 
