@@ -132,15 +132,17 @@
                         <div class="col col-md-6">
                             <div class="row">
                                 <div class="col-lg-11 well">
-                                    <h3 class="pull-left" th:inline="text"><i class="glyphicon glyphicon-camera"
-                                                                              aria-hidden="true"></i>&nbsp;Photo
-                                    </h3>
-                                    <button th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
-                                            class="btn btn-default pull-right" type="button"
-                                            data-toggle="collapse"
-                                            th:attr="data-target=${'#addImages' + var.count}"><i
-                                            class="glyphicon glyphicon-plus"></i>
-                                    </button>
+                                    <div>
+                                        <h3 class="pull-left bottom-buffer"th:inline="text"><i class="glyphicon glyphicon-camera"
+                                                                                  aria-hidden="true"></i>&nbsp;Photo
+                                        </h3>
+                                        <button th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
+                                                class="btn btn-default pull-right" type="button"
+                                                data-toggle="collapse"
+                                                th:attr="data-target=${'#addImages' + var.count}"><i
+                                                class="glyphicon glyphicon-plus"></i>
+                                        </button>
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-12 collapse bottom-buffer"
                                              th:id="${'addImages' + var.count}">
@@ -178,7 +180,8 @@
                                                      title="Click to enlarge"/>
                                                 <br/>
                                                 <br/>
-                                                <a th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}" type="button"
+                                                <a th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
+                                                   type="button"
                                                    class="btn btn-danger pull-left deleteImageButton"
                                                    th:attr="data-image-name=${address.home.image.name},link-template=@{/home/{homeId}/deleteImage/{imageId}(homeId=${address.home.homeId},imageId=${address.home.image.id})}">Delete</a>
                                             </div>
@@ -228,10 +231,14 @@
             </div>
             <div class="modal-footer">
                 <a id="emailButton">
-                    <button id="emailBtn" type="button" class="btn btn-success pull-left"><i class="glyphicon glyphicon-envelope"></i>&nbsp;E-mail</button>
+                    <button id="emailBtn" type="button" class="btn btn-success pull-left"><i
+                            class="glyphicon glyphicon-envelope"></i>&nbsp;E-mail
+                    </button>
                 </a>
 
-                <button id="phoneButton" type="button" class="btn btn-success pull-left"><i class="glyphicon glyphicon-phone"></i>&nbsp;Call</button>
+                <button id="phoneButton" type="button" class="btn btn-success pull-left"><i
+                        class="glyphicon glyphicon-phone"></i>&nbsp;Call
+                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -267,9 +274,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h3 class="enlargeImageModalTitle">Image title</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
                 <img src="" class="enlargeImageModalSource" style="width: 100%;"/>
@@ -283,10 +289,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Delete image</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Delete an image</h3>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info">
