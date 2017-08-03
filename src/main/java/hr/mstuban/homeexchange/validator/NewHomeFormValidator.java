@@ -37,7 +37,7 @@ public class NewHomeFormValidator implements Validator {
         validateCityString(newHomeForm.getCity(), errors);
         validatePostalCodeLong(newHomeForm.getPostalCode(), errors);
         validateSizeInSquareMetersInteger(newHomeForm.getSizeInSquareMeters(), errors);
-        validateTimeOfExchangeInMonthsInteger(newHomeForm.getSizeInSquareMeters(), errors);
+        validateTimeOfExchangeInMonthsInteger(newHomeForm.getTimeOfExchangeInMonths(), errors);
         validateDescriptionString(newHomeForm.getDescription(), errors);
 
     }
