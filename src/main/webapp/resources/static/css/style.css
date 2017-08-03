@@ -227,7 +227,7 @@ footer {
     font-size: 100%;
     text-decoration: none;
     border-radius: 0.3rem;
-    border: 0.3px solid #f8f8f8;
+    border: 0.3px solid #ddd;
 }
 
 #sendNewMessageButton:hover{
