@@ -48,12 +48,20 @@ public class NewUserFormValidator implements Validator {
             errors.rejectValue("phoneNumber", "error.user.phoneNumber.empty", "You must enter a phone number.");
         }
 
+        if (phoneNumber.length() > 20) {
+            errors.rejectValue("phoneNumber", "error.user.phoneNumber.too-long", "A phone number cannot be that long.");
+        }
+
     }
 
     public void validateEmailString(String email, Errors errors) {
 
         if (isBlank(email)) {
-            errors.rejectValue("email", "error.user.email.empty", "You must enter an email.");
+            errors.rejectValue("email", "error.user.email.empty", "You must enter an e-mail.");
+        }
+
+        if (email.length() > 30) {
+            errors.rejectValue("email", "error.user.email.too-long", "An e-mail cannot be that long.");
         }
 
     }
@@ -80,6 +88,14 @@ public class NewUserFormValidator implements Validator {
             errors.rejectValue("username", "error.user.username.empty", "You must enter a username.");
         }
 
+        if (username.length() > 15) {
+            errors.rejectValue("username", "error.user.username.too-long", "A username can only be long 15 characters.");
+        }
+
+        if (username.length() < 5) {
+            errors.rejectValue("username", "error.user.username.too-short", "A username has to be at least 5 characters long.");
+        }
+
     }
 
     public void validateUsername(String username, Errors errors) {
@@ -92,6 +108,10 @@ public class NewUserFormValidator implements Validator {
     public void validatePassword(String password, String confirmedPassword, Errors errors) {
         if (password.length() < 8) {
             errors.rejectValue("password", "error.password.too-short", "Entered password has to be at least 8 characters long.");
+        }
+
+        if (confirmedPassword.length() < 8) {
+            errors.rejectValue("confirmedPassword", "error.confirmedPassword.too-short", "Confirmed password has to be at least 8 characters long.");
         }
 
         if (!password.equals(confirmedPassword)) {

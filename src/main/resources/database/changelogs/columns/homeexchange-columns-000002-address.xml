@@ -13,13 +13,13 @@
             <column name="ADDRESS_ID" type="BIGINT" defaultValueComputed="nextval('ADDRESS_SEQUENCE')">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="ADDRESS_PK"/>
             </column>
-            <column name="COUNTRY" type="VARCHAR(60)">
+            <column name="COUNTRY" type="VARCHAR(50)">
             </column>
             <column name="FRN_HOME_ID" type="BIGINT">
             </column>
             <column name="STREET" type="VARCHAR(60)"/>
-            <column name="CITY" type="VARCHAR(60)"/>
-            <column name="POSTAL_CODE" type="VARCHAR(60)">
+            <column name="CITY" type="VARCHAR(50)"/>
+            <column name="POSTAL_CODE" type="BIGINT">
             </column>
         </createTable>
     </changeSet>

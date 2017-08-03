@@ -2,6 +2,8 @@ package hr.mstuban.homeexchange.validator;
 
 
 import hr.mstuban.homeexchange.domain.form.NewMessageForm;
+import hr.mstuban.homeexchange.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -13,6 +15,9 @@ import static org.codehaus.plexus.util.StringUtils.isBlank;
  */
 @Component
 public class NewMessageFormValidator implements Validator {
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -32,6 +37,11 @@ public class NewMessageFormValidator implements Validator {
 
         if(isBlank(receiver)){
             errors.rejectValue("receiver", "message.receiver.empty", "You must select a receiver.");
+        }
+
+        if(!userService.existsByUserNameIgnoreCase(receiver)){
+            errors.rejectValue("receiver", "message.receiver.does-not-exist", "That user does not exist!");
+
         }
 
     }
