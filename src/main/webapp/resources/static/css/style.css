@@ -235,4 +235,6 @@ footer {
     background-color: white;
 }
 
-
+.homeImage{
+    border-radius: 0.2rem;
+}
