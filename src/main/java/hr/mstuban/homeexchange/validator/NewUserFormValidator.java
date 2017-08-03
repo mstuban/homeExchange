@@ -38,8 +38,30 @@ public class NewUserFormValidator implements Validator {
         validateMatchingPasswordString(newUserForm.getMatchingPassword(), errors);
         validateEmailString(newUserForm.getEmail(), errors);
         validatePhoneNumberString(newUserForm.getPhoneNumber(), errors);
+        validateFirstNameString(newUserForm.getFirstName(), errors);
+        validateLastNameString(newUserForm.getLastName(), errors);
 
 
+    }
+
+    public void validateLastNameString(String lastName, Errors errors) {
+        if (isBlank(lastName)) {
+            errors.rejectValue("lastName", "error.user.lastName.empty", "You must enter a last name.");
+        }
+
+        if (lastName.length() > 30) {
+            errors.rejectValue("lastName", "error.user.lastName.too-long", "Last name can only be long 30 characters.");
+        }
+    }
+
+    public void validateFirstNameString(String firstName, Errors errors){
+        if (isBlank(firstName)) {
+            errors.rejectValue("firstName", "error.user.firstName.empty", "You must enter a first name.");
+        }
+
+        if (firstName.length() > 30) {
+            errors.rejectValue("firstName", "error.user.firstName.too-long", "First name can only be long 30 characters.");
+        }
     }
 
     public void validatePhoneNumberString(String phoneNumber, Errors errors) {
@@ -49,7 +71,7 @@ public class NewUserFormValidator implements Validator {
         }
 
         if (phoneNumber.length() > 20) {
-            errors.rejectValue("phoneNumber", "error.user.phoneNumber.too-long", "A phone number cannot be that long.");
+            errors.rejectValue("phoneNumber", "error.user.phoneNumber.too-long", "A phone number can only be long 20 characters.");
         }
 
     }
@@ -61,7 +83,7 @@ public class NewUserFormValidator implements Validator {
         }
 
         if (email.length() > 30) {
-            errors.rejectValue("email", "error.user.email.too-long", "An e-mail cannot be that long.");
+            errors.rejectValue("email", "error.user.email.too-long", "An e-mail can only be long 30 characters.");
         }
 
     }
@@ -105,16 +127,16 @@ public class NewUserFormValidator implements Validator {
 
     }
 
-    public void validatePassword(String password, String confirmedPassword, Errors errors) {
+    public void validatePassword(String password, String matchingPassword, Errors errors) {
         if (password.length() < 8) {
             errors.rejectValue("password", "error.password.too-short", "Entered password has to be at least 8 characters long.");
         }
 
-        if (confirmedPassword.length() < 8) {
-            errors.rejectValue("confirmedPassword", "error.confirmedPassword.too-short", "Confirmed password has to be at least 8 characters long.");
+        if (matchingPassword.length() < 8) {
+            errors.rejectValue("matchingPassword", "error.matchingPassword.too-short", "Confirmed password has to be at least 8 characters long.");
         }
 
-        if (!password.equals(confirmedPassword)) {
+        if (!password.equals(matchingPassword)) {
             errors.rejectValue("password", "error.password.not-equal", "Entered password is not the same as the confirmed password.");
         }
 

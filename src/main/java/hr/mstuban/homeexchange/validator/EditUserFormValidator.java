@@ -37,6 +37,8 @@ public class EditUserFormValidator extends NewUserFormValidator implements Valid
         validateMatchingPasswordString(editUserForm.getMatchingPassword(), errors);
         validateEmailString(editUserForm.getEmail(), errors);
         validatePhoneNumberString(editUserForm.getPhoneNumber(), errors);
+        validateFirstNameString(editUserForm.getFirstName(), errors);
+        validateLastNameString(editUserForm.getLastName(), errors);
 
     }
 

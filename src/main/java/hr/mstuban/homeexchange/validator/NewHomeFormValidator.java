@@ -30,7 +30,7 @@ public class NewHomeFormValidator implements Validator {
         NewHomeForm newHomeForm = (NewHomeForm) target;
 
         validateName(newHomeForm.getName(), errors);
-        validateDescription(newHomeForm.getDescription(), errors);
+        validateDescriptionString(newHomeForm.getDescription(), errors);
         validateNameString(newHomeForm.getName(), errors);
         validateStreetString(newHomeForm.getStreet(), errors);
         validateCountryString(newHomeForm.getCountry(), errors);
@@ -38,7 +38,6 @@ public class NewHomeFormValidator implements Validator {
         validatePostalCodeLong(newHomeForm.getPostalCode(), errors);
         validateSizeInSquareMetersInteger(newHomeForm.getSizeInSquareMeters(), errors);
         validateTimeOfExchangeInMonthsInteger(newHomeForm.getTimeOfExchangeInMonths(), errors);
-        validateDescriptionString(newHomeForm.getDescription(), errors);
 
     }
 
@@ -48,7 +47,7 @@ public class NewHomeFormValidator implements Validator {
         }
 
         if(description.length() > 100){
-            errors.rejectValue("description", "error.home.description.too-long", "Description can only be long 80 characters..");
+            errors.rejectValue("description", "error.home.description.too-long", "Description can only be long 100 characters.");
         }
     }
 
@@ -118,7 +117,7 @@ public class NewHomeFormValidator implements Validator {
             errors.rejectValue("street", "error.home.street.empty", "You must enter a street.");
         }
         if(street.length() > 60){
-            errors.rejectValue("country", "error.home.description.too-long", "Country can only be long 60 characters.");
+            errors.rejectValue("street", "error.home.description.too-long", "Street can only be long 60 characters.");
         }
     }
 
@@ -129,9 +128,4 @@ public class NewHomeFormValidator implements Validator {
 
     }
 
-    public void validateDescription(String description, Errors errors) {
-        if (description.length() > 100) {
-            errors.rejectValue("description", "error.description.too-long", "Description can only be long 100 characters.");
-        }
-    }
 }

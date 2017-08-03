@@ -96,10 +96,10 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/home/new", method = RequestMethod.POST)
-    public String newHomeFormSubmit(@Valid @ModelAttribute("newHomeForm") NewHomeForm newHomeForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
+    public String newHomeFormSubmit(@Valid @ModelAttribute("newHomeForm") NewHomeForm newHomeForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes, Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "new-home-form";
+            return renderNewNewHomeForm(model);
         }
 
         Home home = homeMapper.newHomeFormToHome(newHomeForm);
@@ -145,10 +145,10 @@ public class HomeController {
         return "redirect:/homes";
     }
 
-    @GetMapping("/home/edit/{id}")
-    public String editHome(@PathVariable Long id, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+    @GetMapping("/home/edit/{userHomeId}")
+    public String editHome(@PathVariable Long userHomeId, Model model, Principal principal, RedirectAttributes redirectAttributes) {
 
-        Home home = homeService.findById(id);
+        Home home = homeService.findById(userHomeId);
 
         if (!Objects.equals(home.getUser().getUserName(), principal.getName()) && !((UsernamePasswordAuthenticationToken) principal).getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             redirectAttributes.addFlashAttribute("failedToEditError", "You are not the owner of that home, so therefore, you cannot edit it.");
@@ -157,11 +157,11 @@ public class HomeController {
 
         EditHomeForm editHomeForm = homeMapper.homeToEditHomeForm(home);
 
-        model.addAttribute("homeId", id);
+        model.addAttribute("homeId", userHomeId);
 
-        Address address = addressService.findByHome_HomeId(id);
+        Address address = addressService.findByHome_HomeId(userHomeId);
 
-        editHomeForm.setId(id);
+        editHomeForm.setId(userHomeId);
 
         editHomeForm.setCountry(address.getCountry());
         editHomeForm.setCity(address.getCity());
@@ -174,25 +174,27 @@ public class HomeController {
 
     }
 
-    @RequestMapping(value = "/home/edit/{id}", method = RequestMethod.POST)
-    public String handleUserEditForm(@Valid @ModelAttribute("editHomeForm") EditHomeForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal, @PathVariable Long id) {
+    @RequestMapping(value = "/home/edit/{userHomeId}", method = RequestMethod.POST)
+    public String handleUserEditForm(@Valid @ModelAttribute("editHomeForm") EditHomeForm form, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, Principal principal, @PathVariable Long userHomeId) {
 
         if (bindingResult.hasErrors()) {
-            return "edit-home";
+            model.addAttribute("homeId", userHomeId);
+            return renderNewEditHomeForm(model);
         }
 
         try {
-            Address address = addressService.findByHome_HomeId(id);
+            Address address = addressService.findByHome_HomeId(userHomeId);
             Long addressId = address.getAddressId();
             addressService.editAddress(form.getCity(), form.getCountry(), form.getPostalCode(), form.getStreet(), addressId);
-            homeService.editHome(form.getName(), form.getSizeInSquareMeters(), form.getDescription(), form.getTimeOfExchangeInMonths(), form.getType(), form.isAvailable(), id);
+            homeService.editHome(form.getName(), form.getSizeInSquareMeters(), form.getDescription(), form.getTimeOfExchangeInMonths(), form.getType(), form.isAvailable(), userHomeId);
         } catch (DataIntegrityViolationException e) {
-            return "edit-home";
+            redirectAttributes.addFlashAttribute("dataIntegrityException", e.getMessage());
+            return "redirect:/home/edit/" + userHomeId;
         }
 
         redirectAttributes.addFlashAttribute("editHomeSuccess", "You have successfully edited your home!");
 
-        return "redirect:/home/edit/" + id;
+        return "redirect:/home/edit/" + userHomeId;
     }
 
     @RequestMapping("/home/{homeId}/deleteImage/{imageId}")
@@ -210,6 +212,14 @@ public class HomeController {
     @RequestMapping("/get-addresses")
     public List<Address> getHomes(@RequestParam(name = "q") String query) {
         return addressService.findAddressesBySearchParameter(query);
+    }
+
+    private String renderNewEditHomeForm(Model model){
+        return "edit-home";
+    }
+
+    private String renderNewNewHomeForm(Model model){
+        return "new-home-form";
     }
 
     @InitBinder("newHomeForm")
