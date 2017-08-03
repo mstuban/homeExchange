@@ -25,7 +25,7 @@
                             <label for="sentBy">Sent by:</label>
                             <div id="sentBy" th:text="${message.author}"></div>
                             <label for="sentOn">Sent at:</label>
-                            <div id="sentOn" th:text="${#dates.format(message.createdOn, 'dd.MM.YYYY HH:mm')}"></div>
+                            <div id="sentOn" th:text="${#dates.format(message.createdOn, 'dd.MM.YYYY. HH:mm')}"></div>
                             <label for="content">Content:</label>
                             <div class="col-md-12 well">
                                 <span id="content" th:text="${message.content}"></span>
