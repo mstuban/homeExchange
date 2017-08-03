@@ -224,10 +224,10 @@ footer {
 }
 
 #link-no-color:hover {
-    font-size: 105%;
-    font-weight: bold;
+    font-size: 100%;
     text-decoration: none;
-    color: black
+    border-radius: 0.3rem;
+    border: 0.3px solid black;
 }
 
 #sendNewMessageButton:hover{

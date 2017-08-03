@@ -50,8 +50,8 @@
                         <li th:each="message : ${@messageService.getMessagesByReceiverUsername(#authentication.getName())}"
                             th:classappend="${message.hasBeenRead} ? 'read-message row' : 'unread-message row'"
                             style="padding: 5px;">
-                            <div class="col-md-12">
-                                <a id="link-no-color" th:href="@{/message/{id}(id=${message.id})}">
+                            <a id="link-no-color" th:href="@{/message/{id}(id=${message.id})}">
+                                <div>
                                     <strong th:text="${message.author}"></strong>
                                     <small class="pull-right text-muted">
                                         <span class="glyphicon glyphicon-time"></span>&nbsp;<span id="messageTime"
@@ -59,9 +59,10 @@
                                     </small>
                                     <p th:text="${message.title}">
                                     </p>
-                                </a>
-                            </div>
-                            <div class="">
+                                </div>
+                            </a>
+                            <br/>
+                            <div>
                                 <a th:href="@{/message/new/{messageAuthor}(messageAuthor=${message.author})}"
                                    class="col-md-6 btn btn-success text-center">
                                     <i
