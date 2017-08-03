@@ -14,7 +14,7 @@ import java.util.List;
 public interface UserService {
     User findByUsername(String username);
 
-    List<User> listAll();
+    List<User> findAll();
 
     User getById(Long id);
 
@@ -34,5 +34,7 @@ public interface UserService {
 
     @Transactional
     void editUser(EditUserForm form, Long id);
+
+    List<User> findAllExceptOneWithUsername(String username);
 
 }

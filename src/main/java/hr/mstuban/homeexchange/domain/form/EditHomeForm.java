@@ -27,10 +27,6 @@ public class EditHomeForm {
     private boolean available;
 
     private Integer timeOfExchangeInMonths;
-/*
-    @NotNull
-    @NotEmpty
-    private MultipartFile imageFile;*/
 
     public String getName() {
         return name;
@@ -120,12 +116,5 @@ public class EditHomeForm {
         this.id = id;
     }
 
-/*    public MultipartFile getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(MultipartFile imageFile) {
-        this.imageFile = imageFile;
-    }*/
 }
 

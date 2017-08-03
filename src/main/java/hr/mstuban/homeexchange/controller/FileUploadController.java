@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 /**
@@ -34,7 +35,7 @@ public class FileUploadController {
     @Transactional
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    @PathVariable("homeId") Long homeId,
-                                   RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
         try {
             Home home = homeService.findById(homeId);
@@ -51,8 +52,26 @@ public class FileUploadController {
             home.setImage(image);
 
         } catch (FileUploadException ex) {
-            redirectAttributes.addFlashAttribute("alert", ex.getMessage());
-            return "redirect:/home/new";
+
+            if(ex.getMessage().equals("upload.images.error.type")){
+                String referer = request.getHeader("Referer");
+                redirectAttributes.addFlashAttribute("imageUploadAlert", "The file you uploaded was not an image!");
+                return "redirect:" + referer;
+
+            }
+
+            if(ex.getMessage().equals("upload.images.error.size")){
+                String referer = request.getHeader("Referer");
+                redirectAttributes.addFlashAttribute("imageUploadAlert", "The file you uploaded was too large (size must be up to 2 MB).");
+                return "redirect:" + referer;
+
+            }
+
+            String referer = request.getHeader("Referer");
+
+            redirectAttributes.addFlashAttribute("imageUploadAlert", ex.getMessage());
+
+            return "redirect:" + referer;
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("alert", ex.getMessage());
             return "redirect:/home/new";

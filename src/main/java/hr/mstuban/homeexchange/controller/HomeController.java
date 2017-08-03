@@ -56,40 +56,40 @@ public class HomeController {
     private EditHomeFormValidator editHomeFormValidator;
 
     @GetMapping("/home")
-    public String getHome(Model model, Principal principal) {
+    public String getHome() {
         return "home";
     }
 
     @PostMapping("/searchForHomes")
     public String searchForHomes(Model model, @RequestParam(value = "searchParameter") String searchParameter, Principal principal) {
+
         List<Address> addresses = addressService.findAddressesBySearchParameter(searchParameter);
         model.addAttribute("addresses", addresses);
-        model.addAttribute("username", principal.getName());
 
         return "home-search-results";
     }
 
     @GetMapping("/searchForMyHomes")
     public String searchForHomes(Model model, Principal principal) {
-        List<Address> addresses = addressService.getAddressesByHome_User_UserName(principal.getName());
 
+        List<Address> addresses = addressService.getAddressesByHome_User_UserName(principal.getName());
         model.addAttribute("addresses", addresses);
-        model.addAttribute("username", principal.getName());
 
         return "home-search-results";
     }
 
     @GetMapping("/homes")
     public String getAllHomes(Model model) {
+
         List<Address> addresses = addressService.findAddressesBySearchParameter("");
         model.addAttribute("addresses", addresses);
-
 
         return "home-search-results";
     }
 
     @RequestMapping(value = "/home/new", method = RequestMethod.GET)
     public String getHomeForm(Model model) {
+
         model.addAttribute("newHomeForm", new NewHomeForm());
 
         return "new-home-form";
@@ -101,7 +101,6 @@ public class HomeController {
         if (bindingResult.hasErrors()) {
             return "new-home-form";
         }
-
 
         Home home = homeMapper.newHomeFormToHome(newHomeForm);
         home.setUser(userService.findByUsername(principal.getName()));
@@ -133,18 +132,14 @@ public class HomeController {
             return "redirect:/homes";
         }
 
-
         if (home.getImage() != null) {
             Long imageId = home.getImage().getId();
             home.setImage(null);
             imageService.delete(imageId);
         }
 
-       addressService.deleteByHome_HomeId(home.getHomeId());
+        addressService.deleteByHome_HomeId(home.getHomeId());
 
-
-
-//        homeService.deleteById(id);
         redirectAttributes.addFlashAttribute("deleteSuccess", "You have successfully deleted your home!");
 
         return "redirect:/homes";
@@ -155,14 +150,12 @@ public class HomeController {
 
         Home home = homeService.findById(id);
 
-
         if (!Objects.equals(home.getUser().getUserName(), principal.getName()) && !((UsernamePasswordAuthenticationToken) principal).getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             redirectAttributes.addFlashAttribute("failedToEditError", "You are not the owner of that home, so therefore, you cannot edit it.");
             return "redirect:/homes";
         }
 
         EditHomeForm editHomeForm = homeMapper.homeToEditHomeForm(home);
-
 
         model.addAttribute("homeId", id);
 
@@ -183,10 +176,10 @@ public class HomeController {
 
     @RequestMapping(value = "/home/edit/{id}", method = RequestMethod.POST)
     public String handleUserEditForm(@Valid @ModelAttribute("editHomeForm") EditHomeForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal, @PathVariable Long id) {
+
         if (bindingResult.hasErrors()) {
             return "edit-home";
         }
-
 
         try {
             Address address = addressService.findByHome_HomeId(id);
@@ -194,7 +187,6 @@ public class HomeController {
             addressService.editAddress(form.getCity(), form.getCountry(), form.getPostalCode(), form.getStreet(), addressId);
             homeService.editHome(form.getName(), form.getSizeInSquareMeters(), form.getDescription(), form.getTimeOfExchangeInMonths(), form.getType(), form.isAvailable(), id);
         } catch (DataIntegrityViolationException e) {
-            //bindingResult.reject("email.exists", "Email already exists");
             return "edit-home";
         }
 
@@ -213,7 +205,6 @@ public class HomeController {
         return "redirect:/homes";
 
     }
-
 
     @ResponseBody
     @RequestMapping("/get-addresses")

@@ -118,6 +118,7 @@
                                     <button th:if="${(address.home.available || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')) && !#strings.equals(address.home.user.userName, #authentication.getName())}"
                                             data-toggle="modal"
                                             data-target="#profileModal"
+                                            th:attr="data-userId-id=${address.home.user.userId}"
                                             class="col col-md-12 text-center btn btn-primary contactOwnerButton top-buffer bottom-buffer">
                                         Contact Owner
                                     </button>
@@ -131,10 +132,11 @@
                         </div>
                         <div class="col col-md-6">
                             <div class="row">
-                                <div class="col-lg-11 well">
+                                <div class="col-lg-offset-1 col-lg-10 well">
                                     <div>
-                                        <h3 class="pull-left bottom-buffer"th:inline="text"><i class="glyphicon glyphicon-camera"
-                                                                                  aria-hidden="true"></i>&nbsp;Photo
+                                        <h3 class="pull-left bottom-buffer" th:inline="text"><i
+                                                class="glyphicon glyphicon-camera"
+                                                aria-hidden="true"></i>&nbsp;Photo
                                         </h3>
                                         <button th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
                                                 class="btn btn-default pull-right" type="button"
@@ -239,6 +241,12 @@
                 <button id="phoneButton" type="button" class="btn btn-success pull-left"><i
                         class="glyphicon glyphicon-phone"></i>&nbsp;Call
                 </button>
+
+                <a id="modalMessageButton">
+                    <button type="button" class="btn btn-success pull-left"><i
+                            class="glyphicon glyphicon-pencil"></i>&nbsp;Send a message
+                    </button>
+                </a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>

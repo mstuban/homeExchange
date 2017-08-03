@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <title>Send a new message</title>
+    <th:block th:include="fragments/headerincludes :: head"></th:block>
+</head>
+<body>
+<th:block th:include="fragments/header :: header"></th:block>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-md-4 col-md-offset-4">
+            <h1 class="text-center">Send a new message</h1>
+            <form th:action="@{/message/new}" th:object="${newMessageForm}" method="POST">
+                <div class="form-group">
+                    <label>Title:</label>
+                    <input class="form-control" type="text" th:field="*{title}" required/>
+                    <p class="text-danger" th:each="error : ${#fields.errors('title')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group">
+                    <label>Content:</label>
+                    <textarea class="form-control" type="text" th:field="*{content}" required>
+                    </textarea>
+                    <p class="text-danger" th:each="error : ${#fields.errors('content')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group">
+                    <label>Send To:</label>
+                    <select class="form-control" th:field="*{receiver}" required>
+                        <option selected="selected" value="">Select a receiver</option>
+                        <option th:each="user : ${@userService.findAllExceptOneWithUsername(#authentication.getName())}" th:text="${user.userName}" th:value="${user.userName}">
+
+                        </option>
+                    </select>
+                    <p class="text-danger" th:each="error : ${#fields.errors('receiver')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <button class="btn btn-success col-md-12" type="submit">Send message</button>
+            </form>
+        </div>
+    </div>
+</div>
+<th:block th:include="fragments/footer :: footer"></th:block>
+</body>
+</html>

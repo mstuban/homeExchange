@@ -54,6 +54,10 @@ dependencies {
     compile 'org.springframework.security:spring-security-core:4.2.3.RELEASE'
     compile 'org.liquibase:liquibase-core:3.5.3'
     compile 'org.mapstruct:mapstruct-jdk8:1.1.0.Final'
+    compile 'joda-time:joda-time:2.9.9'
+    compile 'org.jadira.usertype:usertype.core:5.0.0.GA'
+    compile 'com.fasterxml.jackson.core:jackson-annotations'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.9.0'
 
     apt 'org.mapstruct:mapstruct-processor:1.1.0.Final'
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.6.RELEASE') {

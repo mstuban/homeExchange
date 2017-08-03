@@ -1,6 +1,10 @@
 package hr.mstuban.homeexchange.config;
 
 import hr.mstuban.homeexchange.services.CustomUserDetailsService;
+import hr.mstuban.homeexchange.services.MessageService;
+import hr.mstuban.homeexchange.services.UserService;
+import hr.mstuban.homeexchange.services.impl.MessageServiceImpl;
+import hr.mstuban.homeexchange.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -37,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/home", "/homes", "/home/new", "/profile", "/editProfile", "/home/edit", "/searchForHomes", "/searchForMyHomes")
+                .antMatchers("/", "/home", "/homes", "/home/new", "/profile", "/editProfile", "/home/edit", "/searchForHomes", "/searchForMyHomes", "/message/*", "/message/delete", "/message/new", "/upload")
                 .fullyAuthenticated()
                 .and()
                 .formLogin()
@@ -58,6 +62,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean(name = "passwordEncoder")
     public PasswordEncoder passwordencoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public MessageService messageService() {
+        return new MessageServiceImpl();
+    }
+
+    @Bean
+    public UserService userService() {
+        return new UserServiceImpl();
     }
 
 }

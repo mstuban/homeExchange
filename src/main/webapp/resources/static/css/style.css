@@ -151,15 +151,84 @@ footer {
     margin-bottom: 10px;
 }
 
-#descriptionWell{
+#descriptionWell {
     margin-left: 10px;
 }
 
-#editButton{
+#editButton {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
 }
 
-#emailBtn{
+#emailBtn {
     margin-right: 5px;
 }
+
+.rw-number-notification {
+    position: absolute;
+    top: -7px;
+    right: -6px;
+    padding: 3px 3px 2px 3px;
+    background-color: red;
+    color: white;
+    font-family: arial;
+    font-weight: bold;
+    font-size: 10px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 1px silver;
+}
+
+.unread-message {
+    font-weight: bolder;
+}
+
+.read-message {
+    font-weight: normal;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+#messageTime{
+    font-size: 10px;
+}
+
+
+#link-no-color {
+    text-decoration: none;
+    color: black;
+}
+
+#link-no-color:hover {
+    font-size: 105%;
+    font-weight: bold;
+    text-decoration: none;
+    color: black
+}
+
+#sendNewMessageButton:hover{
+    text-decoration: none;
+    background-color: white;
+}
+
+

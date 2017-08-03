@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -64,7 +63,7 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/editProfile", method = RequestMethod.POST)
-    public String handleUserEditForm(@Valid @ModelAttribute("editUserForm") EditUserForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
+    public String handleUserEditForm(@Valid @ModelAttribute("editUserForm") EditUserForm form, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "edit-profile";
         }

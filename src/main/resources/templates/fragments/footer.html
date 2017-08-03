@@ -10,6 +10,30 @@
             mstuban <span>©</span> | HomeExchange 2017.
         </div>
     </footer>
+    <div id="deleteMessageModal" class="modal fade" role="dialog"
+         xmlns:th="http://www.w3.org/1999/xhtml">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Delete message</h4>
+                </div>
+                <div class="modal-body">
+                    <p>You are about to delete this message. Are you sure?</p>
+                </div>
+                <div class="modal-footer">
+                    <a id="deleteMessageButton">
+                        <button type="button" class="btn btn-danger"><i
+                                class="glyphicon glyphicon-trash"></i>&nbsp;Delete
+                        </button>
+                    </a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </footer>
+
 </body>
 </html>

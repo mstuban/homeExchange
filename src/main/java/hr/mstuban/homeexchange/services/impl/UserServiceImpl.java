@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,14 +33,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    @Override
-    public List<User> listAll() {
-        List<User> users = new ArrayList<>();
-        //fun with Java 8
-        users.addAll(userRepository.findAll());
-        return users;
     }
 
     @Override
@@ -71,6 +62,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUserName(username);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
@@ -119,6 +115,11 @@ public class UserServiceImpl implements UserService {
         String encryptedPassword = BCrypt.hashpw(form.getPassword(), BCrypt.gensalt());
 
         userRepository.editUser(form.getUsername(), form.getFirstName(), form.getLastName(), encryptedPassword, form.getEmail(), form.getPhoneNumber(), id);
+    }
+
+    @Override
+    public List<User> findAllExceptOneWithUsername(String username) {
+        return userRepository.findAllExceptOneWithUsername(username);
     }
 
 }

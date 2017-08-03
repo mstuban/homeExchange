@@ -11,6 +11,7 @@
     <include file="database/changelogs/columns/homeexchange-columns-000002-address.xml"/>
     <include file="database/changelogs/columns/homeexchange-columns-000003-userrole.xml"/>
     <include file="database/changelogs/columns/homeexchange-columns-000004-image.xml"/>
+    <include file="database/changelogs/columns/homeexchange-columns-000005-message.xml"/>
 
     <include file="database/changelogs/data/homeexchange-test-000000-user.xml"/>
     <include file="database/changelogs/data/homeexchange-test-000001-home.xml"/>

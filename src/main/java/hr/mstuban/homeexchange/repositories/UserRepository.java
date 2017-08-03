@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -20,5 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("update User u set u.userName = ?1, u.firstName = ?2, u.lastName = ?3 , u.password = ?4, u.email = ?5, u.phoneNumber = ?6 where u.userId = ?7")
     void editUser(String userName, String firstName, String lastName, String encryptedPassword, String email, String phoneNumber, Long id);
+
+    @Query("select u From User u where u.userName <> ?1 order by u.userName")
+    List<User> findAllExceptOneWithUsername(String username);
 
 }
