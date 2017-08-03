@@ -164,6 +164,10 @@ footer {
     margin-right: 5px;
 }
 
+#phoneButton {
+    margin-right: 5px;
+}
+
 .rw-number-notification {
     position: absolute;
     top: -7px;

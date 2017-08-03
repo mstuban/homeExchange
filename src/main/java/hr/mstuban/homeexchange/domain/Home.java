@@ -35,7 +35,7 @@ public class Home {
     @Column(name = "AVAILABLE")
     private boolean available;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USERID")
     private User user;
 

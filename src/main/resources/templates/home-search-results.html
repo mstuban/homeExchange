@@ -118,15 +118,15 @@
                                     <button th:if="${(address.home.available || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')) && !#strings.equals(address.home.user.userName, #authentication.getName())}"
                                             data-toggle="modal"
                                             data-target="#profileModal"
-                                            th:attr="data-userId-id=${address.home.user.userId}"
-                                            class="col col-md-12 text-center btn btn-primary contactOwnerButton top-buffer bottom-buffer">
+                                            data-th-attr="data-username-id=${address.home.user.userName},
+                                            data-email-id=${address.home.user.email},
+                                            data-phonenumber-id=${address.home.user.phoneNumber},
+                                            data-fullname-id=${address.home.user.firstName +
+                                    ' ' + address.home.user.lastName}"
+                                            class="col col-md-12 text-center btn btn-primary contactOwnerButton top-buffer
+                                    bottom-buffer">
                                         Contact Owner
                                     </button>
-                                    <span hidden="hidden"
-                                          th:text="${address.home.user.firstName + ' ' + address.home.user.lastName}"></span>
-                                    <span hidden="hidden" th:text="${address.home.user.userName}"></span>
-                                    <span hidden="hidden" th:text="${address.home.user.email}"></span>
-                                    <span hidden="hidden" th:text="${address.home.user.phoneNumber}"></span>
                                 </div>
                             </div>
                         </div>

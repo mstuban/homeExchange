@@ -3,14 +3,16 @@
  */
 $(document).ready(function () {
 
-    $('.contactOwnerButton').click(function () {
+    $('#profileModal').on('show.bs.modal', function (e) {
 
-        var userFullName = $(this)[0].nextElementSibling.textContent;
-        var userUserName = $(this)[0].nextElementSibling.nextElementSibling.textContent;
-        var userEmail = $(this)[0].nextElementSibling.nextElementSibling.nextElementSibling.textContent;
-        var userPhoneNumber = $(this)[0].nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.textContent;
+        var userFullName = $(e.relatedTarget).data('fullname-id');
+        var userUserName = $(e.relatedTarget).data('username-id');
+        var userEmail = $(e.relatedTarget).data('email-id');
+        var userPhoneNumber = $(e.relatedTarget).data('phonenumber-id');
 
-        var userId = $(e.relatedTarget).data('userId-id');
+        console.log(userUserName);
+
+        var userId = $(e.relatedTarget).data('userid-id');
 
         $('#modalUserFullName').text(userFullName);
         $('#modalUserName').text(userUserName);
@@ -20,7 +22,7 @@ $(document).ready(function () {
 
         $('#emailButton').attr("href", "mailto:" + userEmail);
         $('#phoneButton').attr("href", "tel:" + userPhoneNumber);
-        $('#modalMessageButton').attr("href", "/message/new/" + userId);
+        $('#modalMessageButton').attr("href", "/message/new/" + userUserName);
 
     });
 
