@@ -30,7 +30,7 @@ public class NewMessageFormValidator implements Validator {
 
         validateTitle(newMessageForm.getTitle(), errors);
         validateContent(newMessageForm.getContent(), errors);
-        validateReceiver(newMessageForm.getTitle(), errors);
+        validateReceiver(newMessageForm.getReceiver(), errors);
     }
 
     private void validateReceiver(String receiver, Errors errors) {
