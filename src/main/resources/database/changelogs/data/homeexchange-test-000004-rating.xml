@@ -11,17 +11,17 @@
             <column name="HOME_ID">1</column>
         </insert>
         <insert tableName="RATING">
-            <column name="NUMBER_OF_STARS">3</column>
-            <column name="USERID">1</column>
-            <column name="HOME_ID">2</column>
-        </insert>
-        <insert tableName="RATING">
             <column name="NUMBER_OF_STARS">4</column>
-            <column name="USERID">1</column>
+            <column name="USERID">2</column>
             <column name="HOME_ID">3</column>
         </insert>
         <insert tableName="RATING">
             <column name="NUMBER_OF_STARS">5</column>
+            <column name="USERID">2</column>
+            <column name="HOME_ID">3</column>
+        </insert>
+        <insert tableName="RATING">
+            <column name="NUMBER_OF_STARS">1</column>
             <column name="USERID">2</column>
             <column name="HOME_ID">3</column>
         </insert>
