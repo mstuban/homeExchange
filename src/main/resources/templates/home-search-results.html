@@ -97,7 +97,7 @@
                                 data-th-attr="
                                 data-homename-id=${address.home.name},
                                             data-href-id=${'/home/' + address.home.homeId + '/rate'}"
-                                class="btn btn-primary"
+                                class="btn btn-primary" id="rateHomeButton"
                                 data-toggle="modal" data-target="#rateHomeModal" type="button"><i
                                 class="glyphicon glyphicon-star"></i>&nbsp;Rate
                             home
@@ -368,29 +368,29 @@
                     <br/>
                     <form id="rateHomeForm" class="rating form-group" method="POST">
                         <label>
-                            <input type="radio" name="ratingValue" value="1"/>
+                            <input type="radio" name="ratingValue" value="1" required/>
                             <span class="icon">★</span>
                         </label>
                         <label>
-                            <input type="radio" name="ratingValue" value="2"/>
-                            <span class="icon">★</span>
-                            <span class="icon">★</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="ratingValue" value="3"/>
-                            <span class="icon">★</span>
+                            <input type="radio" name="ratingValue" value="2" required/>
                             <span class="icon">★</span>
                             <span class="icon">★</span>
                         </label>
                         <label>
-                            <input type="radio" name="ratingValue" value="4"/>
-                            <span class="icon">★</span>
+                            <input type="radio" name="ratingValue" value="3" required/>
                             <span class="icon">★</span>
                             <span class="icon">★</span>
                             <span class="icon">★</span>
                         </label>
                         <label>
-                            <input type="radio" name="ratingValue" value="5"/>
+                            <input type="radio" name="ratingValue" value="4" required/>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="ratingValue" value="5" required/>
                             <span class="icon">★</span>
                             <span class="icon">★</span>
                             <span class="icon">★</span>
