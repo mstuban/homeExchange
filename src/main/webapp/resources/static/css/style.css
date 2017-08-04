@@ -245,28 +245,22 @@ footer {
 #statisticsWidget{
     position: relative;
     bottom: 100px;
+    display: flex;
+
 }
 
 .statisticsDiv{
-    padding: 1%;
     color: white;
     background-color: #337ab7;
     border-color: #2e6da4;
     border-radius: 0.3rem;
     border-right: 1px solid white;
     height: 150px;
+    flex: 1;
+    padding: 1em;
 }
 
 #lastStatisticsDiv{
     border-right: 0px;
 }
 
-.row {
-    display: flex;
-}
-
-.col {
-    flex: 1;
-
-    padding: 1em;
-}
