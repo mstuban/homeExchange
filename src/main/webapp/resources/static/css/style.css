@@ -344,3 +344,12 @@ footer {
 .ratingLabel{
     margin-right: 5px;
 }
+
+
+.btn-group #rateHomeButton{
+    border-radius: 4px;
+}
+
+#selectSort{
+    margin-bottom: 5px;
+}
