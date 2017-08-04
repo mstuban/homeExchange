@@ -50,5 +50,10 @@ public class MessageServiceImpl implements MessageService{
         messageRepository.delete(id);
     }
 
+    @Override
+    public List<Message> findAll() {
+        return messageRepository.findAll();
+    }
+
 
 }

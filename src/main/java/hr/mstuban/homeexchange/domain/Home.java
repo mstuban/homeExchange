@@ -128,4 +128,5 @@ public class Home {
     public void setImage(Image image) {
         this.image = image;
     }
+
 }

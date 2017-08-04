@@ -16,7 +16,7 @@ header, header .header-content {
 
 header .header-content {
     position: absolute;
-    top: 50%;
+    top: 35%;
     /* -webkit-transform: translateY(-50%);
      -ms-transform: translateY(-50%);
      transform: translateY(-50%);*/
@@ -42,6 +42,9 @@ article, aside, footer, header, hgroup, main, nav, section {
     margin-left: auto;
     margin-right: auto;
     font-size: 2rem;
+}
+
+.header-content-inner{
 }
 
 .vcenter {
@@ -237,4 +240,33 @@ footer {
 
 .homeImage{
     border-radius: 0.2rem;
+}
+
+#statisticsWidget{
+    position: relative;
+    bottom: 100px;
+}
+
+.statisticsDiv{
+    padding: 1%;
+    color: white;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    border-radius: 0.3rem;
+    border-right: 1px solid white;
+    height: 150px;
+}
+
+#lastStatisticsDiv{
+    border-right: 0px;
+}
+
+.row {
+    display: flex;
+}
+
+.col {
+    flex: 1;
+
+    padding: 1em;
 }

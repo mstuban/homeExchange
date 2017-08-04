@@ -32,4 +32,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
 
     Address findByHome_HomeId(Long id);
 
+    @Query("select DISTINCT(a.country) from Address a")
+    List<String> getByCountryIsUnique();
+
 }

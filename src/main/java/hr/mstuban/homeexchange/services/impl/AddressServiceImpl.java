@@ -63,5 +63,10 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository.findByHome_HomeId(id);
     }
 
+    @Override
+    public List<String> getByCountryIsUnique() {
+        return addressRepository.getByCountryIsUnique();
+    }
+
 }
 

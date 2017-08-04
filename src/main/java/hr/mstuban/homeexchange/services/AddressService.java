@@ -24,4 +24,6 @@ public interface AddressService {
     void editAddress(String city, String country, Long postalCode, String street, Long addressId);
 
     Address findByHome_HomeId(Long id);
+
+    List<String> getByCountryIsUnique();
 }

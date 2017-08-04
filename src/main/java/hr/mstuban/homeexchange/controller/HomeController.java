@@ -2,13 +2,11 @@ package hr.mstuban.homeexchange.controller;
 
 import hr.mstuban.homeexchange.domain.Address;
 import hr.mstuban.homeexchange.domain.Home;
+import hr.mstuban.homeexchange.domain.User;
 import hr.mstuban.homeexchange.domain.form.EditHomeForm;
 import hr.mstuban.homeexchange.domain.form.NewHomeForm;
 import hr.mstuban.homeexchange.domain.mapper.HomeMapper;
-import hr.mstuban.homeexchange.services.AddressService;
-import hr.mstuban.homeexchange.services.HomeService;
-import hr.mstuban.homeexchange.services.ImageService;
-import hr.mstuban.homeexchange.services.UserService;
+import hr.mstuban.homeexchange.services.*;
 import hr.mstuban.homeexchange.validator.EditHomeFormValidator;
 import hr.mstuban.homeexchange.validator.NewHomeFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +45,9 @@ public class HomeController {
     private ImageService imageService;
 
     @Autowired
+    private MessageService messageService;
+
+    @Autowired
     private HomeMapper homeMapper;
 
     @Autowired
@@ -56,8 +57,30 @@ public class HomeController {
     private EditHomeFormValidator editHomeFormValidator;
 
     @GetMapping("/home")
-    public String getHome() {
+    public String getHome(Model model) {
+
+        List<User> users = userService.findAll();
+
+        Integer usersWithHomesAddedCounter = 0;
+
+        for (User user : users) {
+            if (user.getHomes().size() > 0) {
+                usersWithHomesAddedCounter++;
+            }
+        }
+
+        Home home = homeService.findHomeWithMostTimeExchanged();
+
+        model.addAttribute("usersWithHomesAddedCounter", usersWithHomesAddedCounter);
+        model.addAttribute("userCount", users.size());
+        model.addAttribute("homeCount", homeService.findAll().size());
+        model.addAttribute("userWithLongestStay", home.getUser().getFirstName() +  ' '  + home.getUser().getLastName());
+        model.addAttribute("numberOfCountries", addressService.getByCountryIsUnique().size());
+        model.addAttribute("messagesSentCount", messageService.findAll().size());
+
         return "home";
+
+
     }
 
     @PostMapping("/searchForHomes")
@@ -214,11 +237,11 @@ public class HomeController {
         return addressService.findAddressesBySearchParameter(query);
     }
 
-    private String renderNewEditHomeForm(Model model){
+    private String renderNewEditHomeForm(Model model) {
         return "edit-home";
     }
 
-    private String renderNewNewHomeForm(Model model){
+    private String renderNewNewHomeForm(Model model) {
         return "new-home-form";
     }
 

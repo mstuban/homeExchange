@@ -1,6 +1,7 @@
 package hr.mstuban.homeexchange.services.impl;
 
 import hr.mstuban.homeexchange.domain.Home;
+import hr.mstuban.homeexchange.domain.User;
 import hr.mstuban.homeexchange.repositories.HomeRepository;
 import hr.mstuban.homeexchange.services.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,16 @@ public class HomeServiceImpl implements HomeService {
     public void editHome(String name, Integer sizeInSquareMeters, String description, Integer timeOfExchangeInMonths, String type, boolean available, Long homeId) {
         homeRepository.editHome(name, sizeInSquareMeters, description, timeOfExchangeInMonths, type, available, homeId);
     }
+
+    @Override
+    public Integer countHomeByUser(User user) {
+        return countHomeByUser(user);
+    }
+
+    @Override
+    public Home findHomeWithMostTimeExchanged() {
+        return homeRepository.findFirstByTimeOfExchangeInMonthsIsNotNullOrderByTimeOfExchangeInMonthsDesc();
+    }
+
 
 }

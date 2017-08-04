@@ -1,6 +1,7 @@
 package hr.mstuban.homeexchange.services;
 
 import hr.mstuban.homeexchange.domain.Home;
+import hr.mstuban.homeexchange.domain.User;
 
 import java.util.List;
 
@@ -21,5 +22,9 @@ public interface HomeService {
     Integer countByUser_UserId(Long id);
 
     void editHome(String name, Integer sizeInSquareMeters, String description, Integer timeOfExchangeInMonths, String type, boolean available, Long homeId);
+
+    Integer countHomeByUser(User user);
+
+    Home findHomeWithMostTimeExchanged();
 
 }

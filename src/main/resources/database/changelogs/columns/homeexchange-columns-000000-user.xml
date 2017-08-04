@@ -13,7 +13,6 @@
             <column name="USERID" type="BIGINT" defaultValueComputed="nextval('USER_SEQUENCE')">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="USER_PK"/>
             </column>
-
             <column name="USERNAME" type="VARCHAR(15)">
                 <constraints nullable="false" unique="true"/>
             </column>
@@ -29,7 +28,6 @@
             <column name="ENABLED" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
-
         </createTable>
     </changeSet>
 </databaseChangeLog>
