@@ -31,6 +31,8 @@
             </column>
             <column name="IMAGE_ID" type="BIGINT">
             </column>
+            <column name="RATING_ID" type="BIGINT">
+            </column>
         </createTable>
     </changeSet>
     <changeSet id="00003-20170716000000" author="mstuban" dbms="postgresql">

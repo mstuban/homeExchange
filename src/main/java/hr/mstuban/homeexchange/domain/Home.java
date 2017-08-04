@@ -5,6 +5,7 @@ package hr.mstuban.homeexchange.domain;
  */
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "HOME")
@@ -45,6 +46,13 @@ public class Home {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IMAGE_ID")
     private Image image;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "RATING_ID")
+    private List<Rating> ratings;
+
+    @Transient
+    private Double averageRating;
 
     public Home() {
     }
@@ -129,4 +137,19 @@ public class Home {
         this.image = image;
     }
 
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
+    }
 }

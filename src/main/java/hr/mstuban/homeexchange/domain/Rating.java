@@ -27,6 +27,16 @@ public class Rating {
     @JoinColumn(name = "USERID")
     private User user;
 
+    public Rating(){
+
+    }
+
+    public Rating(Integer numberOfStars, Home home, User user) {
+        this.numberOfStars = numberOfStars;
+        this.home = home;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

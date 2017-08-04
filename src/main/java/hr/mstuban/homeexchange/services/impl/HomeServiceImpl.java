@@ -69,5 +69,10 @@ public class HomeServiceImpl implements HomeService {
         return homeRepository.findFirstByTimeOfExchangeInMonthsIsNotNullOrderByTimeOfExchangeInMonthsDesc();
     }
 
+    @Override
+    public boolean existsByHomeId(Long id) {
+        return homeRepository.existsByHomeId(id);
+    }
+
 
 }

@@ -45,6 +45,9 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Home> homes;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private List<Rating> ratings;
+
     public User() {
     }
 
@@ -139,4 +142,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
 }

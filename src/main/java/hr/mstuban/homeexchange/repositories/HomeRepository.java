@@ -29,4 +29,6 @@ public interface HomeRepository extends JpaRepository<Home, Long> {
 
     Home findFirstByTimeOfExchangeInMonthsIsNotNullOrderByTimeOfExchangeInMonthsDesc();
 
+    boolean existsByHomeId(Long id);
+
 }

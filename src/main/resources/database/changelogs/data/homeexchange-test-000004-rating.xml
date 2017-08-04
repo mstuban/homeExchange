@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="00001-20170804000000" author="mstuban">
+        <insert tableName="RATING">
+            <column name="NUMBER_OF_STARS">5</column>
+            <column name="USERID">1</column>
+            <column name="HOME_ID">1</column>
+        </insert>
+        <insert tableName="RATING">
+            <column name="NUMBER_OF_STARS">3</column>
+            <column name="USERID">1</column>
+            <column name="HOME_ID">2</column>
+        </insert>
+        <insert tableName="RATING">
+            <column name="NUMBER_OF_STARS">4</column>
+            <column name="USERID">1</column>
+            <column name="HOME_ID">3</column>
+        </insert>
+        <insert tableName="RATING">
+            <column name="NUMBER_OF_STARS">5</column>
+            <column name="USERID">2</column>
+            <column name="HOME_ID">3</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

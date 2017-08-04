@@ -27,4 +27,6 @@ public interface HomeService {
 
     Home findHomeWithMostTimeExchanged();
 
+    boolean existsByHomeId(Long id);
+
 }

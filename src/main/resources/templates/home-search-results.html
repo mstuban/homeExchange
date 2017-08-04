@@ -45,7 +45,28 @@
                 <strong>Warning!</strong> <span th:text="${failedToEditError}"></span>
             </div>
         </div>
+        <div th:if="${ratingAddedSuccess}" class="col col-md-12 text-center">
+            <div class="alert alert-success">
+                <strong>Success!</strong> <span th:text="${ratingAddedSuccess}"></span>
+            </div>
+        </div>
+        <div th:if="${cannotRateHome}" class="col col-md-12 text-center">
+            <div class="alert alert-danger">
+                <strong>Warning!</strong> <span th:text="${cannotRateHome}"></span>
+            </div>
+        </div>
+
         <div class="col col-md-offset-2 col-md-8" th:each="address, var : ${addresses}">
+            <div class="row" th:if="${var.index == 0}">
+                <form th:action="@{/homes}" method="get">
+                    <select name="sortBy">
+                        <option value="ratingDesc">Highest rated first</option>
+                        <option value="ratingAsc">Lowest rated first</option>
+                    </select>
+                    <input type="submit" class="btn btn-primary" value="Sort by rating">
+                </form>
+
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="pull-left justify" th:inline="text">
@@ -53,6 +74,11 @@
                         <span th:if="${address.home.available}" class="label label-success pull-right">Available</span>
                         <span th:unless="${address.home.available}"
                               class="label label-danger pull-right">Not available</span>
+                        <span th:inline="text" th:if="${address.home.averageRating}"
+                              class="ratingLabel label label-info pull-right"><i class="glyphicon glyphicon-star"></i>[[${#numbers.formatDecimal(address.home.averageRating, 0, 'COMMA', 2, 'POINT')}]]</span>
+                        <span th:inline="text" th:unless="${address.home.averageRating}"
+                              class="ratingLabel label label-info pull-right"><i class="glyphicon glyphicon-star"></i>No ratings</span>
+
                     </h3>
                     <div class="btn-group pull-right">
                         <a th:href="@{/home/edit/{id}(id=${address.home.homeId})}">
@@ -65,6 +91,15 @@
                                 th:attr="data-home-id=${address.home.homeId}" class="btn btn-danger"
                                 data-toggle="modal" data-target="#deleteHomeModal" type="button"><i
                                 class="glyphicon glyphicon-trash"></i>&nbsp;Delete
+                            home
+                        </button>
+                        <button th:if="${(!@ratingService.existsByUsernameAndHomeId(#authentication.getName(), address.home.homeId) && !#strings.equals(address.home.user.userName, #authentication.getName()))}"
+                                data-th-attr="
+                                data-homename-id=${address.home.name},
+                                            data-href-id=${'/home/' + address.home.homeId + '/rate'}"
+                                class="btn btn-primary"
+                                data-toggle="modal" data-target="#rateHomeModal" type="button"><i
+                                class="glyphicon glyphicon-star"></i>&nbsp;Rate
                             home
                         </button>
 
@@ -315,6 +350,60 @@
                 </button>
                 <a type="button" class="btn btn-danger btn-lg" id="deleteImage"
                    href="#">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Rate home modal -->
+<div class="modal fade" id="rateHomeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Rate <span id="homeName"></span></h3>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    Select rating (1 to 5):
+                    <form id="rateHomeForm" class="rating form-group" method="POST">
+                        <label>
+                            <input type="radio" name="ratingValue" value="1"/>
+                            <span class="icon">★</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="ratingValue" value="2"/>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="ratingValue" value="3"/>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="ratingValue" value="4"/>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="ratingValue" value="5"/>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                        </label>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-lg"
+                        data-dismiss="modal">Cancel
+                </button>
+                <input type="submit" class="btn btn-lg btn-success" form="rateHomeForm" value="Rate"/>
             </div>
         </div>
     </div>

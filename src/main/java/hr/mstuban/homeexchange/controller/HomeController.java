@@ -2,6 +2,7 @@ package hr.mstuban.homeexchange.controller;
 
 import hr.mstuban.homeexchange.domain.Address;
 import hr.mstuban.homeexchange.domain.Home;
+import hr.mstuban.homeexchange.domain.Rating;
 import hr.mstuban.homeexchange.domain.User;
 import hr.mstuban.homeexchange.domain.form.EditHomeForm;
 import hr.mstuban.homeexchange.domain.form.NewHomeForm;
@@ -48,6 +49,9 @@ public class HomeController {
     private MessageService messageService;
 
     @Autowired
+    private RatingService ratingService;
+
+    @Autowired
     private HomeMapper homeMapper;
 
     @Autowired
@@ -74,7 +78,7 @@ public class HomeController {
         model.addAttribute("usersWithHomesAddedCounter", usersWithHomesAddedCounter);
         model.addAttribute("userCount", users.size());
         model.addAttribute("homeCount", homeService.findAll().size());
-        model.addAttribute("userWithLongestStay", home.getUser().getFirstName() +  ' '  + home.getUser().getLastName());
+        model.addAttribute("userWithLongestStay", home.getUser().getFirstName() + ' ' + home.getUser().getLastName());
         model.addAttribute("numberOfCountries", addressService.getByCountryIsUnique().size());
         model.addAttribute("messagesSentCount", messageService.findAll().size());
 
@@ -84,9 +88,10 @@ public class HomeController {
     }
 
     @PostMapping("/searchForHomes")
-    public String searchForHomes(Model model, @RequestParam(value = "searchParameter") String searchParameter, Principal principal) {
+    public String searchForHomes(Model model, @RequestParam(value = "searchParameter") String searchParameter) {
 
         List<Address> addresses = addressService.findAddressesBySearchParameter(searchParameter);
+        addresses = setAverageRatingsToAddresses(addresses);
         model.addAttribute("addresses", addresses);
 
         return "home-search-results";
@@ -96,19 +101,49 @@ public class HomeController {
     public String searchForHomes(Model model, Principal principal) {
 
         List<Address> addresses = addressService.getAddressesByHome_User_UserName(principal.getName());
+        addresses = setAverageRatingsToAddresses(addresses);
+
         model.addAttribute("addresses", addresses);
 
         return "home-search-results";
     }
-
+/*
     @GetMapping("/homes")
     public String getAllHomes(Model model) {
 
         List<Address> addresses = addressService.findAddressesBySearchParameter("");
+
+        addresses = setAverageRatingsToAddresses(addresses);
+        sortAddressesByAverageRatingDescending(addresses);
+
+        model.addAttribute("addresses", addresses);
+
+        return "home-search-results";
+    }*/
+
+
+    @GetMapping("/homes")
+    public String getAllHomes(@RequestParam(required = false) String sortBy, Model model) {
+
+        List<Address> addresses = addressService.findAddressesBySearchParameter("");
+
+        addresses = setAverageRatingsToAddresses(addresses);
+        sortAddressesByAverageRatingDescending(addresses);
+
+        if (sortBy != null) {
+
+            if (sortBy.equals("ratingAsc")) {
+                sortAddressesByAverageRatingAscending(addresses);
+            }
+            if (sortBy.equals("ratingDesc")) {
+                sortAddressesByAverageRatingDescending(addresses);
+            }
+        }
         model.addAttribute("addresses", addresses);
 
         return "home-search-results";
     }
+
 
     @RequestMapping(value = "/home/new", method = RequestMethod.GET)
     public String getHomeForm(Model model) {
@@ -231,6 +266,38 @@ public class HomeController {
 
     }
 
+    @PostMapping("/home/{homeId}/rate")
+    public String addRatingForHome(@RequestParam(name = "ratingValue") Integer ratingValue, @PathVariable Long homeId, Principal principal, RedirectAttributes redirectAttributes) {
+
+        if (ratingValue == null) {
+            redirectAttributes.addFlashAttribute("ratingCannotBeNull", "Rating cannot be null!");
+            return "redirect:/homes";
+        }
+
+        if (!homeService.existsByHomeId(homeId)) {
+            redirectAttributes.addFlashAttribute("cannotRateHome", "You can't rate that home because it does not exist!");
+            return "redirect:/homes";
+        }
+
+        if (ratingService.existsByUsernameAndHomeId(principal.getName(), homeId) && !((UsernamePasswordAuthenticationToken) principal).getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            redirectAttributes.addFlashAttribute("cannotRateHome", "You have already rated that home!");
+            return "redirect:/homes";
+        }
+
+        Home home = homeService.findById(homeId);
+
+        User user = userService.findByUsername(principal.getName());
+
+        Rating rating = new Rating(ratingValue, home, user);
+
+        ratingService.save(rating);
+
+        redirectAttributes.addFlashAttribute("ratingAddedSuccess", "Home rated successfully!");
+
+        return "redirect:/homes";
+
+    }
+
     @ResponseBody
     @RequestMapping("/get-addresses")
     public List<Address> getHomes(@RequestParam(name = "q") String query) {
@@ -254,6 +321,56 @@ public class HomeController {
     public void addNewEditFormValidator(WebDataBinder dataBinder) {
         dataBinder.addValidators(editHomeFormValidator);
     }
+
+
+    public double calculateAverageHomeRating(List<Rating> ratings) {
+
+        Integer ratingsSum = 0;
+
+        for (Rating rating : ratings) {
+            ratingsSum += rating.getNumberOfStars();
+        }
+
+        if (ratingsSum > 0) {
+            return (ratingsSum / (double) ratings.size());
+        }
+
+        return 0d;
+
+    }
+
+    public void sortAddressesByAverageRatingAscending(List<Address> addresses) {
+
+        addresses.sort((o1, o2) -> {
+            if (Objects.equals(o1.getHome().getAverageRating(), o2.getHome().getAverageRating()))
+                return 0;
+            return o1.getHome().getAverageRating() < o2.getHome().getAverageRating() ? -1 : 1;
+        });
+
+    }
+
+    public void sortAddressesByAverageRatingDescending(List<Address> addresses) {
+
+        addresses.sort((o1, o2) -> {
+            if (Objects.equals(o1.getHome().getAverageRating(), o2.getHome().getAverageRating()))
+                return 0;
+            return o1.getHome().getAverageRating() < o2.getHome().getAverageRating() ? 1 : -1;
+        });
+
+    }
+
+
+    public List<Address> setAverageRatingsToAddresses(List<Address> addresses) {
+
+        for (Address address : addresses) {
+            List<Rating> homeRatings = ratingService.getRatingsByHomeId(address.getHome().getHomeId());
+            address.getHome().setAverageRating(calculateAverageHomeRating(homeRatings));
+        }
+
+        return addresses;
+
+    }
+
 
 }
 

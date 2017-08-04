@@ -3,6 +3,10 @@
  */
 $(document).ready(function () {
 
+    $(':radio').change(function() {
+        console.log('New star rating: ' + this.value);
+    });
+
     $('#profileModal').on('show.bs.modal', function (e) {
 
         var userFullName = $(e.relatedTarget).data('fullname-id');
@@ -23,6 +27,16 @@ $(document).ready(function () {
         $('#emailButton').attr("href", "mailto:" + userEmail);
         $('#phoneButton').attr("href", "tel:" + userPhoneNumber);
         $('#modalMessageButton').attr("href", "/message/new/" + userUserName);
+
+    });
+    
+    $('#rateHomeModal').on('show.bs.modal', function (e) {
+        var homeName = $(e.relatedTarget).data('homename-id');
+        var href = $(e.relatedTarget).data('href-id');
+
+        $('#rateHomeForm').attr("action", href);
+        $('#homeName').text(homeName);
+
 
     });
 
