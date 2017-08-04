@@ -57,7 +57,7 @@
         </div>
 
         <div class="col col-md-offset-2 col-md-8" th:each="address, var : ${addresses}">
-            <div class="row">
+            <div class="row" th:if="${var.index == 0}">
                 <form th:action="@{/homes}" method="GET" class="form-group col-sm-2">
                     <select name="sortBy" class="input-sm" id="selectSort">
                         <option value="ratingDesc">Highest rated first</option>
