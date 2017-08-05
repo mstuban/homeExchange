@@ -105,6 +105,18 @@
                                 class="glyphicon glyphicon-trash"></i>&nbsp;Delete
                             home
                         </button>
+                        <span class="dropdown pull-right">
+                            <button class="dropdown-toggle btn btn-primary" data-toggle="dropdown" th:inline="text">
+                                <i class="glyphicon glyphicon-comment"></i>&nbsp;View comments
+                            </button>
+                            <ul id="products-menu" class="dropdown-menu clearfix" role="menu">
+                                <li class="text-center" th:each="comment, var : ${@ratingService.getCommentsByHome(address.home)}">
+                                    <span th:text="${'By: ' + comment[0].userName}"></span>
+                                    <br/>
+                                    <span th:text="${comment[1]}"></span>
+                                </li>
+                            </ul>
+                        </span>
                         <button th:if="${(!@ratingService.existsByUsernameAndHomeId(#authentication.getName(), address.home.homeId) && !#strings.equals(address.home.user.userName, #authentication.getName()))}"
                                 data-th-attr="
                                 data-homename-id=${address.home.name},
@@ -240,18 +252,6 @@
                             </div>
                         </div>
                     </div>
-                    <span class="dropdown pull-right">
-                            <button class="dropdown-toggle btn btn-primary" data-toggle="dropdown" th:inline="text">
-                                <i class="glyphicon glyphicon-comment"></i>&nbsp;View comments
-                            </button>
-                            <ul id="products-menu" class="dropdown-menu clearfix" role="menu">
-                                <li class="text-center" th:each="comment, var : ${@ratingService.getCommentsByHome(address.home)}">
-                                    <span th:text="${'By: ' + comment[0].userName}"></span>
-                                    <br/>
-                                    <span th:text="${comment[1]}"></span>
-                                </li>
-                            </ul>
-                        </span>
                 </div>
             </div>
         </div>
