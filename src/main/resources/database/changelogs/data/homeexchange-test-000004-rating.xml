@@ -11,17 +11,17 @@
             <column name="FACILITIES">5</column>
             <column name="CLEANLINESS">5</column>
             <column name="VALUE_FOR_MONEY">4</column>
-            <column name="COMMENT">Very nice apartment!</column>
+            <column name="COMMENT">Very nice apartment! We liked the centre of Zagreb.</column>
             <column name="USERID">1</column>
             <column name="HOME_ID">1</column>
         </insert>
         <insert tableName="RATING">
             <column name="COMFORT">2</column>
             <column name="HOSPITALITY">4</column>
-            <column name="FACILITIES">3</column>
+            <column name="FACILITIES">2</column>
             <column name="CLEANLINESS">3</column>
             <column name="VALUE_FOR_MONEY">2</column>
-            <column name="COMMENT">Not that good!</column>
+            <column name="COMMENT">Not that good! Čazma isn't such a lovely place.</column>
             <column name="USERID">2</column>
             <column name="HOME_ID">2</column>
         </insert>
@@ -29,11 +29,11 @@
             <column name="COMFORT">4</column>
             <column name="HOSPITALITY">5</column>
             <column name="FACILITIES">4</column>
-            <column name="CLEANLINESS">3</column>
+            <column name="CLEANLINESS">1</column>
             <column name="VALUE_FOR_MONEY">4</column>
-            <column name="COMMENT">Owners were kind, but not that good!</column>
+            <column name="COMMENT">Owners were kind, but the place was dirty!</column>
             <column name="USERID">3</column>
-            <column name="HOME_ID">3</column>
+            <column name="HOME_ID">1</column>
         </insert>
     </changeSet>
 </databaseChangeLog>

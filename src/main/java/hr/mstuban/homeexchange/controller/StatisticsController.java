@@ -14,7 +14,6 @@ public class StatisticsController {
     @GetMapping("/generateStatistics")
     public String generateStatistics(Model model) {
 
-        
 
         return "statistics";
     }

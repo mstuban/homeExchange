@@ -78,9 +78,10 @@
                     <span class="dropdown pull-left ratingDropDown">
                             <span class="dropdown-toggle label ratingLabel label-info" data-toggle="dropdown"
                                   th:inline="text">
-                                <i class="glyphicon glyphicon-star"></i> [[${address.home.averageHomeRatings['averageOverallRating']}]]
+                                <i class="glyphicon glyphicon-star"></i> [[${address.home.averageHomeRatings['averageOverallRating'] > 0 ? address.home.averageHomeRatings['averageOverallRating'] : 'No ratings'}]]
                             </span>
-                            <ul id="products-menu" class="dropdown-menu clearfix" role="menu">
+                            <ul id="products-menu" class="dropdown-menu clearfix" role="menu"
+                                th:if="${address.home.averageHomeRatings['averageOverallRating'] > 0}">
                                 <li class="text-center"
                                     th:text="${'Comfort: ' + address.home.averageHomeRatings['averageComfortRating']}"></li>
                                 <li class="text-center"
@@ -112,10 +113,17 @@
                                 <i class="glyphicon glyphicon-comment"></i>&nbsp;View comments
                             </button>
                             <ul id="products-menu" class="dropdown-menu clearfix" role="menu">
-                                <li class="text-center" th:each="comment, var : ${@ratingService.getCommentsByHome(address.home)}">
-                                    <span th:text="${'By: ' + comment[0].userName}"></span>
-                                    <br/>
-                                    <span th:text="${comment[1]}"></span>
+                                     <li class="text-center"
+                                         th:if="${#lists.size(@ratingService.getCommentsByHome(address.home)) == 0}">
+                                        No comments yet!
+                                    </li>
+                                <li class="text-center"
+                                    th:each="comment, var : ${@ratingService.getCommentsByHome(address.home)}">
+                                    <div th:if="${#lists.size(comment) > 0}">
+                                        <span th:text="${'By: ' + comment[0].userName}"></span>
+                                        <br/>
+                                        <span th:text="${comment[1]}"></span>
+                                    </div>
                                 </li>
                             </ul>
                         </span>
@@ -261,246 +269,246 @@
 </div>
 <div class=" col-md-4">
 
-                </div>
+</div>
+</div>
+</div>
+<th:block th:include="fragments/footer :: footer"></th:block>
+<!-- Modal -->
+<div id="profileModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="glyphicon glyphicon-user"></i>&nbsp;Owner Profile</h4>
             </div>
-        </div>
-        <th:block th:include="fragments/footer :: footer"></th:block>
-        <!-- Modal -->
-        <div id="profileModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"><i class="glyphicon glyphicon-user"></i>&nbsp;Owner Profile</h4>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Full Name:</label>
+                        <p id="modalUserFullName"></p>
+                        <label>Username:</label>
+                        <p id="modalUserName"></p>
+                        <label>E-mail Address:</label>
+                        <p id="modalUserEmail"></p>
+                        <label>Phone Number:</label>
+                        <p id="modalUserPhoneNumber"></p>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Full Name:</label>
-                                <p id="modalUserFullName"></p>
-                                <label>Username:</label>
-                                <p id="modalUserName"></p>
-                                <label>E-mail Address:</label>
-                                <p id="modalUserEmail"></p>
-                                <label>Phone Number:</label>
-                                <p id="modalUserPhoneNumber"></p>
-                            </div>
-                            <div class="col-md-5">
-                                <img src="https://i.guildwalls.com/users/avatars/22791.png?t=1229176239"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a id="emailButton">
-                            <button id="emailBtn" type="button" class="btn btn-success pull-left"><i
-                                    class="glyphicon glyphicon-envelope"></i>&nbsp;E-mail
-                            </button>
-                        </a>
-
-                        <button id="phoneButton" type="button" class="btn btn-success pull-left"><i
-                                class="glyphicon glyphicon-phone"></i>&nbsp;Call
-                        </button>
-
-                        <a id="modalMessageButton">
-                            <button type="button" class="btn btn-success pull-left"><i
-                                    class="glyphicon glyphicon-pencil"></i>&nbsp;Send a message
-                            </button>
-                        </a>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!-- Modal -->
-        <div id="deleteHomeModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Delete Confirmation</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete this home?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a id="deleteHomeButton">
-                            <button type="button" class="btn btn-danger">Delete this home</button>
-                        </a>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!--Modal for viewing enlarged images-->
-        <div class="modal fade" id="enlargeImageModal" tabindex="-1" role="dialog" aria-labelledby="enlargeImageModal"
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="enlargeImageModalTitle">Image title</h3>
-                    </div>
-                    <div class="modal-body">
-                        <img src="" class="enlargeImageModalSource" style="width: 100%;"/>
+                    <div class="col-md-5">
+                        <img src="https://i.guildwalls.com/users/avatars/22791.png?t=1229176239"/>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--END of Enlarged Images Modal-->
-        <!-- DELETE MODAL -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">Delete an image</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="alert alert-info">
-                            <p class="text-center">
-                                <span>You are about to delete </span> <strong id="image-name"></strong>.
-                                <br/>
-                                <span>Please confirm the operation.</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-lg"
-                                data-dismiss="modal">Cancel
-                        </button>
-                        <a type="button" class="btn btn-danger btn-lg" id="deleteImage"
-                           href="#">Delete</a>
-                    </div>
-                </div>
+            <div class="modal-footer">
+                <a id="emailButton">
+                    <button id="emailBtn" type="button" class="btn btn-success pull-left"><i
+                            class="glyphicon glyphicon-envelope"></i>&nbsp;E-mail
+                    </button>
+                </a>
+
+                <button id="phoneButton" type="button" class="btn btn-success pull-left"><i
+                        class="glyphicon glyphicon-phone"></i>&nbsp;Call
+                </button>
+
+                <a id="modalMessageButton">
+                    <button type="button" class="btn btn-success pull-left"><i
+                            class="glyphicon glyphicon-pencil"></i>&nbsp;Send a message
+                    </button>
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-        <!-- Rate home modal -->
-        <div class="modal fade" id="rateHomeModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">Rate <span id="homeName"></span></h3>
-                    </div>
-                    <div class="modal-body">
-                        <form id="rateHomeForm" method="post">
-                            <b>Comfort:</b>
-                            <br/>
-                            <div class="acidjs-rating-stars">
-                                <input type="radio" name="comfortValue" id="group-1-0" value="5" required/><label
-                                    for="group-1-0"></label><!--
+
+    </div>
+</div>
+<!-- Modal -->
+<div id="deleteHomeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this home?</p>
+            </div>
+            <div class="modal-footer">
+                <a id="deleteHomeButton">
+                    <button type="button" class="btn btn-danger">Delete this home</button>
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--Modal for viewing enlarged images-->
+<div class="modal fade" id="enlargeImageModal" tabindex="-1" role="dialog" aria-labelledby="enlargeImageModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="enlargeImageModalTitle">Image title</h3>
+            </div>
+            <div class="modal-body">
+                <img src="" class="enlargeImageModalSource" style="width: 100%;"/>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END of Enlarged Images Modal-->
+<!-- DELETE MODAL -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Delete an image</h3>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <p class="text-center">
+                        <span>You are about to delete </span> <strong id="image-name"></strong>.
+                        <br/>
+                        <span>Please confirm the operation.</span>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-lg"
+                        data-dismiss="modal">Cancel
+                </button>
+                <a type="button" class="btn btn-danger btn-lg" id="deleteImage"
+                   href="#">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Rate home modal -->
+<div class="modal fade" id="rateHomeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Rate <span id="homeName"></span></h3>
+            </div>
+            <div class="modal-body">
+                <form id="rateHomeForm" method="post">
+                    <b>Comfort:</b>
+                    <br/>
+                    <div class="acidjs-rating-stars">
+                        <input type="radio" name="comfortValue" id="group-1-0" value="5" required/><label
+                            for="group-1-0"></label><!--
         --><input type="radio" name="comfortValue" id="group-1-1" value="4" required/><label for="group-1-1"></label><!--
         --><input type="radio" name="comfortValue" id="group-1-2" value="3" required/><label for="group-1-2"></label><!--
         --><input type="radio" name="comfortValue" id="group-1-3" value="2" required/><label for="group-1-3"></label><!--
         --><input type="radio" name="comfortValue" id="group-1-4" value="1" required/><label for="group-1-4"></label>
 
-                            </div>
-                            <br/>
-                            <br/>
-                            <b>Hospitality:</b>
-                            <br/>
-                            <div class="acidjs-rating-stars">
-                                <input type="radio" name="hospitalityValue" id="group-2-0" value="5" required/><label
-                                    for="group-2-0"></label><!--
+                    </div>
+                    <br/>
+                    <br/>
+                    <b>Hospitality:</b>
+                    <br/>
+                    <div class="acidjs-rating-stars">
+                        <input type="radio" name="hospitalityValue" id="group-2-0" value="5" required/><label
+                            for="group-2-0"></label><!--
         --><input type="radio" name="hospitalityValue" id="group-2-1" value="4" required/><label
-                                    for="group-2-1"></label><!--
+                            for="group-2-1"></label><!--
         --><input type="radio" name="hospitalityValue" id="group-2-2" value="3" required/><label
-                                    for="group-2-2"></label><!--
+                            for="group-2-2"></label><!--
         --><input type="radio" name="hospitalityValue" id="group-2-3" value="2" required/><label
-                                    for="group-2-3"></label><!--
+                            for="group-2-3"></label><!--
         --><input type="radio" name="hospitalityValue" id="group-2-4" value="1" required/><label
-                                    for="group-2-4"></label>
+                            for="group-2-4"></label>
 
-                            </div>
-                            <br/>
-                            <br/>
-                            <b>Cleanliness:</b>
-                            <br/>
-                            <div class="acidjs-rating-stars">
-                                <input type="radio" name="cleanlinessValue" id="group-3-0" value="5"/><label
-                                    for="group-3-0"></label><!--
+                    </div>
+                    <br/>
+                    <br/>
+                    <b>Cleanliness:</b>
+                    <br/>
+                    <div class="acidjs-rating-stars">
+                        <input type="radio" name="cleanlinessValue" id="group-3-0" value="5"/><label
+                            for="group-3-0"></label><!--
         --><input type="radio" name="cleanlinessValue" id="group-3-1" value="4" required/><label
-                                    for="group-3-1"></label><!--
+                            for="group-3-1"></label><!--
         --><input type="radio" name="cleanlinessValue" id="group-3-2" value="3" required/><label
-                                    for="group-3-2"></label><!--
+                            for="group-3-2"></label><!--
         --><input type="radio" name="cleanlinessValue" id="group-3-3" value="2" required/><label
-                                    for="group-3-3"></label><!--
+                            for="group-3-3"></label><!--
         --><input type="radio" name="cleanlinessValue" id="group-3-4" value="1" required/><label
-                                    for="group-3-4"></label>
+                            for="group-3-4"></label>
 
-                            </div>
-                            <br/>
-                            <br/>
-                            <b>Facilities:</b>
-                            <br/>
-                            <div class="acidjs-rating-stars">
-                                <input type="radio" name="facilitiesValue" id="group-4-0" value="5"/><label
-                                    for="group-4-0"></label><!--
+                    </div>
+                    <br/>
+                    <br/>
+                    <b>Facilities:</b>
+                    <br/>
+                    <div class="acidjs-rating-stars">
+                        <input type="radio" name="facilitiesValue" id="group-4-0" value="5"/><label
+                            for="group-4-0"></label><!--
         --><input type="radio" name="facilitiesValue" id="group-4-1" value="4" required/><label for="group-4-1"></label><!--
         --><input type="radio" name="facilitiesValue" id="group-4-2" value="3" required/><label for="group-4-2"></label><!--
         --><input type="radio" name="facilitiesValue" id="group-4-3" value="2" required/><label for="group-4-3"></label><!--
         --><input type="radio" name="facilitiesValue" id="group-4-4" value="1" required/><label for="group-4-4"></label>
 
-                            </div>
-                            <br/>
-                            <br/>
-                            <b>Value For Money:</b>
-                            <br/>
-                            <div class="acidjs-rating-stars">
-                                <input type="radio" name="valueForMoneyValue" id="group-5-0" value="5"/><label
-                                    for="group-5-0"></label><!--
+                    </div>
+                    <br/>
+                    <br/>
+                    <b>Value For Money:</b>
+                    <br/>
+                    <div class="acidjs-rating-stars">
+                        <input type="radio" name="valueForMoneyValue" id="group-5-0" value="5"/><label
+                            for="group-5-0"></label><!--
         --><input type="radio" name="valueForMoneyValue" id="group-5-1" value="4" required/><label
-                                    for="group-5-1"></label><!--
+                            for="group-5-1"></label><!--
         --><input type="radio" name="valueForMoneyValue" id="group-5-2" value="3" required/><label
-                                    for="group-5-2"></label><!--
+                            for="group-5-2"></label><!--
         --><input type="radio" name="valueForMoneyValue" id="group-5-3" value="2" required/><label
-                                    for="group-5-3"></label><!--
+                            for="group-5-3"></label><!--
         --><input type="radio" name="valueForMoneyValue" id="group-5-4" value="1" required/><label
-                                    for="group-5-4"></label>
-                            </div>
-                            <br/>
-                            <br/>
-                            <b>Comment:</b>
-                            <br/>
-                            <textarea placeholder="Type in a comment..." id="ratingComment" name="comment"
-                                      class="form-control">
+                            for="group-5-4"></label>
+                    </div>
+                    <br/>
+                    <br/>
+                    <b>Comment:</b>
+                    <br/>
+                    <textarea placeholder="Type in a comment..." id="ratingComment" name="comment"
+                              class="form-control">
                     </textarea>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-lg"
-                                data-dismiss="modal">Cancel
-                        </button>
-                        <input type="submit" class="btn btn-lg btn-success" form="rateHomeForm" value="Rate"/>
-                    </div>
-                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-lg"
+                        data-dismiss="modal">Cancel
+                </button>
+                <input type="submit" class="btn btn-lg btn-success" form="rateHomeForm" value="Rate"/>
             </div>
         </div>
-        <!-- Modal -->
-        <div id="commentsModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+    </div>
+</div>
+<!-- Modal -->
+<div id="commentsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Comments for <span id="home name"></span></h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Some text in the modal.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Comments for <span id="home name"></span></h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
+
+    </div>
+</div>
 </body>
 </html>
