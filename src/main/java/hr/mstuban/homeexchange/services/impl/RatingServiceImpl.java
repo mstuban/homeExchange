@@ -1,5 +1,6 @@
 package hr.mstuban.homeexchange.services.impl;
 
+import hr.mstuban.homeexchange.domain.Home;
 import hr.mstuban.homeexchange.domain.Rating;
 import hr.mstuban.homeexchange.repositories.RatingRepository;
 import hr.mstuban.homeexchange.services.RatingService;
@@ -40,6 +41,11 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public boolean existsByUsernameAndHomeId(String username, Long id) {
         return ratingRepository.existsByUser_UserNameAndHome_HomeId(username, id);
+    }
+
+    @Override
+    public List<Object[]> getCommentsByHome(Home home) {
+        return ratingRepository.getCommentsByHome(home);
     }
 
 

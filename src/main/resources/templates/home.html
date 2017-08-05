@@ -22,35 +22,6 @@
         </div>
     </div>
     <div class="header-content">
-        <div class="row text-center" id="statisticsWidget">
-            <div class="col col-md-2 statisticsDiv">
-                <i class="glyphicon glyphicon-globe"></i>
-                <h3 th:text="${numberOfCountries}"></h3> countries to move to
-            </div>
-            <div class="col col-md-2 statisticsDiv">
-                <i class="glyphicon glyphicon-refresh"></i>
-                <h3 th:text="${usersWithHomesAddedCounter}"></h3> people exchanged homes
-            </div>
-            <div class="col col-md-2 statisticsDiv">
-                <i class="glyphicon glyphicon-user"></i>
-                <h3 th:text="${userCount}"></h3> people registered
-
-            </div>
-            <div class="col col-md-2 statisticsDiv">
-                <i class="glyphicon glyphicon-home"></i>
-                <h3 th:text="${homeCount}"></h3> homes to exchange with
-
-            </div>
-            <div class="col col-md-2 statisticsDiv">
-                <i class="glyphicon glyphicon-envelope"></i>
-                <h3 th:text="${messagesSentCount}"></h3> messages sent
-            </div>
-            <div class="col col-md-2 statisticsDiv" id="lastStatisticsDiv">
-                <i class="glyphicon glyphicon-time"></i>
-                <br/>
-                <h4 th:text="${userWithLongestStay}"></h4> User with longest exchange
-            </div>
-        </div>
         <div class="header-content-inner vcenter">
             <h2>Where would you like to move?</h2>
             <form th:action="@{/searchForHomes}" method="POST">

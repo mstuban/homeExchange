@@ -6,6 +6,7 @@ package hr.mstuban.homeexchange.domain;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "HOME")
@@ -52,7 +53,7 @@ public class Home {
     private List<Rating> ratings;
 
     @Transient
-    private Double averageRating;
+    private Map<String, Double> averageHomeRatings;
 
     public Home() {
     }
@@ -145,11 +146,11 @@ public class Home {
         this.ratings = ratings;
     }
 
-    public Double getAverageRating() {
-        return averageRating;
+    public Map<String, Double> getAverageHomeRatings() {
+        return averageHomeRatings;
     }
 
-    public void setAverageRating(Double averageRating) {
-        this.averageRating = averageRating;
+    public void setAverageHomeRatings(Map<String, Double> averageHomeRatings) {
+        this.averageHomeRatings = averageHomeRatings;
     }
 }

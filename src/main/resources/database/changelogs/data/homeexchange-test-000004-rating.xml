@@ -6,23 +6,33 @@
 
     <changeSet id="00001-20170804000000" author="mstuban">
         <insert tableName="RATING">
-            <column name="NUMBER_OF_STARS">5</column>
+            <column name="COMFORT">5</column>
+            <column name="HOSPITALITY">4</column>
+            <column name="FACILITIES">5</column>
+            <column name="CLEANLINESS">5</column>
+            <column name="VALUE_FOR_MONEY">4</column>
+            <column name="COMMENT">Very nice apartment!</column>
             <column name="USERID">1</column>
             <column name="HOME_ID">1</column>
         </insert>
         <insert tableName="RATING">
-            <column name="NUMBER_OF_STARS">4</column>
+            <column name="COMFORT">2</column>
+            <column name="HOSPITALITY">4</column>
+            <column name="FACILITIES">3</column>
+            <column name="CLEANLINESS">3</column>
+            <column name="VALUE_FOR_MONEY">2</column>
+            <column name="COMMENT">Not that good!</column>
             <column name="USERID">2</column>
-            <column name="HOME_ID">3</column>
+            <column name="HOME_ID">2</column>
         </insert>
         <insert tableName="RATING">
-            <column name="NUMBER_OF_STARS">5</column>
-            <column name="USERID">2</column>
-            <column name="HOME_ID">3</column>
-        </insert>
-        <insert tableName="RATING">
-            <column name="NUMBER_OF_STARS">1</column>
-            <column name="USERID">2</column>
+            <column name="COMFORT">4</column>
+            <column name="HOSPITALITY">5</column>
+            <column name="FACILITIES">4</column>
+            <column name="CLEANLINESS">3</column>
+            <column name="VALUE_FOR_MONEY">4</column>
+            <column name="COMMENT">Owners were kind, but not that good!</column>
+            <column name="USERID">3</column>
             <column name="HOME_ID">3</column>
         </insert>
     </changeSet>

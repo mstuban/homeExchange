@@ -1,5 +1,6 @@
 package hr.mstuban.homeexchange.services;
 
+import hr.mstuban.homeexchange.domain.Home;
 import hr.mstuban.homeexchange.domain.Rating;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface RatingService {
     boolean existsByUsername(String username);
 
     boolean existsByUsernameAndHomeId(String username, Long id);
+
+    List<Object[]> getCommentsByHome(Home home);
 }

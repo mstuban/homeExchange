@@ -23,7 +23,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -91,7 +93,7 @@ public class HomeController {
     public String searchForHomes(Model model, @RequestParam(value = "searchParameter") String searchParameter) {
 
         List<Address> addresses = addressService.findAddressesBySearchParameter(searchParameter);
-        addresses = setAverageRatingsToAddresses(addresses);
+        addresses = setRatingsToAddresses(addresses);
         model.addAttribute("addresses", addresses);
 
         return "home-search-results";
@@ -101,37 +103,22 @@ public class HomeController {
     public String searchForHomes(Model model, Principal principal) {
 
         List<Address> addresses = addressService.getAddressesByHome_User_UserName(principal.getName());
-        addresses = setAverageRatingsToAddresses(addresses);
+        addresses = setRatingsToAddresses(addresses);
 
         model.addAttribute("addresses", addresses);
 
         return "home-search-results";
     }
-/*
+
     @GetMapping("/homes")
-    public String getAllHomes(Model model) {
+    public String getAllHomes(@RequestParam(name = "sortBy", required = false) String sortBy, Model model) {
 
         List<Address> addresses = addressService.findAddressesBySearchParameter("");
 
-        addresses = setAverageRatingsToAddresses(addresses);
-        sortAddressesByAverageRatingDescending(addresses);
-
-        model.addAttribute("addresses", addresses);
-
-        return "home-search-results";
-    }*/
-
-
-    @GetMapping("/homes")
-    public String getAllHomes(@RequestParam(required = false) String sortBy, Model model) {
-
-        List<Address> addresses = addressService.findAddressesBySearchParameter("");
-
-        addresses = setAverageRatingsToAddresses(addresses);
+        addresses = setRatingsToAddresses(addresses);
         sortAddressesByAverageRatingDescending(addresses);
 
         if (sortBy != null) {
-
             if (sortBy.equals("ratingAsc")) {
                 sortAddressesByAverageRatingAscending(addresses);
             }
@@ -139,6 +126,7 @@ public class HomeController {
                 sortAddressesByAverageRatingDescending(addresses);
             }
         }
+
         model.addAttribute("addresses", addresses);
 
         return "home-search-results";
@@ -267,12 +255,7 @@ public class HomeController {
     }
 
     @PostMapping("/home/{homeId}/rate")
-    public String addRatingForHome(@RequestParam(name = "ratingValue") Integer ratingValue, @PathVariable Long homeId, Principal principal, RedirectAttributes redirectAttributes) {
-
-        if (ratingValue == null) {
-            redirectAttributes.addFlashAttribute("ratingCannotBeNull", "Rating cannot be null!");
-            return "redirect:/homes";
-        }
+    public String addRatingForHome(@RequestParam(name = "comfortValue") Integer comfortValue, @RequestParam(name = "hospitalityValue") Integer hospitalityValue, @RequestParam(name = "cleanlinessValue") Integer cleanlinessValue, @RequestParam(name = "facilitiesValue") Integer facilitiesValue, @RequestParam(name = "valueForMoneyValue") Integer valueForMoneyValue, @RequestParam(name = "comment") String comment, @PathVariable Long homeId, Principal principal, RedirectAttributes redirectAttributes) {
 
         if (!homeService.existsByHomeId(homeId)) {
             redirectAttributes.addFlashAttribute("cannotRateHome", "You can't rate that home because it does not exist!");
@@ -284,11 +267,12 @@ public class HomeController {
             return "redirect:/homes";
         }
 
+
         Home home = homeService.findById(homeId);
 
         User user = userService.findByUsername(principal.getName());
 
-        Rating rating = new Rating(ratingValue, home, user);
+        Rating rating = new Rating(comfortValue, hospitalityValue, cleanlinessValue, facilitiesValue, valueForMoneyValue, home, user, comment);
 
         ratingService.save(rating);
 
@@ -323,28 +307,78 @@ public class HomeController {
     }
 
 
-    public double calculateAverageHomeRating(List<Rating> ratings) {
+    public void calculateAverageHomeRatings(Long homeId) {
 
-        Integer ratingsSum = 0;
+        List<Rating> ratings = ratingService.getRatingsByHomeId(homeId);
+        Home home = homeService.findById(homeId);
+
+        Integer overallRatingsSum;
+        Integer comfortSum = 0;
+        Integer hospitalitySum = 0;
+        Integer facilitiesSum = 0;
+        Integer valueForMoneySum = 0;
+        Integer cleanlinessSum = 0;
+
 
         for (Rating rating : ratings) {
-            ratingsSum += rating.getNumberOfStars();
+            hospitalitySum += rating.getHospitality();
+            facilitiesSum += rating.getFacilities();
+            valueForMoneySum += rating.getValueForMoney();
+            cleanlinessSum += rating.getCleanliness();
+            comfortSum += rating.getComfort();
         }
 
-        if (ratingsSum > 0) {
-            return (ratingsSum / (double) ratings.size());
+        overallRatingsSum = hospitalitySum + facilitiesSum + valueForMoneySum + cleanlinessSum + comfortSum;
+
+        double averageOverallRating = (overallRatingsSum / (ratings.size() * 5d));
+        double averageComfortRating = (comfortSum / (double) ratings.size());
+        double averageHospitalityRating = (hospitalitySum / (double) ratings.size());
+        double averageFacilitiesRating = (facilitiesSum / (double) ratings.size());
+        double averageCleanlinessRating = (cleanlinessSum / (double) ratings.size());
+        double averageValueForMoneyRating = (valueForMoneySum / (double) ratings.size());
+
+        Map<String, Double> averageHomeRatings = new HashMap<>();
+        if (averageOverallRating > 0) {
+            averageHomeRatings.put("averageOverallRating", round(averageOverallRating, 2));
+        } else {
+            averageHomeRatings.put("averageOverallRating", 0d);
+        }
+        if (averageComfortRating > 0) {
+            averageHomeRatings.put("averageComfortRating", round(averageComfortRating, 2));
+        } else {
+            averageHomeRatings.put("averageComfortRating", 0d);
+        }
+        if (averageHospitalityRating > 0) {
+            averageHomeRatings.put("averageHospitalityRating", round(averageHospitalityRating, 2));
+        } else {
+            averageHomeRatings.put("averageHospitalityRating", 0d);
+        }
+        if (averageFacilitiesRating > 0) {
+            averageHomeRatings.put("averageFacilitiesRating", round(averageFacilitiesRating, 2));
+        } else {
+            averageHomeRatings.put("averageFacilitiesRating", 0d);
+        }
+        if (averageValueForMoneyRating > 0) {
+            averageHomeRatings.put("averageValueForMoneyRating", round(averageValueForMoneyRating, 2));
+        } else {
+            averageHomeRatings.put("averageValueForMoneyRating", 0d);
+        }
+        if (averageCleanlinessRating > 0) {
+            averageHomeRatings.put("averageCleanlinessRating", round(averageCleanlinessRating, 2));
+        } else {
+            averageHomeRatings.put("averageCleanlinessRating", 0d);
         }
 
-        return 0d;
+        home.setAverageHomeRatings(averageHomeRatings);
 
     }
 
     public void sortAddressesByAverageRatingAscending(List<Address> addresses) {
 
         addresses.sort((o1, o2) -> {
-            if (Objects.equals(o1.getHome().getAverageRating(), o2.getHome().getAverageRating()))
+            if (Objects.equals(o1.getHome().getAverageHomeRatings().get("averageOverallRating"), o2.getHome().getAverageHomeRatings().get("averageOverallRating")))
                 return 0;
-            return o1.getHome().getAverageRating() < o2.getHome().getAverageRating() ? -1 : 1;
+            return o1.getHome().getAverageHomeRatings().get("averageOverallRating") < o2.getHome().getAverageHomeRatings().get("averageOverallRating") ? -1 : 1;
         });
 
     }
@@ -352,25 +386,32 @@ public class HomeController {
     public void sortAddressesByAverageRatingDescending(List<Address> addresses) {
 
         addresses.sort((o1, o2) -> {
-            if (Objects.equals(o1.getHome().getAverageRating(), o2.getHome().getAverageRating()))
+            if (Objects.equals(o1.getHome().getAverageHomeRatings().get("averageOverallRating"), o2.getHome().getAverageHomeRatings().get("averageOverallRating")))
                 return 0;
-            return o1.getHome().getAverageRating() < o2.getHome().getAverageRating() ? 1 : -1;
+            return o1.getHome().getAverageHomeRatings().get("averageOverallRating") < o2.getHome().getAverageHomeRatings().get("averageOverallRating") ? 1 : -1;
         });
 
     }
 
 
-    public List<Address> setAverageRatingsToAddresses(List<Address> addresses) {
+    public List<Address> setRatingsToAddresses(List<Address> addresses) {
 
         for (Address address : addresses) {
-            List<Rating> homeRatings = ratingService.getRatingsByHomeId(address.getHome().getHomeId());
-            address.getHome().setAverageRating(calculateAverageHomeRating(homeRatings));
+            calculateAverageHomeRatings(address.getHome().getHomeId());
         }
 
         return addresses;
 
     }
 
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 
 }
 

@@ -1,9 +1,30 @@
 /**
  * Created by marko on 09.05.17.
  */
+
 $(document).ready(function () {
 
-    $(':radio').change(function() {
+    $(function () {
+        function is_touch_device() {
+            return 'ontouchstart' in window        // works on most browsers
+                || navigator.maxTouchPoints;       // works on IE10/11 and Surface
+        };
+
+        if (!is_touch_device() && $('.navbar-toggle:hidden')) {
+            $('.dropdown-menu', this).css('margin-top', 0);
+            $('.dropdown').hover(function () {
+                $('.dropdown-toggle', this).trigger('click').toggleClass("disabled");
+            });
+        }
+    });
+
+    $("label").click(function () {
+        $(this).parent().find("label").css({"background-color": "#D8D8D8"});
+        $(this).css({"background-color": "#7ED321"});
+        $(this).nextAll().css({"background-color": "#7ED321"});
+    });
+
+    $(':radio').change(function () {
         console.log('New star rating: ' + this.value);
     });
 
@@ -29,7 +50,7 @@ $(document).ready(function () {
         $('#modalMessageButton').attr("href", "/message/new/" + userUserName);
 
     });
-    
+
     $('#rateHomeModal').on('show.bs.modal', function (e) {
         var homeName = $(e.relatedTarget).data('homename-id');
         var href = $(e.relatedTarget).data('href-id');
@@ -78,3 +99,8 @@ $(function () {
     });
 
 });
+
+function sortBy(object) {
+    var value = object.value;
+    console.log(value);
+}

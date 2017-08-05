@@ -16,8 +16,20 @@ public class Rating {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NUMBER_OF_STARS")
-    private Integer numberOfStars;
+    @Column(name = "COMFORT")
+    private Integer comfort;
+
+    @Column(name = "HOSPITALITY")
+    private Integer hospitality;
+
+    @Column(name = "CLEANLINESS")
+    private Integer cleanliness;
+
+    @Column(name = "FACILITIES")
+    private Integer facilities;
+
+    @Column(name = "VALUE_FOR_MONEY")
+    private Integer valueForMoney;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "HOME_ID")
@@ -27,14 +39,22 @@ public class Rating {
     @JoinColumn(name = "USERID")
     private User user;
 
-    public Rating(){
+    @Column(name = "COMMENT")
+    private String comment;
+
+    public Rating() {
 
     }
 
-    public Rating(Integer numberOfStars, Home home, User user) {
-        this.numberOfStars = numberOfStars;
+    public Rating(Integer comfort, Integer hospitality, Integer cleanliness, Integer facilities, Integer valueForMoney, Home home, User user, String comment) {
+        this.comfort = comfort;
+        this.hospitality = hospitality;
+        this.cleanliness = cleanliness;
+        this.facilities = facilities;
+        this.valueForMoney = valueForMoney;
         this.home = home;
         this.user = user;
+        this.comment = comment;
     }
 
     public Long getId() {
@@ -43,14 +63,6 @@ public class Rating {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getNumberOfStars() {
-        return numberOfStars;
-    }
-
-    public void setNumberOfStars(Integer numberOfStars) {
-        this.numberOfStars = numberOfStars;
     }
 
     public Home getHome() {
@@ -67,5 +79,53 @@ public class Rating {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Integer getComfort() {
+        return comfort;
+    }
+
+    public void setComfort(Integer comfort) {
+        this.comfort = comfort;
+    }
+
+    public Integer getHospitality() {
+        return hospitality;
+    }
+
+    public void setHospitality(Integer hospitality) {
+        this.hospitality = hospitality;
+    }
+
+    public Integer getCleanliness() {
+        return cleanliness;
+    }
+
+    public void setCleanliness(Integer cleanliness) {
+        this.cleanliness = cleanliness;
+    }
+
+    public Integer getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(Integer facilities) {
+        this.facilities = facilities;
+    }
+
+    public Integer getValueForMoney() {
+        return valueForMoney;
+    }
+
+    public void setValueForMoney(Integer valueForMoney) {
+        this.valueForMoney = valueForMoney;
     }
 }
