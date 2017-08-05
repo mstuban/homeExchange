@@ -16,7 +16,7 @@
                     </li>
                     <li><a href="#" th:href="@{/home/new}" sec:authorize="hasRole('ROLE_USER')">Add a new home</a>
                     </li>
-                    <li><a href="#" th:href="@{/statistics}" sec:authorize="hasRole('ROLE_USER')">View statistics</a>
+                    <li><a href="#" th:href="@{/generateStatistics}" sec:authorize="hasRole('ROLE_USER')">View statistics</a>
                     </li>
                     <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/login}">Sign in</a></li>
                     <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/register}">Create an account</a></li>

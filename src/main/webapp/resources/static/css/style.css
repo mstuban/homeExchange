@@ -339,3 +339,11 @@ footer {
 #availableLabel{
     margin-right: 5px;
 }
+
+.ratingDropDown{
+    margin: 2px;
+}
+
+.glyphicon-star{
+    color: #f0ad4e;
+}
