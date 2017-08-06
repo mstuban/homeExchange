@@ -103,18 +103,18 @@
                     <div class="btn-group pull-right">
                         <a th:href="@{/home/edit/{id}(id=${address.home.homeId})}">
                             <button th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
-                                    class="btn btn-warning pull-left" type="button" id="editButton"
+                                    class="btn btn-sm btn-warning pull-left" type="button" id="editButton"
                             ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit home
                             </button>
                         </a>
                         <button th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
-                                th:attr="data-home-id=${address.home.homeId}" class="btn btn-danger"
+                                th:attr="data-home-id=${address.home.homeId}" class="btn btn-sm btn-danger"
                                 data-toggle="modal" data-target="#deleteHomeModal" type="button"><i
                                 class="glyphicon glyphicon-trash"></i>&nbsp;Delete
                             home
                         </button>
                         <span class="dropdown pull-right">
-                            <button class="dropdown-toggle btn btn-primary" data-toggle="dropdown" th:inline="text">
+                            <button class="dropdown-toggle btn btn-sm btn-primary" data-toggle="dropdown" th:inline="text">
                                 <i class="glyphicon glyphicon-comment"></i>&nbsp;View comments
                             </button>
                             <ul id="products-menu" class="dropdown-menu clearfix" role="menu">
@@ -136,7 +136,7 @@
                                 data-th-attr="
                                 data-homename-id=${address.home.name},
                                 data-href-id=${'/home/' + address.home.homeId + '/rate'}"
-                                class="btn btn-primary" id="rateHomeButton"
+                                class="btn btn-sm btn-primary" id="rateHomeButton"
                                 data-toggle="modal" data-target="#rateHomeModal" type="button"><i
                                 class="glyphicon glyphicon-star"></i>&nbsp;Rate
                             home
@@ -145,7 +145,7 @@
                         <a th:if="${@ratingService.existsByUsernameAndHomeId(#authentication.getName(), address.home.homeId) && !#strings.equals(address.home.user.userName, #authentication.getName())}"
                            th:href="@{/home/deleteRating/{id}(id=${@ratingService.findByHomeIdAndUsername(address.home.homeId, #authentication.getName()).id})}">
                             <button
-                                    class="btn btn-primary" type="button" id="rateHomeButton">
+                                    class="btn btn-sm btn-primary" type="button" id="rateHomeButton">
                                 <i class="glyphicon glyphicon-trash"></i>&nbsp;Delete rating
                             </button>
                         </a>
