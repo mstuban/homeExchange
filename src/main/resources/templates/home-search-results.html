@@ -142,7 +142,7 @@
                             home
                         </button>
 
-                        <a th:if="${@ratingService.existsByUsernameAndHomeId(#authentication.getName(), address.home.homeId)}"
+                        <a th:if="${@ratingService.existsByUsernameAndHomeId(#authentication.getName(), address.home.homeId) && !#strings.equals(address.home.user.userName, #authentication.getName())}"
                            th:href="@{/home/deleteRating/{id}(id=${@ratingService.findByHomeIdAndUsername(address.home.homeId, #authentication.getName()).id})}">
                             <button
                                     class="btn btn-primary" type="button">
