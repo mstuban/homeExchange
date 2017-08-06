@@ -266,7 +266,7 @@
                                                 <br/>
                                                 <a th:if="${#strings.equals(address.home.user.userName, #authentication.getName()) || #strings.contains(#authentication.getAuthorities(), 'ROLE_ADMIN')}"
                                                    type="button"
-                                                   class="btn btn-danger pull-left deleteImageButton"
+                                                   class="btn btn-sm btn-danger pull-left deleteImageButton"
                                                    th:attr="data-image-name=${address.home.image.name},link-template=@{/home/{homeId}/deleteImage/{imageId}(homeId=${address.home.homeId},imageId=${address.home.image.id})}">Delete</a>
                                             </div>
                                         </div>
