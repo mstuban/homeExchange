@@ -269,6 +269,8 @@ footer {
 
 .btn-group #rateHomeButton {
     border-radius: 4px;
+    background-color: #5bc0de;
+    border-color: #5bc0de;
 }
 
 #selectSort {
