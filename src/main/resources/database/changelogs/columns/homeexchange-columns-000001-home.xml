@@ -15,7 +15,7 @@
             </column>
             <column name="NAME" type="VARCHAR(50)">
             </column>
-            <column name="ADDRESS" type="BIGINT">
+            <column name="ADDRESS_ID" type="BIGINT">
             </column>
             <column name="SIZE_IN_SQUARE_METERS" type="INT">
             </column>
@@ -30,8 +30,6 @@
             <column name="TIME_OF_EXCHANGE_IN_MONTHS" type="INT">
             </column>
             <column name="IMAGE_ID" type="BIGINT">
-            </column>
-            <column name="RATING_ID" type="BIGINT">
             </column>
         </createTable>
     </changeSet>

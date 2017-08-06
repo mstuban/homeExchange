@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/home", "/homes", "/home/new", "/profile", "/editProfile", "/home/edit", "/searchForHomes", "/searchForMyHomes", "/message/*", "/message/delete", "/message/new", "/upload", "/home/rate/*", "/home/*", "/homes/*")
+                .antMatchers("/", "/home", "/homes", "/home/new", "/profile", "/editProfile", "/home/edit", "/searchForHomes", "/searchForMyHomes", "/message/*", "/message/delete", "/message/new", "/upload", "/home/rate/*", "/home/*", "/homes/*", "/statistics", "/generateStatistics")
                 .fullyAuthenticated()
                 .and()
                 .formLogin()

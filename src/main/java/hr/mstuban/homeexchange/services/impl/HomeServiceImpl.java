@@ -1,5 +1,6 @@
 package hr.mstuban.homeexchange.services.impl;
 
+import com.querydsl.core.types.Predicate;
 import hr.mstuban.homeexchange.domain.Home;
 import hr.mstuban.homeexchange.domain.User;
 import hr.mstuban.homeexchange.repositories.HomeRepository;
@@ -74,5 +75,9 @@ public class HomeServiceImpl implements HomeService {
         return homeRepository.existsByHomeId(id);
     }
 
+    @Override
+    public Iterable<Home> findAll(Predicate predicate) {
+        return homeRepository.findAll(predicate);
+    }
 
 }

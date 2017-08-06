@@ -49,10 +49,10 @@ public class Home {
     private Image image;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "RATING_ID")
     private List<Rating> ratings;
 
-    @Transient
+    @ElementCollection(targetClass = Double.class)
+    @MapKeyClass(String.class)
     private Map<String, Double> averageHomeRatings;
 
     public Home() {

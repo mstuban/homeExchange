@@ -5,13 +5,14 @@ import hr.mstuban.homeexchange.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 /**
  * Created by mstuban on 14.05.17..
  */
 @Repository
-public interface HomeRepository extends JpaRepository<Home, Long> {
+public interface HomeRepository extends JpaRepository<Home, Long>, QueryDslPredicateExecutor<Home> {
 
     Home findByName(String name);
 

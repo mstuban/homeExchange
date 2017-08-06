@@ -1,5 +1,6 @@
 package hr.mstuban.homeexchange.services;
 
+import com.querydsl.core.types.Predicate;
 import hr.mstuban.homeexchange.domain.Home;
 import hr.mstuban.homeexchange.domain.User;
 
@@ -28,5 +29,7 @@ public interface HomeService {
     Home findHomeWithMostTimeExchanged();
 
     boolean existsByHomeId(Long id);
+
+    Iterable<Home> findAll(Predicate predicate);
 
 }

@@ -84,6 +84,10 @@ public class HomeController {
         model.addAttribute("numberOfCountries", addressService.getByCountryIsUnique().size());
         model.addAttribute("messagesSentCount", messageService.findAll().size());
 
+        List<Address> addresses = addressService.findAddressesBySearchParameter("");
+
+        setRatingsToAddresses(addresses);
+
         return "home";
 
 
@@ -131,7 +135,6 @@ public class HomeController {
 
         return "home-search-results";
     }
-
 
     @RequestMapping(value = "/home/new", method = RequestMethod.GET)
     public String getHomeForm(Model model) {
@@ -330,12 +333,12 @@ public class HomeController {
 
         overallRatingsSum = hospitalitySum + facilitiesSum + valueForMoneySum + cleanlinessSum + comfortSum;
 
-        double averageOverallRating = (overallRatingsSum / (ratings.size() * 5d));
-        double averageComfortRating = (comfortSum / (double) ratings.size());
-        double averageHospitalityRating = (hospitalitySum / (double) ratings.size());
-        double averageFacilitiesRating = (facilitiesSum / (double) ratings.size());
-        double averageCleanlinessRating = (cleanlinessSum / (double) ratings.size());
-        double averageValueForMoneyRating = (valueForMoneySum / (double) ratings.size());
+        Double averageOverallRating = (overallRatingsSum / ((double) ratings.size() * 5d));
+        Double averageComfortRating = comfortSum / (double) ratings.size();
+        Double averageHospitalityRating = (hospitalitySum / (double) ratings.size());
+        Double averageFacilitiesRating = (facilitiesSum / (double) ratings.size());
+        Double averageCleanlinessRating = (cleanlinessSum / (double) ratings.size());
+        Double averageValueForMoneyRating = (valueForMoneySum / (double) ratings.size());
 
         Map<String, Double> averageHomeRatings = new HashMap<>();
         if (averageOverallRating > 0) {
@@ -370,6 +373,7 @@ public class HomeController {
         }
 
         home.setAverageHomeRatings(averageHomeRatings);
+        homeService.save(home);
 
     }
 

@@ -1,5 +1,8 @@
 package hr.mstuban.homeexchange.domain;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -39,12 +42,15 @@ public class User {
     @Column(name = "ENABLED")
     private boolean enabled;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<UserRole> roles;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Home> homes;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Rating> ratings;
 

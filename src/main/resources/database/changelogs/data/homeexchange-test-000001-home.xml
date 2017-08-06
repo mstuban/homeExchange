@@ -8,17 +8,17 @@
         <insert tableName="HOME">
             <column name="NAME">Apartment in Zagreb</column>
             <column name="SIZE_IN_SQUARE_METERS">250</column>
-            <column name="ADDRESS">1</column>
+            <column name="ADDRESS_ID">1</column>
             <column name="TYPE">Apartment</column>
             <column name="DESCRIPTION">Apartment in the upper town of Zagreb.</column>
             <column name="AVAILABLE">true</column>
             <column name="USERID">1</column>
-            <column name="TIME_OF_EXCHANGE_IN_MONTHS">3</column>
+            <column name="TIME_OF_EXCHANGE_IN_MONTHS">36</column>
         </insert>
         <insert tableName="HOME">
             <column name="NAME">Condo in Čazma</column>
             <column name="SIZE_IN_SQUARE_METERS">35</column>
-            <column name="ADDRESS">2</column>
+            <column name="ADDRESS_ID">2</column>
             <column name="TYPE">Condo</column>
             <column name="DESCRIPTION">Condo in the centre of Čazma.</column>
             <column name="AVAILABLE">false</column>
@@ -28,7 +28,7 @@
         <insert tableName="HOME">
             <column name="NAME">House in Imotski</column>
             <column name="SIZE_IN_SQUARE_METERS">35</column>
-            <column name="ADDRESS">3</column>
+            <column name="ADDRESS_ID">3</column>
             <column name="TYPE">House</column>
             <column name="DESCRIPTION">House in the outback of Imotski.</column>
             <column name="AVAILABLE">true</column>

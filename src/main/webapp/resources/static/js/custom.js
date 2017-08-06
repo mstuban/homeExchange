@@ -4,6 +4,9 @@
 
 $(document).ready(function () {
 
+    $('#available').bootstrapToggle('on');
+
+
     $(function () {
         function is_touch_device() {
             return 'ontouchstart' in window        // works on most browsers

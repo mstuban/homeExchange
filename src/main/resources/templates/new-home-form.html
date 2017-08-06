@@ -311,7 +311,7 @@
                     <label>Available:</label>
                     <input type="checkbox" data-toggle="toggle" th:field="*{available}"
                            data-on="Yes"
-                           data-off="No" >
+                           data-off="No" id="available">
                     <p class="text-danger" th:each="error : ${#fields.errors('available')}"
                        th:text="${error}">Validation error</p>
                 </div>

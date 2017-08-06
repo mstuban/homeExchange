@@ -139,13 +139,12 @@ html {
 }
 
 footer {
-    font-size: small;
-    padding-top: 3px;
-    position: absolute;
-    height: 30px;
-    margin-bottom: 0;
+    padding-top: 10px;
+    position: fixed;
     bottom: 0;
     width: 100%;
+    height: 30px;
+    z-index: 100;
 }
 
 #profileModal img, #profilePanelBody img {
