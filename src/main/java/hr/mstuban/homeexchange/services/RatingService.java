@@ -21,5 +21,11 @@ public interface RatingService {
 
     boolean existsByUsernameAndHomeId(String username, Long id);
 
+    Rating findByHomeIdAndUsername(Long id, String username);
+
     List<Object[]> getCommentsByHome(Home home);
+
+    Rating findById(Long id);
+
+    void deleteById(Long id);
 }

@@ -44,9 +44,24 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    public Rating findByHomeIdAndUsername(Long id, String username) {
+        return ratingRepository.findByHome_HomeIdAndUserUserName(id, username);
+    }
+
+    @Override
     public List<Object[]> getCommentsByHome(Home home) {
         return ratingRepository.getCommentsByHome(home);
     }
 
+    @Override
+    public Rating findById(Long id) {
+        return ratingRepository.findOne(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        ratingRepository.delete(id);
+    }
 
 }
+

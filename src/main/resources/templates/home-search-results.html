@@ -55,6 +55,11 @@
                 <strong>Warning!</strong> <span th:text="${cannotRateHome}"></span>
             </div>
         </div>
+        <div th:if="${failedToDeleteRatingError}" class="col col-md-12 text-center">
+            <div class="alert alert-danger">
+                <strong>Warning!</strong> <span th:text="${failedToDeleteRatingError}"></span>
+            </div>
+        </div>
 
         <div class="col col-md-offset-2 col-md-8" th:each="address, var : ${addresses}">
             <div class="row" th:if="${var.index == 0}">
@@ -136,6 +141,14 @@
                                 class="glyphicon glyphicon-star"></i>&nbsp;Rate
                             home
                         </button>
+
+                        <a th:if="${@ratingService.existsByUsernameAndHomeId(#authentication.getName(), address.home.homeId)}"
+                           th:href="@{/home/deleteRating/{id}(id=${@ratingService.findByHomeIdAndUsername(address.home.homeId, #authentication.getName()).id})}">
+                            <button
+                                    class="btn btn-primary" type="button">
+                                <i class="glyphicon glyphicon-trash"></i>&nbsp;Delete rating
+                            </button>
+                        </a>
 
                     </div>
                     <div class="clearfix"></div>

@@ -285,6 +285,23 @@ public class HomeController {
 
     }
 
+    @GetMapping("/home/deleteRating/{id}")
+    public String deleteRatingById(@PathVariable Long id, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+
+        Rating rating = ratingService.findById(id);
+
+        if (!Objects.equals(rating.getUser().getUserName(), principal.getName()) && !((UsernamePasswordAuthenticationToken) principal).getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            redirectAttributes.addFlashAttribute("failedToDeleteRatingError", "You did not make that rating, so therefore, you cannot delete it.");
+            return "redirect:/homes";
+        }
+
+        ratingService.deleteById(id);
+
+        redirectAttributes.addFlashAttribute("deleteSuccess", "You have successfully removed your rating!");
+
+        return "redirect:/homes";
+    }
+
     @ResponseBody
     @RequestMapping("/get-addresses")
     public List<Address> getHomes(@RequestParam(name = "q") String query) {

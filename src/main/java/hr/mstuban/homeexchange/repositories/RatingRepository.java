@@ -23,4 +23,6 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     @Query("select r.user, r.comment FROM Rating r where r.home = ?1 and r.comment is not null")
     List<Object[]> getCommentsByHome(Home home);
 
+    Rating findByHome_HomeIdAndUserUserName(Long id, String username);
+
 }
