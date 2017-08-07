@@ -7,60 +7,19 @@
 <th:block th:include="fragments/header :: header"></th:block>
 <div class="container-fluid">
     <div class="row top-buffer bottom-buffer">
-        <div th:if="${deleteSuccess}" class="col col-md-12 text-center">
-            <div class="alert alert-success">
-                <strong>Success!</strong> <span th:text="${deleteSuccess}"></span>
+        <div th:if="${searchResults != null && !#lists.isEmpty(addresses)}" class="col col-md-12 text-center">
+            <div class="alert alert-info">
+                <span th:text="${searchResults}"></span>
             </div>
         </div>
         <div th:if="${#lists.isEmpty(addresses)}" class="col col-md-12 text-center">
             <div class="alert alert-info">
-                <strong>Info!</strong> No addresses found by that search parameter.
+                No addresses found for: <span th:inline="text">'[[${searchParameterWithNoResults}]]'</span>
             </div>
             <a th:href="@{/}">
                 <button class="btn btn-primary">Search again</button>
             </a>
         </div>
-        <div th:if="${failedToDeleteError}" class="col col-md-12 text-center">
-            <div class="alert alert-danger">
-                <strong>Warning!</strong> <span th:text="${failedToDeleteError}"></span>
-            </div>
-        </div>
-        <div th:if="${homeCreatedSuccess}" class="col col-md-12 text-center">
-            <div class="alert alert-success">
-                <strong>Success!</strong> <span th:text="${homeCreatedSuccess}"></span>
-            </div>
-        </div>
-        <div th:if="${imageDeletedSuccessfully}" class="col col-md-12 text-center">
-            <div class="alert alert-success">
-                <strong>Success!</strong> <span th:text="${imageDeletedSuccessfully}"></span>
-            </div>
-        </div>
-        <div th:if="${imageAddedSuccessfully}" class="col col-md-12 text-center">
-            <div class="alert alert-success">
-                <strong>Success!</strong> <span th:text="${imageAddedSuccessfully}"></span>
-            </div>
-        </div>
-        <div th:if="${failedToEditError}" class="col col-md-12 text-center">
-            <div class="alert alert-danger">
-                <strong>Warning!</strong> <span th:text="${failedToEditError}"></span>
-            </div>
-        </div>
-        <div th:if="${ratingAddedSuccess}" class="col col-md-12 text-center">
-            <div class="alert alert-success">
-                <strong>Success!</strong> <span th:text="${ratingAddedSuccess}"></span>
-            </div>
-        </div>
-        <div th:if="${cannotRateHome}" class="col col-md-12 text-center">
-            <div class="alert alert-danger">
-                <strong>Warning!</strong> <span th:text="${cannotRateHome}"></span>
-            </div>
-        </div>
-        <div th:if="${failedToDeleteRatingError}" class="col col-md-12 text-center">
-            <div class="alert alert-danger">
-                <strong>Warning!</strong> <span th:text="${failedToDeleteRatingError}"></span>
-            </div>
-        </div>
-
         <div class="col col-md-offset-2 col-md-8" th:each="address, var : ${addresses}">
             <div class="row" th:if="${var.index == 0}">
                 <form th:action="@{/homes}" method="GET" class="form-group col-sm-2">
@@ -70,6 +29,52 @@
                     </select>
                     <input type="submit" class="btn btn-primary" value="Sort by rating">
                 </form>
+                <div th:if="${deleteSuccess}" class="col col-md-12 text-center">
+                    <div class="alert alert-success">
+                        <strong>Success!</strong> <span th:text="${deleteSuccess}"></span>
+                    </div>
+                </div>
+                <div th:if="${failedToDeleteError}" class="col col-md-12 text-center">
+                    <div class="alert alert-danger">
+                        <strong>Warning!</strong> <span th:text="${failedToDeleteError}"></span>
+                    </div>
+                </div>
+                <div th:if="${homeCreatedSuccess}" class="col col-md-12 text-center">
+                    <div class="alert alert-success">
+                        <strong>Success!</strong> <span th:text="${homeCreatedSuccess}"></span>
+                    </div>
+                </div>
+                <div th:if="${imageDeletedSuccessfully}" class="col col-md-12 text-center">
+                    <div class="alert alert-success">
+                        <strong>Success!</strong> <span th:text="${imageDeletedSuccessfully}"></span>
+                    </div>
+                </div>
+                <div th:if="${imageAddedSuccessfully}" class="col col-md-12 text-center">
+                    <div class="alert alert-success">
+                        <strong>Success!</strong> <span th:text="${imageAddedSuccessfully}"></span>
+                    </div>
+                </div>
+                <div th:if="${failedToEditError}" class="col col-md-12 text-center">
+                    <div class="alert alert-danger">
+                        <strong>Warning!</strong> <span th:text="${failedToEditError}"></span>
+                    </div>
+                </div>
+                <div th:if="${ratingAddedSuccess}" class="col col-md-12 text-center">
+                    <div class="alert alert-success">
+                        <strong>Success!</strong> <span th:text="${ratingAddedSuccess}"></span>
+                    </div>
+                </div>
+                <div th:if="${cannotRateHome}" class="col col-md-12 text-center">
+                    <div class="alert alert-danger">
+                        <strong>Warning!</strong> <span th:text="${cannotRateHome}"></span>
+                    </div>
+                </div>
+                <div th:if="${failedToDeleteRatingError}" class="col col-md-12 text-center">
+                    <div class="alert alert-danger">
+                        <strong>Warning!</strong> <span th:text="${failedToDeleteRatingError}"></span>
+                    </div>
+                </div>
+
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -114,7 +119,8 @@
                             home
                         </button>
                         <span class="dropdown pull-right">
-                            <button class="dropdown-toggle btn btn-sm btn-primary" data-toggle="dropdown" th:inline="text">
+                            <button class="dropdown-toggle btn btn-sm btn-primary" data-toggle="dropdown"
+                                    th:inline="text">
                                 <i class="glyphicon glyphicon-comment"></i>&nbsp;View comments
                             </button>
                             <ul id="products-menu" class="dropdown-menu clearfix" role="menu">
@@ -317,7 +323,6 @@
                 <a id="emailButton">
                     <button id="emailBtn" type="button" class="btn btn-success pull-left"><i
                             class="glyphicon glyphicon-envelope"></i>&nbsp;E-mail
-                    </button>
                 </a>
 
                 <button id="phoneButton" type="button" class="btn btn-success pull-left"><i

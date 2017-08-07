@@ -323,18 +323,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label>Available:</label>
-                                        <br/>
-                                        <input type="checkbox" checked="checked" data-toggle="toggle"
-                                               th:field="*{available}"
-                                               data-on="Yes"
-                                               data-off="No" id="available">
-                                        <p class="text-danger" th:each="error : ${#fields.errors('available')}"
-                                           th:text="${error}">Validation error</p>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group col-md-3">
                                         <label>Time Of Exchange In Months:</label>
                                         <input class="form-control" type="number"
@@ -351,6 +339,18 @@
                                                min="2" max="36"/>
                                         <p class="text-danger"
                                            th:each="error : ${#fields.errors('timeOfExchangeInMonthsMax')}"
+                                           th:text="${error}">Validation error</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label>Available:</label>
+                                        <br/>
+                                        <input type="checkbox" checked="checked" data-toggle="toggle"
+                                               th:field="*{available}"
+                                               data-on="Yes"
+                                               data-off="No" id="available">
+                                        <p class="text-danger" th:each="error : ${#fields.errors('available')}"
                                            th:text="${error}">Validation error</p>
                                     </div>
                                 </div>

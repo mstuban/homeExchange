@@ -9,6 +9,7 @@
     <div class="row">
         <div class="col-md-12">
             <br/>
+
             <div th:if="${#lists.isEmpty(homeList)}" class="col col-md-12 text-center">
                 <div class="alert alert-info">
                     <strong>Info!</strong> No statistics could be found by those parameters.
@@ -17,14 +18,95 @@
                     <button class="btn btn-primary">Generate again</button>
                 </a>
             </div>
+
+            <h2 th:if="${!#lists.isEmpty(homeList)}"><i class="glyphicon glyphicon-stats"></i>&nbsp;Generated Statistics</h2>
+
+
+            <h5>Search criteria:</h5>
+            <i class="badge" th:if="${!#strings.isEmpty(generateStatisticsForm.country)}"><span
+                    th:text="${'Country: ' + generateStatisticsForm.country}"></span></i>
+            <i class="badge" th:if="${!#strings.isEmpty(generateStatisticsForm.city)}"><span
+                    th:text="${'City: ' + generateStatisticsForm.city}"></span></i>
+            <i class="badge" th:if="${!#strings.isEmpty(generateStatisticsForm.type)}"><span
+                    th:text="${'Type: ' + generateStatisticsForm.type}"></span></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.sizeInSquareMetersMin != null) and (generateStatisticsForm.sizeInSquareMetersMax != null)}"
+               th:text="${'Size in square meters from ' + ' ' + generateStatisticsForm.sizeInSquareMetersMin} + ' to ' + ${generateStatisticsForm.sizeInSquareMetersMax} + ' '"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.sizeInSquareMetersMin == null) and (generateStatisticsForm.sizeInSquareMetersMax != null)}"
+               th:text="${'Size in square meters to: ' + generateStatisticsForm.sizeInSquareMetersMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.sizeInSquareMetersMax == null) and (generateStatisticsForm.sizeInSquareMetersMin != null)}"
+               th:text="${'Size in square meters from: ' + generateStatisticsForm.sizeInSquareMetersMin}"></i>
+
+            <i class="badge"
+               th:if="${(generateStatisticsForm.timeOfExchangeInMonthsMin != null) and (generateStatisticsForm.timeOfExchangeInMonthsMax != null)}"
+               th:text="${'Time of exchange from ' + ' ' + generateStatisticsForm.timeOfExchangeInMonthsMin} + ' to ' + ${generateStatisticsForm.timeOfExchangeInMonthsMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.timeOfExchangeInMonthsMin == null) and (generateStatisticsForm.timeOfExchangeInMonthsMin != null)}"
+               th:text="${'Time of exchange to: ' + generateStatisticsForm.timeOfExchangeInMonthsMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.timeOfExchangeInMonthsMax == null) and (generateStatisticsForm.timeOfExchangeInMonthsMin != null)}"
+               th:text="${'Time of exchange from: ' + generateStatisticsForm.timeOfExchangeInMonthsMin}"></i>
+
+
+            <i class="badge" th:if="${generateStatisticsForm.available == true}" th:text="${'Is available'}">
+            </i>
+            <i class="badge" th:if="${generateStatisticsForm.available == false}" th:text="${'Is not available'}">
+            </i>
+
+            <i class="badge"
+               th:if="${(generateStatisticsForm.hospitalityMin != null) and (generateStatisticsForm.hospitalityMax != null)}"
+               th:text="${'Average hospitality rating from ' + ' ' + generateStatisticsForm.hospitalityMin} + ' to ' + ${generateStatisticsForm.hospitalityMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.hospitalityMin == null) and (generateStatisticsForm.hospitalityMin != null)}"
+               th:text="${'Average hospitality rating to: ' + generateStatisticsForm.hospitalityMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.hospitalityMax == null) and (generateStatisticsForm.hospitalityMin != null)}"
+               th:text="${'Average hospitality rating from: ' + generateStatisticsForm.hospitalityMin}"></i>
+
+            <i class="badge"
+               th:if="${(generateStatisticsForm.cleanlinessMin != null) and (generateStatisticsForm.cleanlinessMax != null)}"
+               th:text="${'Average cleanliness rating from ' + ' ' + generateStatisticsForm.cleanlinessMin} + ' to ' + ${generateStatisticsForm.cleanlinessMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.cleanlinessMin == null) and (generateStatisticsForm.cleanlinessMax != null)}"
+               th:text="${'Average cleanliness rating to: ' + generateStatisticsForm.cleanlinessMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.cleanlinessMax == null) and (generateStatisticsForm.cleanlinessMin != null)}"
+               th:text="${'Average cleanliness rating from: ' + generateStatisticsForm.cleanlinessMin}"></i>
+
+            <i class="badge"
+               th:if="${(generateStatisticsForm.comfortMin != null) and (generateStatisticsForm.comfortMax != null)}"
+               th:text="${'Average comfort rating from ' + ' ' + generateStatisticsForm.comfortMin} + ' to ' + ${generateStatisticsForm.comfortMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.comfortMin == null) and (generateStatisticsForm.comfortMax != null)}"
+               th:text="${'Average comfort rating to: ' + generateStatisticsForm.comfortMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.comfortMax == null) and (generateStatisticsForm.comfortMin != null)}"
+               th:text="${'Average comfort rating from: ' + generateStatisticsForm.comfortMin}"></i>
+
+            <i class="badge"
+               th:if="${(generateStatisticsForm.facilitiesMin != null) and (generateStatisticsForm.facilitiesMax != null)}"
+               th:text="${'Average facilities rating from ' + ' ' + generateStatisticsForm.facilitiesMin} + ' to ' + ${generateStatisticsForm.facilitiesMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.facilitiesMin == null) and (generateStatisticsForm.facilitiesMax != null)}"
+               th:text="${'Average facilities rating to: ' + generateStatisticsForm.facilitiesMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.facilitiesMax == null) and (generateStatisticsForm.facilitiesMin != null)}"
+               th:text="${'Average facilities rating from: ' + generateStatisticsForm.facilitiesMin}"></i>
+
+            <i class="badge"
+               th:if="${(generateStatisticsForm.valueForMoneyMin != null) and (generateStatisticsForm.valueForMoneyMax != null)}"
+               th:text="${'Average value for money rating from ' + ' ' + generateStatisticsForm.valueForMoneyMin} + ' to ' + ${generateStatisticsForm.valueForMoneyMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.valueForMoneyMin == null) and (generateStatisticsForm.valueForMoneyMax != null)}"
+               th:text="${'Average value for money rating to: ' + generateStatisticsForm.valueForMoneyMax}"></i>
+            <i class="badge"
+               th:if="${(generateStatisticsForm.valueForMoneyMax == null) and (generateStatisticsForm.valueForMoneyMin != null)}"
+               th:text="${'Average value for money rating from: ' + generateStatisticsForm.valueForMoneyMin}"></i>
+
+
             <div th:if="${homeList.size() > 0}">
-                <h2><i class="glyphicon glyphicon-stats"></i>&nbsp;Generated Statistics</h2>
-                <p>These results were generated by your search:</p>
-                <a th:href="@{/statistics}">
-                    <button class="btn btn-primary">
-                        Generate again
-                    </button>
-                </a>
                 <table class="table table-striped">
                     <thead>
                     <tr>

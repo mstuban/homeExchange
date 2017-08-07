@@ -22,9 +22,9 @@ $(document).ready(function () {
     });
 
     $("label").click(function () {
-        $(this).parent().find("label").css({"background-color": "#D8D8D8"});
-        $(this).css({"background-color": "#7ED321"});
-        $(this).nextAll().css({"background-color": "#7ED321"});
+        $(this).parent().find("label").css({"background-color": "white"});
+        $(this).css({"background-color": "#white"});
+        $(this).nextAll().css({"background-color": "#white"});
     });
 
     $(':radio').change(function () {

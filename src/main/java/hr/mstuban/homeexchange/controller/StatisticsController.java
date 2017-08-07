@@ -81,6 +81,11 @@ public class StatisticsController {
         model.addAttribute("longestStay", longestStay);
         model.addAttribute("mostVisitedCountry", mostVisitedCountry);
 
+
+        // search criteria
+        model.addAttribute("generateStatisticsForm", generateStatisticsForm);
+
+
         return "statistics";
     }
 

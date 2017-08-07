@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.codehaus.plexus.util.StringUtils.isBlank;
+
 
 /**
  * Created by mstuban on 13.05.17..
@@ -100,6 +102,20 @@ public class HomeController {
         addresses = setRatingsToAddresses(addresses);
         model.addAttribute("addresses", addresses);
 
+
+        if (!isBlank(searchParameter)) {
+            model.addAttribute("searchResults", "Search results for: '" + searchParameter + "'");
+        }
+
+        if (addresses.size() == 0) {
+            model.addAttribute("searchParameterWithNoResults", searchParameter);
+        }
+
+        if (isBlank(searchParameter)) {
+            model.addAttribute("searchResults", "You typed nothing in the search box, displaying all homes: ");
+        }
+
+
         return "home-search-results";
     }
 
@@ -109,6 +125,7 @@ public class HomeController {
         List<Address> addresses = addressService.getAddressesByHome_User_UserName(principal.getName());
         addresses = setRatingsToAddresses(addresses);
 
+        model.addAttribute("searchResults", "Displaying your homes: ");
         model.addAttribute("addresses", addresses);
 
         return "home-search-results";
@@ -131,6 +148,7 @@ public class HomeController {
             }
         }
 
+        model.addAttribute("searchResults", "Displaying all available homes: ");
         model.addAttribute("addresses", addresses);
 
         return "home-search-results";
