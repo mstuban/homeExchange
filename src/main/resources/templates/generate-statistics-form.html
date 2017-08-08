@@ -17,6 +17,9 @@
                 <div class="panel-body" id="profilePanelBody">
                     <div class="row">
                         <div class="col-md-12">
+                            <button class="btn btn-success" data-toggle="collapse" data-target="#statisticsForm">
+                                Show form
+                            </button>
                             <div id="statisticsForm" class="collapse">
                                 <form th:object="${generateStatisticsForm}"
                                       method="GET">
@@ -444,9 +447,6 @@
                                     </div>
                                 </form>
                             </div>
-                            <button class="btn btn-success" data-toggle="collapse" data-target="#statisticsForm">
-                                Show form
-                            </button>
                         </div>
                         <div class="col-md-12">
                             <br/>
