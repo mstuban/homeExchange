@@ -1,5 +1,7 @@
 package hr.mstuban.homeexchange.domain.form;
 
+import static org.codehaus.plexus.util.StringUtils.isBlank;
+
 /**
  * Created by mstuban on 05/08/17.
  */
@@ -184,4 +186,26 @@ public class GenerateStatisticsForm {
     public void setSizeInSquareMetersMax(Integer sizeInSquareMetersMax) {
         this.sizeInSquareMetersMax = sizeInSquareMetersMax;
     }
+
+    public boolean isFormBlank() {
+        if (!isBlank(country)) {
+            return false;
+        }
+
+        if (!isBlank(city)) {
+            return false;
+        }
+
+        if (!isBlank(type)) {
+            return false;
+        }
+
+        if (timeOfExchangeInMonthsMin != null || timeOfExchangeInMonthsMax != null || sizeInSquareMetersMin != null || sizeInSquareMetersMax != null || hospitalityMin != null || hospitalityMax != null || facilitiesMin != null || facilitiesMax != null || cleanlinessMin != null || cleanlinessMax != null || comfortMin != null || comfortMax != null || valueForMoneyMin != null || valueForMoneyMax != null) {
+            return false;
+        }
+
+        return true;
+
+    }
+
 }

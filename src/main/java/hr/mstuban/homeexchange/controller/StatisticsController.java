@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,17 +28,19 @@ public class StatisticsController {
     @Autowired
     private StatisticsFacade statisticsFacade;
 
-    @GetMapping("/statistics")
-    public String getStatisticsForm(Model model) {
+    @GetMapping("/generateStatistics")
+    public String generateStatistics(@Valid @ModelAttribute("generateStatisticsForm") GenerateStatisticsForm generateStatisticsForm, @RequestParam(value="origin", required = false) boolean origin,
+            @RequestParam(value="reset", required = false) boolean reset, @RequestParam(value = "unassigned", required = false) boolean unassigned, Model model, HttpSession session) {
 
-        model.addAttribute("generateStatisticsForm", new GenerateStatisticsForm());
+        if (reset || unassigned) {
+            session.setAttribute("generateStatisticsForm", new GenerateStatisticsForm());
+        }
 
-        return "generate-statistics-form";
-    }
-
-    @PostMapping("/generateStatistics")
-    public String generateStatistics(@Valid @ModelAttribute("generateStatisticsForm") GenerateStatisticsForm generateStatisticsForm, Model model) {
-
+        if (generateStatisticsForm.isFormBlank() && session.getAttribute("generateStatisticsForm") != null && origin) {
+            generateStatisticsForm = (GenerateStatisticsForm) session.getAttribute("generateStatisticsForm");
+        } else {
+            session.setAttribute("generateStatisticsForm", generateStatisticsForm);
+        }
 
         Iterable<Home> homes = statisticsFacade.searchHomeByFilter(generateStatisticsForm);
         List<Home> homeList = new ArrayList<>();
@@ -86,7 +90,7 @@ public class StatisticsController {
         model.addAttribute("generateStatisticsForm", generateStatisticsForm);
 
 
-        return "statistics";
+        return "generate-statistics-form";
     }
 
 }
