@@ -4,6 +4,15 @@
 
 $(document).ready(function () {
 
+    $(document).ready(function(){
+        $("#statisticsForm").on("hide.bs.collapse", function(){
+            $(".btn-success").html('<span class="glyphicon glyphicon-collapse-down"></span> Show');
+        });
+        $("#statisticsForm").on("show.bs.collapse", function(){
+            $(".btn-success").html('<span class="glyphicon glyphicon-collapse-up"></span> Hide');
+        });
+    });
+
     $('#available').bootstrapToggle('on');
 
 

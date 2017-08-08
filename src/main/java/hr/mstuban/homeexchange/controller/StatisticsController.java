@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
@@ -29,10 +28,9 @@ public class StatisticsController {
     private StatisticsFacade statisticsFacade;
 
     @GetMapping("/generateStatistics")
-    public String generateStatistics(@Valid @ModelAttribute("generateStatisticsForm") GenerateStatisticsForm generateStatisticsForm, @RequestParam(value="origin", required = false) boolean origin,
-            @RequestParam(value="reset", required = false) boolean reset, @RequestParam(value = "unassigned", required = false) boolean unassigned, Model model, HttpSession session) {
+    public String generateStatistics(@Valid @ModelAttribute("generateStatisticsForm") GenerateStatisticsForm generateStatisticsForm, @RequestParam(value = "origin", required = false) boolean origin, @RequestParam(value = "unassigned", required = false) boolean unassigned, Model model, HttpSession session) {
 
-        if (reset || unassigned) {
+        if (unassigned) {
             session.setAttribute("generateStatisticsForm", new GenerateStatisticsForm());
         }
 
@@ -88,7 +86,7 @@ public class StatisticsController {
 
         // search criteria
         model.addAttribute("generateStatisticsForm", generateStatisticsForm);
-
+        model.addAttribute("homes", homeList);
 
         return "generate-statistics-form";
     }
