@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <ul class="nav navbar-nav text-center">
-                    <li><a href="#" th:href="@{/home}"><i class="glyphicon glyphicon-home"></i></a></li>
+                    <li><a id="homeLink" href="#" th:href="@{/home}"><i class="glyphicon glyphicon-home"></i></a></li>
                     <li><a href="#" th:href="@{/home}"><b>Home Exchange</b></a></li>
                     <li><a href="#" th:href="@{/homes}" sec:authorize="hasRole('ROLE_USER')">Show all homes</a>
                     </li>
@@ -38,7 +38,7 @@
                         <strong>Warning!</strong> <span th:text="${imageUploadAlert}"></span>
                     </div>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown" id="messagesBox">
                     <a href="#" class="text-center dropdown-toggle" data-toggle="dropdown">
                         <i class="glyphicon glyphicon-envelope">
                             <i class="rw-number-notification"
@@ -88,7 +88,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown" id="profileBox">
                     <a href="#" class="text-center dropdown-toggle" data-toggle="dropdown">
 
                         <i class="glyphicon glyphicon-user"></i>

@@ -32,7 +32,7 @@
                                 <input hidden="hidden" th:value="${homeId}" th:field="*{id}"/>
                                 <div class="form-group col-md-6">
                                     <label>Name:</label>
-                                    <input class="form-control" max=100 th:field="*{name}" required/>
+                                    <input class="form-control" max=100 th:field="*{name}" required autofocus/>
                                     <p class="text-danger" th:each="error: ${#fields.errors('name')}"
                                        th:text="${error}">Validation error</p>
                                 </div>

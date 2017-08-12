@@ -34,7 +34,7 @@
                                 <input type="hidden" th:field="*{id}" th:value="${#authentication.principal.userId}"/>
                                 <div class="form-group col-md-6">
                                     <label>Username:</label>
-                                    <input class="form-control" th:field="*{username}" required/>
+                                    <input class="form-control" th:field="*{username}" required autofocus/>
                                     <p class="text-danger" th:each="error: ${#fields.errors('username')}"
                                        th:text="${error}">Validation error</p>
                                 </div>

@@ -65,29 +65,9 @@ public class HomeController {
     private EditHomeFormValidator editHomeFormValidator;
 
     @GetMapping("/home")
-    public String getHome(Model model) {
-
-        List<User> users = userService.findAll();
-
-        Integer usersWithHomesAddedCounter = 0;
-
-        for (User user : users) {
-            if (user.getHomes().size() > 0) {
-                usersWithHomesAddedCounter++;
-            }
-        }
-
-        Home home = homeService.findHomeWithMostTimeExchanged();
-
-        model.addAttribute("usersWithHomesAddedCounter", usersWithHomesAddedCounter);
-        model.addAttribute("userCount", users.size());
-        model.addAttribute("homeCount", homeService.findAll().size());
-        model.addAttribute("userWithLongestStay", home.getUser().getFirstName() + ' ' + home.getUser().getLastName());
-        model.addAttribute("numberOfCountries", addressService.getByCountryIsUnique().size());
-        model.addAttribute("messagesSentCount", messageService.findAll().size());
+    public String getHome() {
 
         List<Address> addresses = addressService.findAddressesBySearchParameter("");
-
         setRatingsToAddresses(addresses);
 
         return "home";
@@ -203,6 +183,12 @@ public class HomeController {
             Long imageId = home.getImage().getId();
             home.setImage(null);
             imageService.delete(imageId);
+        }
+
+        List<Rating> ratings = ratingService.getRatingsByHomeId(id);
+
+        for (Rating rating : ratings) {
+            ratingService.deleteById(rating.getId());
         }
 
         addressService.deleteByHome_HomeId(home.getHomeId());

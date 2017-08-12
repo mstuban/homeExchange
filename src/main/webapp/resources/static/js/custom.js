@@ -4,11 +4,22 @@
 
 $(document).ready(function () {
 
-    $(document).ready(function(){
-        $("#statisticsForm").on("hide.bs.collapse", function(){
+    $(document).ready(function () {
+        var url = window.location;
+        // Will only work if string in href matches with location
+        $('ul.nav a[href="' + url + '"]').parent().addClass('active');
+
+        // Will also work for relative and absolute hrefs
+        $('ul.nav a').not('#homeLink').filter(function () {
+            return this.href == url;
+        }).parent().addClass('active').parent().parent().addClass('active');
+    });
+
+    $(document).ready(function () {
+        $("#statisticsForm").on("hide.bs.collapse", function () {
             $(".btn-success").html('<span class="glyphicon glyphicon-collapse-down"></span> Show');
         });
-        $("#statisticsForm").on("show.bs.collapse", function(){
+        $("#statisticsForm").on("show.bs.collapse", function () {
             $(".btn-success").html('<span class="glyphicon glyphicon-collapse-up"></span> Hide');
         });
     });
@@ -24,14 +35,13 @@ $(document).ready(function () {
 
         if (!is_touch_device() && $('.navbar-toggle:hidden')) {
             $('.dropdown-menu', this).css('margin-top', 0);
-            $('.dropdown').hover(function () {
+            $(".dropdown").not('#messagesBox').not('#profileBox').hover(function () {
                 $('.dropdown-toggle', this).trigger('click').toggleClass("disabled");
             });
         }
     });
 
     $("label").click(function () {
-        $(this).parent().find("label").css({"background-color": "white"});
         $(this).css({"background-color": "#white"});
         $(this).nextAll().css({"background-color": "#white"});
     });
