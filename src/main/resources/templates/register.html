@@ -12,7 +12,7 @@
             <form th:action="@{/register}" th:object="${newUserForm}" method="POST">
                 <div class="form-group">
                     <label>Username:</label>
-                    <input class="form-control" th:field="*{username}" required/>
+                    <input class="form-control" th:field="*{username}" required autofocus/>
                     <p class="text-danger" th:each="error: ${#fields.errors('username')}"
                        th:text="${error}">Validation error</p>
                 </div>
