@@ -35,41 +35,38 @@ public class NewMessageFormValidator implements Validator {
 
     private void validateReceiver(String receiver, Errors errors) {
 
-        if(isBlank(receiver)){
+        if (isBlank(receiver)) {
             errors.rejectValue("receiver", "message.receiver.empty", "You must select a receiver.");
         }
 
-        if(!userService.existsByUserNameIgnoreCase(receiver)){
+        if (!userService.existsByUserNameIgnoreCase(receiver)) {
             errors.rejectValue("receiver", "message.receiver.does-not-exist", "That user does not exist!");
-
         }
 
     }
 
     private void validateContent(String content, Errors errors) {
 
-        if(isBlank(content)){
+        if (isBlank(content)) {
             errors.rejectValue("content", "message.content.empty", "You must enter some content.");
         }
 
-        if(content.length() > 200){
+        if (content.length() > 200) {
             errors.rejectValue("content", "message.content.too-long", "Your content can only have 200 characters.");
-
         }
     }
 
     private void validateTitle(String title, Errors errors) {
 
-        if(isBlank(title)){
+        if (isBlank(title)) {
             errors.rejectValue("title", "message.title.empty", "You must enter a title.");
         }
 
-        if(title.length() > 30){
+        if (title.length() > 30) {
             errors.rejectValue("title", "message.title.too-long", "Your title can only have 30 characters.");
         }
 
     }
-
 
 
 }

@@ -4,42 +4,39 @@
     <th:block th:include="fragments/headerincludes :: head"></th:block>
 </head>
 <body>
-<th:block th:include="fragments/header :: header"></th:block>
-<header>
-    <div th:if="${messageDoesNotExist}" class="col col-md-12 text-center">
-        <div class="alert alert-danger">
-            <strong>Warning!</strong> <span th:text="${messageDoesNotExist}"></span>
+    <th:block th:include="fragments/header :: header"></th:block>
+    <header>
+        <div th:if="${messageDoesNotExist}" class="col col-md-12 text-center">
+            <div class="alert alert-danger">
+                <strong>Warning!</strong> <span th:text="${messageDoesNotExist}"></span>
+            </div>
         </div>
-    </div>
-    <div th:if="${messageDeleteFailed}" class="col col-md-12 text-center">
-        <div class="alert alert-danger">
-            <strong>Warning!</strong> <span th:text="${messageDeleteFailed}"></span>
+        <div th:if="${messageDeleteFailed}" class="col col-md-12 text-center">
+            <div class="alert alert-danger">
+                <strong>Warning!</strong> <span th:text="${messageDeleteFailed}"></span>
+            </div>
         </div>
-    </div>
-    <div th:if="${messageViewFailed}" class="col col-md-12 text-center">
-        <div class="alert alert-danger">
-            <strong>Warning!</strong> <span th:text="${messageViewFailed}"></span>
+        <div th:if="${messageViewFailed}" class="col col-md-12 text-center">
+            <div class="alert alert-danger">
+                <strong>Warning!</strong> <span th:text="${messageViewFailed}"></span>
+            </div>
         </div>
-    </div>
-    <div class="header-content">
-        <div class="header-content-inner vcenter">
-            <h2>Where would you like to move?</h2>
-            <form th:action="@{/searchForHomes}" method="POST">
-                <div class="form-group">
-                    <input placeholder="Type in a country, city, or street" class="form-control" type="text"
-                           name="searchParameter" autofocus/>
-                    <br/>
-                    <input type="submit" class="col-md-12 btn btn-primary" value="Search"/>
-                </div>
-            </form>
+        <div class="header-content">
+            <div class="header-content-inner vcenter">
+                <h2>Where would you like to move?</h2>
+                <form th:action="@{/searchForHomes}" method="POST">
+                    <div class="form-group">
+                        <input placeholder="Type in a country, city, or street" class="form-control" type="text"
+                               name="searchParameter" autofocus/>
+                        <br/>
+                        <input type="submit" class="col-md-12 btn btn-primary" value="Search"/>
+                    </div>
+                </form>
+            </div>
         </div>
-
-
-    </div>
-
-</header>
-<br/>
-<br/>
-<th:block th:include="fragments/footer :: footer"></th:block>
+    </header>
+    <br/>
+    <br/>
+    <th:block th:include="fragments/footer :: footer"></th:block>
 </body>
 </html>

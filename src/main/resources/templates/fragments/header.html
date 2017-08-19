@@ -4,120 +4,120 @@
     <meta charset="UTF-8"/>
 </head>
 <body>
+    <div th:fragment="header">
+        <nav id="navbar-top" class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <ul class="nav navbar-nav text-center">
+                        <li><a id="homeLink" href="#" th:href="@{/home}"><i class="glyphicon glyphicon-home"></i></a></li>
+                        <li><a href="#" th:href="@{/home}"><b>Home Exchange</b></a></li>
+                        <li><a href="#" th:href="@{/homes}" sec:authorize="hasRole('ROLE_USER')">Show all homes</a>
+                        </li>
+                        <li><a href="#" th:href="@{/home/new}" sec:authorize="hasRole('ROLE_USER')">Add a new home</a>
+                        </li>
+                        <li><a href="#" th:href="@{/generateStatistics(origin=true)}" sec:authorize="hasRole('ROLE_USER')">Statistics
+                            tool</a>
+                        </li>
+                        <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/login}">Sign in</a></li>
+                        <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/register}">Create an account</a></li>
+                    </ul>
+                </div>
+                <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right ">
+                    <li th:if="${loginSuccess}" class="col col-md-12 text-center">
+                        <div class="alert alert-success">
+                            <strong>Success!</strong> <span th:text="${loginSuccess}"></span>
+                        </div>
+                    </li>
+                    <li th:if="${messageDeletedSuccess}">
+                        <div class="alert alert-success">
+                            <strong>Success!</strong> <span th:text="${messageDeletedSuccess}"></span>
+                        </div>
+                    </li>
+                    <li th:if="${imageUploadAlert}">
+                        <div class="alert alert-danger">
+                            <strong>Warning!</strong> <span th:text="${imageUploadAlert}"></span>
+                        </div>
+                    </li>
+                    <li class="dropdown" id="messagesBox">
+                        <a href="#" class="text-center dropdown-toggle" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-envelope">
+                                <i class="rw-number-notification"
+                                   th:if="${@messageService.countByReceiverUsernameUnread(#authentication.getName(), false) > 0}"
+                                   th:text="${@messageService.countByReceiverUsernameUnread(#authentication.getName(), false)}"></i>
+                            </i>
+                            &nbsp;
+                            <i class="glyphicon glyphicon-chevron-down"></i>
+                        </a>
+                        <ul id="messages-menu" class="dropdown-menu link-no-color" style="padding: 15px;">
+                            <li th:each="message : ${@messageService.getMessagesByReceiverUsername(#authentication.getName())}"
+                                th:classappend="${message.hasBeenRead} ? 'read-message row' : 'unread-message row'"
+                                style="padding: 5px;">
+                                <a id="link-no-color" th:href="@{/message/{id}(id=${message.id})}">
+                                    <div>
+                                        <strong th:text="${message.author}"></strong>
+                                        <small class="pull-right text-muted">
+                                            <span class="glyphicon glyphicon-time"></span>&nbsp;<span id="messageTime"
+                                                                                                      th:text="${#dates.format(message.createdOn, 'dd.MM.YYYY HH:mm')}"></span>
+                                        </small>
+                                        <p th:text="${message.title}">
+                                        </p>
+                                    </div>
+                                </a>
+                                <br/>
+                                <div>
+                                    <a th:href="@{/message/new/{messageAuthor}(messageAuthor=${message.author})}"
+                                       class="col-md-6 btn btn-success text-center">
+                                        <i
+                                                class="glyphicon glyphicon-pencil"></i></a>
+                                    <a class=" col-md-6 text-center btn btn-danger text-center" data-toggle="modal"
+                                       data-target="#deleteMessageModal" th:attr="data-message-id=${message.id}">
+                                        <i class="glyphicon glyphicon-trash"></i></a>
+                                </div>
+                                <hr class="col-md-10"/>
+                            </li>
+                            <li class="text-center"
+                                th:if="${#lists.size(@messageService.getMessagesByReceiverUsername(#authentication.getName())) == 0}">
+                                <span>You have no messages.</span>
+                            </li>
+                            <li class="text-center">
+                                <a th:href="@{/message/new}" id="sendNewMessageButton">
+                                    <button type="button" class="btn btn-primary">
+                                        Send a new message
+                                    </button>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="profileBox">
+                        <a href="#" class="text-center dropdown-toggle" data-toggle="dropdown">
 
-<div th:fragment="header">
-    <nav id="navbar-top" class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <ul class="nav navbar-nav text-center">
-                    <li><a id="homeLink" href="#" th:href="@{/home}"><i class="glyphicon glyphicon-home"></i></a></li>
-                    <li><a href="#" th:href="@{/home}"><b>Home Exchange</b></a></li>
-                    <li><a href="#" th:href="@{/homes}" sec:authorize="hasRole('ROLE_USER')">Show all homes</a>
+                            <i class="glyphicon glyphicon-user"></i>
+                            <strong sec:authentication="name"></strong>
+                            <i class="glyphicon glyphicon-chevron-down"></i>
+                        </a>
+                        <ul class="dropdown-menu text-center">
+                            <li>
+                                <a th:href="@{/profile}" class="text-center">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    &nbsp;My Profile
+                                </a> 
+                            </li>
+                            <li>
+                                <a th:href="@{/searchForMyHomes}" class="text-center">
+                                    <i class="glyphicon glyphicon-home"></i>&nbsp;My Homes
+                                </a> 
+                            </li>
+                            <li class="center-block">
+                                <form id="logoutform" th:action="@{/logout}" method="POST">
+                                    <input type="submit" class="btn btn-danger center-block align-middle"
+                                           value="Logout">
+                                </form>
+                            </li>
+                        </ul>
                     </li>
-                    <li><a href="#" th:href="@{/home/new}" sec:authorize="hasRole('ROLE_USER')">Add a new home</a>
-                    </li>
-                    <li><a href="#" th:href="@{/generateStatistics(origin=true)}" sec:authorize="hasRole('ROLE_USER')">Statistics tool</a>
-                    </li>
-                    <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/login}">Sign in</a></li>
-                    <li sec:authorize="isAnonymous()"><a href="#" th:href="@{/register}">Create an account</a></li>
                 </ul>
             </div>
-            <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right ">
-                <li th:if="${loginSuccess}" class="col col-md-12 text-center">
-                    <div class="alert alert-success">
-                        <strong>Success!</strong> <span th:text="${loginSuccess}"></span>
-                    </div>
-                </li>
-                <li th:if="${messageDeletedSuccess}">
-                    <div class="alert alert-success">
-                        <strong>Success!</strong> <span th:text="${messageDeletedSuccess}"></span>
-                    </div>
-                </li>
-                <li th:if="${imageUploadAlert}">
-                    <div class="alert alert-danger">
-                        <strong>Warning!</strong> <span th:text="${imageUploadAlert}"></span>
-                    </div>
-                </li>
-                <li class="dropdown" id="messagesBox">
-                    <a href="#" class="text-center dropdown-toggle" data-toggle="dropdown">
-                        <i class="glyphicon glyphicon-envelope">
-                            <i class="rw-number-notification"
-                               th:if="${@messageService.countByReceiverUsernameUnread(#authentication.getName(), false) > 0}"
-                               th:text="${@messageService.countByReceiverUsernameUnread(#authentication.getName(), false)}"></i>
-                        </i>
-                        &nbsp;
-                        <i class="glyphicon glyphicon-chevron-down"></i>
-                    </a>
-                    <ul id="messages-menu" class="dropdown-menu link-no-color" style="padding: 15px;">
-                        <li th:each="message : ${@messageService.getMessagesByReceiverUsername(#authentication.getName())}"
-                            th:classappend="${message.hasBeenRead} ? 'read-message row' : 'unread-message row'"
-                            style="padding: 5px;">
-                            <a id="link-no-color" th:href="@{/message/{id}(id=${message.id})}">
-                                <div>
-                                    <strong th:text="${message.author}"></strong>
-                                    <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>&nbsp;<span id="messageTime"
-                                                                                                  th:text="${#dates.format(message.createdOn, 'dd.MM.YYYY HH:mm')}"></span>
-                                    </small>
-                                    <p th:text="${message.title}">
-                                    </p>
-                                </div>
-                            </a>
-                            <br/>
-                            <div>
-                                <a th:href="@{/message/new/{messageAuthor}(messageAuthor=${message.author})}"
-                                   class="col-md-6 btn btn-success text-center">
-                                    <i
-                                            class="glyphicon glyphicon-pencil"></i></a>
-                                <a class=" col-md-6 text-center btn btn-danger text-center" data-toggle="modal"
-                                   data-target="#deleteMessageModal" th:attr="data-message-id=${message.id}">
-                                    <i class="glyphicon glyphicon-trash"></i></a>
-                            </div>
-                            <hr class="col-md-10"/>
-                        </li>
-                        <li class="text-center"
-                            th:if="${#lists.size(@messageService.getMessagesByReceiverUsername(#authentication.getName())) == 0}">
-                            <span>You have no messages.</span>
-                        </li>
-                        <li class="text-center">
-                            <a th:href="@{/message/new}" id="sendNewMessageButton">
-                                <button type="button" class="btn btn-primary">
-                                    Send a new message
-                                </button>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown" id="profileBox">
-                    <a href="#" class="text-center dropdown-toggle" data-toggle="dropdown">
-
-                        <i class="glyphicon glyphicon-user"></i>
-                        <strong sec:authentication="name"></strong>
-                        <i class="glyphicon glyphicon-chevron-down"></i>
-                    </a>
-                    <ul class="dropdown-menu text-center">
-                        <li>
-                            <a th:href="@{/profile}" class="text-center">
-                                <i class="glyphicon glyphicon-user"></i>
-                                &nbsp;My Profile
-                            </a> 
-                        </li>
-                        <li>
-                            <a th:href="@{/searchForMyHomes}" class="text-center">
-                                <i class="glyphicon glyphicon-home"></i>&nbsp;My Homes
-                            </a> 
-                        </li>
-                        <li class="center-block">
-                            <form id="logoutform" th:action="@{/logout}" method="POST">
-                                <input type="submit" class="btn btn-danger center-block align-middle"
-                                       value="Logout">
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
+        </nav>
+    </div>
 </body>
 </html>

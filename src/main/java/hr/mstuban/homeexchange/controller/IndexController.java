@@ -60,6 +60,8 @@ public class IndexController {
         return "redirect:/login";
     }
 
+
+    // form validators
     @InitBinder("newUserForm")
     public void addNewUserFormValidator(WebDataBinder dataBinder) {
         dataBinder.addValidators(newUserFormValidator);

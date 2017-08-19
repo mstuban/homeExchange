@@ -41,10 +41,9 @@ public class NewUserFormValidator implements Validator {
         validateFirstNameString(newUserForm.getFirstName(), errors);
         validateLastNameString(newUserForm.getLastName(), errors);
 
-
     }
 
-    public void validateLastNameString(String lastName, Errors errors) {
+    void validateLastNameString(String lastName, Errors errors) {
         if (isBlank(lastName)) {
             errors.rejectValue("lastName", "error.user.lastName.empty", "You must enter a last name.");
         }
@@ -54,7 +53,7 @@ public class NewUserFormValidator implements Validator {
         }
     }
 
-    public void validateFirstNameString(String firstName, Errors errors){
+    void validateFirstNameString(String firstName, Errors errors){
         if (isBlank(firstName)) {
             errors.rejectValue("firstName", "error.user.firstName.empty", "You must enter a first name.");
         }
@@ -64,7 +63,7 @@ public class NewUserFormValidator implements Validator {
         }
     }
 
-    public void validatePhoneNumberString(String phoneNumber, Errors errors) {
+    void validatePhoneNumberString(String phoneNumber, Errors errors) {
 
         if (isBlank(phoneNumber)) {
             errors.rejectValue("phoneNumber", "error.user.phoneNumber.empty", "You must enter a phone number.");
@@ -76,7 +75,7 @@ public class NewUserFormValidator implements Validator {
 
     }
 
-    public void validateEmailString(String email, Errors errors) {
+    void validateEmailString(String email, Errors errors) {
 
         if (isBlank(email)) {
             errors.rejectValue("email", "error.user.email.empty", "You must enter an e-mail.");
@@ -88,7 +87,7 @@ public class NewUserFormValidator implements Validator {
 
     }
 
-    public void validateMatchingPasswordString(String matchingPassword, Errors errors) {
+    void validateMatchingPasswordString(String matchingPassword, Errors errors) {
 
         if (isBlank(matchingPassword)) {
             errors.rejectValue("matchingPassword", "error.user.matchingPassword.empty", "You must enter a matching password.");
@@ -96,7 +95,7 @@ public class NewUserFormValidator implements Validator {
 
     }
 
-    public void validatePasswordString(String password, Errors errors) {
+    void validatePasswordString(String password, Errors errors) {
 
         if (isBlank(password)) {
             errors.rejectValue("password", "error.user.password.empty", "You must enter a password.");
@@ -104,7 +103,7 @@ public class NewUserFormValidator implements Validator {
 
     }
 
-    public void validateUsernameString(String username, Errors errors) {
+    void validateUsernameString(String username, Errors errors) {
 
         if (isBlank(username)) {
             errors.rejectValue("username", "error.user.username.empty", "You must enter a username.");
@@ -120,14 +119,14 @@ public class NewUserFormValidator implements Validator {
 
     }
 
-    public void validateUsername(String username, Errors errors) {
+    private void validateUsername(String username, Errors errors) {
         if (userService.existsByUserNameIgnoreCase(username)) {
             errors.rejectValue("username", "error.user.already-exists", "A user with that username already exists in the database.");
         }
 
     }
 
-    public void validatePassword(String password, String matchingPassword, Errors errors) {
+    void validatePassword(String password, String matchingPassword, Errors errors) {
         if (password.length() < 8) {
             errors.rejectValue("password", "error.password.too-short", "Entered password has to be at least 8 characters long.");
         }
@@ -142,13 +141,13 @@ public class NewUserFormValidator implements Validator {
 
     }
 
-    public void validateEmail(String email, Errors errors) {
+    private void validateEmail(String email, Errors errors) {
         if (userService.existsByEmailIgnoreCase(email)) {
             errors.rejectValue("email", "error.email.already-exists", "A user with the entered email already exists in the database.");
         }
     }
 
-    public void validatePhoneNumber(String phoneNumber, Errors errors) {
+    private void validatePhoneNumber(String phoneNumber, Errors errors) {
         if (userService.existsByPhoneNumberIgnoreCase(phoneNumber)) {
             errors.rejectValue("phoneNumber", "error.phoneNumber.already-exists", "Entered phone number already exists in the database.");
         }

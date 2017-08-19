@@ -24,7 +24,6 @@ import javax.transaction.Transactional;
 @RequestMapping("/upload")
 public class FileUploadController {
 
-
     @Autowired
     private ImageService imageService;
 
@@ -53,14 +52,14 @@ public class FileUploadController {
 
         } catch (FileUploadException ex) {
 
-            if(ex.getMessage().equals("upload.images.error.type")){
+            if (ex.getMessage().equals("upload.images.error.type")) {
                 String referer = request.getHeader("Referer");
                 redirectAttributes.addFlashAttribute("imageUploadAlert", "The file you uploaded was not an image!");
                 return "redirect:" + referer;
 
             }
 
-            if(ex.getMessage().equals("upload.images.error.size")){
+            if (ex.getMessage().equals("upload.images.error.size")) {
                 String referer = request.getHeader("Referer");
                 redirectAttributes.addFlashAttribute("imageUploadAlert", "The file you uploaded was too large (size must be up to 2 MB).");
                 return "redirect:" + referer;

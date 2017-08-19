@@ -57,15 +57,10 @@ $(document).ready(function () {
         var userEmail = $(e.relatedTarget).data('email-id');
         var userPhoneNumber = $(e.relatedTarget).data('phonenumber-id');
 
-        console.log(userUserName);
-
-        var userId = $(e.relatedTarget).data('userid-id');
-
         $('#modalUserFullName').text(userFullName);
         $('#modalUserName').text(userUserName);
         $('#modalUserEmail').text(userEmail);
         $('#modalUserPhoneNumber').text(userPhoneNumber);
-
 
         $('#emailButton').attr("href", "mailto:" + userEmail);
         $('#phoneButton').attr("href", "tel:" + userPhoneNumber);
@@ -121,8 +116,3 @@ $(function () {
     });
 
 });
-
-function sortBy(object) {
-    var value = object.value;
-    console.log(value);
-}

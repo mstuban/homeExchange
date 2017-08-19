@@ -78,6 +78,7 @@ public class ProfileController {
         return "redirect:/logout";
     }
 
+    // form validators
     @InitBinder("editUserForm")
     public void addEditUserFormValidator(WebDataBinder dataBinder) {
         dataBinder.addValidators(editUserFormValidator);

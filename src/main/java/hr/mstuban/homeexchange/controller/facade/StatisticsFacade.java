@@ -56,15 +56,16 @@ public class StatisticsFacade {
         private PredicateBuilder() {
         }
 
-        public static PredicateBuilder builder() {
+        static PredicateBuilder builder() {
             return new PredicateBuilder();
         }
 
-        public Predicate build() {
+        Predicate build() {
             return booleanBuilder;
         }
 
         public PredicateBuilder country(String country) {
+
             if (country != null && !isBlank(country)) {
                 booleanBuilder.and(qHome.address.country.containsIgnoreCase(country));
             }
@@ -72,6 +73,7 @@ public class StatisticsFacade {
         }
 
         public PredicateBuilder city(String city) {
+
             if (city != null && !isBlank(city)) {
                 booleanBuilder.and(qHome.address.city.containsIgnoreCase(city));
             }
@@ -80,6 +82,7 @@ public class StatisticsFacade {
         }
 
         public PredicateBuilder type(String type) {
+
             if (type != null && !isBlank(type)) {
                 booleanBuilder.and(qHome.type.containsIgnoreCase(type));
             }
@@ -88,12 +91,13 @@ public class StatisticsFacade {
         }
 
         public PredicateBuilder available(boolean available) {
+
             booleanBuilder.and(qHome.available.eq(available));
 
             return this;
         }
 
-        public PredicateBuilder timeOfExchangeInMonthsFrom(Integer fromValue) {
+        PredicateBuilder timeOfExchangeInMonthsFrom(Integer fromValue) {
 
             if (fromValue != null) {
                 booleanBuilder.and(qHome.timeOfExchangeInMonths.goe(fromValue));
@@ -102,7 +106,7 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder timeOfExchangeInMonthsTo(Integer toValue) {
+        PredicateBuilder timeOfExchangeInMonthsTo(Integer toValue) {
 
             if (toValue != null) {
                 booleanBuilder.and(qHome.timeOfExchangeInMonths.loe(toValue));
@@ -111,7 +115,7 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder sizeInSquareMetersFrom(Integer fromValue) {
+        PredicateBuilder sizeInSquareMetersFrom(Integer fromValue) {
 
             if (fromValue != null) {
                 booleanBuilder.and(qHome.sizeInSquareMeters.goe(fromValue));
@@ -120,7 +124,7 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder sizeInSquareMetersTo(Integer toValue) {
+        PredicateBuilder sizeInSquareMetersTo(Integer toValue) {
 
             if (toValue != null) {
                 booleanBuilder.and(qHome.sizeInSquareMeters.loe(toValue));
@@ -129,7 +133,7 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder hospitalityRatingFrom(Double fromValue) {
+        PredicateBuilder hospitalityRatingFrom(Double fromValue) {
 
             if (fromValue != null) {
 
@@ -138,7 +142,8 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder hospitalityRatingTo(Double toValue) {
+        PredicateBuilder hospitalityRatingTo(Double toValue) {
+
             if (toValue != null) {
 
 
@@ -148,7 +153,8 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder comfortRatingFrom(Double fromValue) {
+        PredicateBuilder comfortRatingFrom(Double fromValue) {
+
             if (fromValue != null) {
 
 
@@ -158,7 +164,8 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder comfortRatingTo(Double toValue) {
+        PredicateBuilder comfortRatingTo(Double toValue) {
+
             if (toValue != null) {
 
                 booleanBuilder.and(qHome.averageHomeRatings.get("averageComfortRating").loe(toValue));
@@ -167,7 +174,8 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder facilitiesRatingFrom(Double fromValue) {
+        PredicateBuilder facilitiesRatingFrom(Double fromValue) {
+
             if (fromValue != null) {
 
                 booleanBuilder.and(qHome.averageHomeRatings.get("averageFacilitiesRating").goe(fromValue));
@@ -176,7 +184,8 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder facilitiesRatingTo(Double toValue) {
+        PredicateBuilder facilitiesRatingTo(Double toValue) {
+
             if (toValue != null) {
 
                 booleanBuilder.and(qHome.averageHomeRatings.get("averageFacilitiesRating").loe(toValue));
@@ -185,7 +194,8 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder cleanlinessRatingFrom(Double fromValue) {
+        PredicateBuilder cleanlinessRatingFrom(Double fromValue) {
+
             if (fromValue != null) {
 
                 booleanBuilder.and(qHome.averageHomeRatings.get("averageCleanlinessRating").goe(fromValue));
@@ -194,7 +204,8 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder cleanlinessRatingTo(Double toValue) {
+        PredicateBuilder cleanlinessRatingTo(Double toValue) {
+
             if (toValue != null) {
 
                 booleanBuilder.and(qHome.averageHomeRatings.get("averageCleanlinessRating").loe(toValue));
@@ -203,7 +214,8 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder valueForMoneyRatingFrom(Double fromValue) {
+        PredicateBuilder valueForMoneyRatingFrom(Double fromValue) {
+
             if (fromValue != null) {
 
                 booleanBuilder.and(qHome.averageHomeRatings.get("averageValueForMoneyRating").goe(fromValue));
@@ -212,7 +224,7 @@ public class StatisticsFacade {
             return this;
         }
 
-        public PredicateBuilder valueForMoneyRatingTo(Double toValue) {
+        PredicateBuilder valueForMoneyRatingTo(Double toValue) {
 
             if (toValue != null) {
 
@@ -221,5 +233,4 @@ public class StatisticsFacade {
             return this;
         }
     }
-
 }

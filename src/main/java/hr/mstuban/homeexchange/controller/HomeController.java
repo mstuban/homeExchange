@@ -50,9 +50,6 @@ public class HomeController {
     private ImageService imageService;
 
     @Autowired
-    private MessageService messageService;
-
-    @Autowired
     private RatingService ratingService;
 
     @Autowired
@@ -71,8 +68,6 @@ public class HomeController {
         setRatingsToAddresses(addresses);
 
         return "home";
-
-
     }
 
     @PostMapping("/searchForHomes")
@@ -81,7 +76,6 @@ public class HomeController {
         List<Address> addresses = addressService.findAddressesBySearchParameter(searchParameter);
         addresses = setRatingsToAddresses(addresses);
         model.addAttribute("addresses", addresses);
-
 
         if (!isBlank(searchParameter)) {
             model.addAttribute("searchResults", "Search results for: '" + searchParameter + "'");
@@ -94,7 +88,6 @@ public class HomeController {
         if (isBlank(searchParameter)) {
             model.addAttribute("searchResults", "You typed nothing in the search box, displaying all homes: ");
         }
-
 
         return "home-search-results";
     }
@@ -146,7 +139,7 @@ public class HomeController {
     public String newHomeFormSubmit(@Valid @ModelAttribute("newHomeForm") NewHomeForm newHomeForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes, Model model) {
 
         if (bindingResult.hasErrors()) {
-            return renderNewNewHomeForm(model);
+            return renderNewNewHomeForm();
         }
 
         Home home = homeMapper.newHomeFormToHome(newHomeForm);
@@ -170,7 +163,7 @@ public class HomeController {
     }
 
     @GetMapping("/home/delete/{id}")
-    public String deleteHomeById(@PathVariable Long id, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+    public String deleteHomeById(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes) {
 
         Home home = homeService.findById(id);
 
@@ -232,7 +225,7 @@ public class HomeController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("homeId", userHomeId);
-            return renderNewEditHomeForm(model);
+            return renderNewEditHomeForm();
         }
 
         try {
@@ -274,7 +267,6 @@ public class HomeController {
             return "redirect:/homes";
         }
 
-
         Home home = homeService.findById(homeId);
 
         User user = userService.findByUsername(principal.getName());
@@ -312,14 +304,15 @@ public class HomeController {
         return addressService.findAddressesBySearchParameter(query);
     }
 
-    private String renderNewEditHomeForm(Model model) {
+    private String renderNewEditHomeForm() {
         return "edit-home";
     }
 
-    private String renderNewNewHomeForm(Model model) {
+    private String renderNewNewHomeForm() {
         return "new-home-form";
     }
 
+    // form validators
     @InitBinder("newHomeForm")
     public void addNewHomeFormValidator(WebDataBinder dataBinder) {
         dataBinder.addValidators(newHomeFormValidator);
@@ -330,8 +323,8 @@ public class HomeController {
         dataBinder.addValidators(editHomeFormValidator);
     }
 
-
-    public void calculateAverageHomeRatings(Long homeId) {
+    // calculation methods
+    private void calculateAverageHomeRatings(Long homeId) {
 
         List<Rating> ratings = ratingService.getRatingsByHomeId(homeId);
         Home home = homeService.findById(homeId);
@@ -342,7 +335,6 @@ public class HomeController {
         Integer facilitiesSum = 0;
         Integer valueForMoneySum = 0;
         Integer cleanlinessSum = 0;
-
 
         for (Rating rating : ratings) {
             hospitalitySum += rating.getHospitality();
@@ -398,7 +390,7 @@ public class HomeController {
 
     }
 
-    public void sortAddressesByAverageRatingAscending(List<Address> addresses) {
+    private void sortAddressesByAverageRatingAscending(List<Address> addresses) {
 
         addresses.sort((o1, o2) -> {
             if (Objects.equals(o1.getHome().getAverageHomeRatings().get("averageOverallRating"), o2.getHome().getAverageHomeRatings().get("averageOverallRating")))
@@ -408,7 +400,7 @@ public class HomeController {
 
     }
 
-    public void sortAddressesByAverageRatingDescending(List<Address> addresses) {
+    private void sortAddressesByAverageRatingDescending(List<Address> addresses) {
 
         addresses.sort((o1, o2) -> {
             if (Objects.equals(o1.getHome().getAverageHomeRatings().get("averageOverallRating"), o2.getHome().getAverageHomeRatings().get("averageOverallRating")))
@@ -419,7 +411,7 @@ public class HomeController {
     }
 
 
-    public List<Address> setRatingsToAddresses(List<Address> addresses) {
+    private List<Address> setRatingsToAddresses(List<Address> addresses) {
 
         for (Address address : addresses) {
             calculateAverageHomeRatings(address.getHome().getHomeId());
@@ -429,7 +421,7 @@ public class HomeController {
 
     }
 
-    public static double round(double value, int places) {
+    private static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
         long factor = (long) Math.pow(10, places);

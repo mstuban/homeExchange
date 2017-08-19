@@ -11,7 +11,6 @@ import org.mapstruct.Mapper;
 public interface MessageMapper {
 
     Message newMessageFormToMessage(NewMessageForm form);
-
     NewMessageForm messageToNewMessageForm(Message message);
 
 }

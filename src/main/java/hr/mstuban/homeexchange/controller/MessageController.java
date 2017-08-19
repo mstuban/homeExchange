@@ -140,7 +140,7 @@ public class MessageController {
 
     }
 
-
+    // form validators
     @InitBinder("newMessageForm")
     public void addNewMessageFormValidator(WebDataBinder dataBinder) {
         dataBinder.addValidators(newMessageFormValidator);

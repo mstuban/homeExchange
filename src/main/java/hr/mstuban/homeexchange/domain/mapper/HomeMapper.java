@@ -17,6 +17,5 @@ public interface HomeMapper {
     Home editHomeFormToHome(EditHomeForm form);
     EditHomeForm homeToEditHomeForm(Home home);
 
-
 }
 

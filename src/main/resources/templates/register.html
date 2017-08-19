@@ -4,68 +4,68 @@
     <th:block th:include="fragments/headerincludes :: head"></th:block>
 </head>
 <body>
-<th:block th:include="fragments/header :: header"></th:block>
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="col-md-4 col-md-offset-4">
-            <h1 class="text-center">Create an account</h1>
-            <form th:action="@{/register}" th:object="${newUserForm}" method="POST">
-                <div class="form-group">
-                    <label>Username:</label>
-                    <input class="form-control" th:field="*{username}" required autofocus/>
-                    <p class="text-danger" th:each="error: ${#fields.errors('username')}"
-                       th:text="${error}">Validation error</p>
-                </div>
-                <div class="form-group">
-                    <label>First Name:</label>
-                    <input class="form-control" th:field="*{firstName}" required/>
-                    <p class="text-danger" th:each="error: ${#fields.errors('firstName')}"
-                       th:text="${error}">Validation error</p>
-                </div>
-                <div class="form-group">
-                    <label>Last Name:</label>
-                    <input class="form-control" th:field="*{lastName}" required/>
-                    <p class="text-danger" th:each="error: ${#fields.errors('lastName')}"
-                       th:text="${error}">Validation error</p>
-                </div>
-                <div class="form-group">
-                    <label>Password:</label>
-                    <input class="form-control" type="password" th:field="*{password}" required/>
-                    <p class="text-danger" th:each="error : ${#fields.errors('password')}"
-                       th:text="${error}">Validation error</p>
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password:</label>
-                    <input class="form-control" type="password" th:field="*{matchingPassword}" required/>
-                    <p class="text-danger" th:each="error : ${#fields.errors('matchingPassword')}"
-                       th:text="${error}">Validation error</p>
-                </div>
-                <div class="form-group">
-                    <label>Email:</label>
-                    <input class="form-control" type="email" th:field="*{email}" required/>
-                    <p class="text-danger" th:each="error : ${#fields.errors('email')}"
-                       th:text="${error}">Validation error</p>
-                </div>
-                <div class="form-group">
-                    <label>Phone Number:</label>
-                    <input class="form-control" type="text" th:field="*{phoneNumber}" required/>
-                    <p class="text-danger" th:each="error : ${#fields.errors('phoneNumber')}"
-                       th:text="${error}">Validation error</p>
-                </div>
-                <button class="col-md-12 btn btn-primary" type="submit">Register</button>
-            </form>
+    <th:block th:include="fragments/header :: header"></th:block>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-md-4 col-md-offset-4">
+                <h1 class="text-center">Create an account</h1>
+                <form th:action="@{/register}" th:object="${newUserForm}" method="POST">
+                    <div class="form-group">
+                        <label>Username:</label>
+                        <input class="form-control" th:field="*{username}" required autofocus/>
+                        <p class="text-danger" th:each="error: ${#fields.errors('username')}"
+                           th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group">
+                        <label>First Name:</label>
+                        <input class="form-control" th:field="*{firstName}" required/>
+                        <p class="text-danger" th:each="error: ${#fields.errors('firstName')}"
+                           th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name:</label>
+                        <input class="form-control" th:field="*{lastName}" required/>
+                        <p class="text-danger" th:each="error: ${#fields.errors('lastName')}"
+                           th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input class="form-control" type="password" th:field="*{password}" required/>
+                        <p class="text-danger" th:each="error : ${#fields.errors('password')}"
+                           th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password:</label>
+                        <input class="form-control" type="password" th:field="*{matchingPassword}" required/>
+                        <p class="text-danger" th:each="error : ${#fields.errors('matchingPassword')}"
+                           th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input class="form-control" type="email" th:field="*{email}" required/>
+                        <p class="text-danger" th:each="error : ${#fields.errors('email')}"
+                           th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number:</label>
+                        <input class="form-control" type="text" th:field="*{phoneNumber}" required/>
+                        <p class="text-danger" th:each="error : ${#fields.errors('phoneNumber')}"
+                           th:text="${error}">Validation error</p>
+                    </div>
+                    <button class="col-md-12 btn btn-primary" type="submit">Register</button>
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="text-center">
-                <hr/>
-                <span>Already have an account?</span>
-                <a th:href="@{/login}" class="btn btn-primary">Login</a>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="text-center">
+                    <hr/>
+                    <span>Already have an account?</span>
+                    <a th:href="@{/login}" class="btn btn-primary">Login</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<th:block th:include="fragments/footer :: footer"></th:block>
+    <th:block th:include="fragments/footer :: footer"></th:block>
 </body>
 </html>

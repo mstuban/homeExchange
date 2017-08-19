@@ -41,82 +41,81 @@ public class NewHomeFormValidator implements Validator {
 
     }
 
-    public void validateDescriptionString(String description, Errors errors) {
+    void validateDescriptionString(String description, Errors errors) {
         if (isBlank(description)) {
             errors.rejectValue("description", "error.home.description.empty", "You must enter a description.");
         }
 
-        if(description.length() > 100){
+        if (description.length() > 100) {
             errors.rejectValue("description", "error.home.description.too-long", "Description can only be long 100 characters.");
         }
     }
 
-    public void validateTimeOfExchangeInMonthsInteger(Integer timeOfExchangeInMonths, Errors errors) {
+    void validateTimeOfExchangeInMonthsInteger(Integer timeOfExchangeInMonths, Errors errors) {
         if (isBlank(timeOfExchangeInMonths.toString())) {
             errors.rejectValue("timeOfExchangeInMonths", "error.home.timeOfExchangeInMonths.empty", "You must enter size in square meters.");
         }
-        if(timeOfExchangeInMonths > 36){
+        if (timeOfExchangeInMonths > 36) {
             errors.rejectValue("timeOfExchangeInMonths", "error.home.timeOfExchangeInMonths.too-long", "You cannot exchange a house for more than 3 years.");
         }
 
-        if(timeOfExchangeInMonths <=0){
+        if (timeOfExchangeInMonths <= 0) {
             errors.rejectValue("timeOfExchangeInMonths", "error.home.timeOfExchangeInMonths.not-valid", "Time of exchange can't be zero or less than zero.");
         }
     }
 
-    public void validateSizeInSquareMetersInteger(Integer sizeInSquareMeters, Errors errors) {
+    void validateSizeInSquareMetersInteger(Integer sizeInSquareMeters, Errors errors) {
         if (isBlank(sizeInSquareMeters.toString())) {
             errors.rejectValue("sizeInSquareMeters", "error.home.sizeInSquareMeters.empty", "You must enter time of exchange.");
         }
-        if(sizeInSquareMeters < 0){
+        if (sizeInSquareMeters < 0) {
             errors.rejectValue("sizeInSquareMeters", "error.home.sizeInSquareMeters.not-valid", "Size in square meters can't be zero or less than zero.");
         }
 
     }
 
-
-    public void validateNameString(String name, Errors errors) {
+    void validateNameString(String name, Errors errors) {
         if (isBlank(name)) {
             errors.rejectValue("name", "error.home.name.empty", "You must enter a home name.");
         }
-        if(name.length() > 50){
+        if (name.length() > 50) {
             errors.rejectValue("name", "error.home.description.too-long", "Name can only be long 50 characters.");
         }
 
     }
 
-    public void validateCityString(String city, Errors errors) {
+    void validateCityString(String city, Errors errors) {
         if (isBlank(city)) {
             errors.rejectValue("city", "error.home.city.empty", "You must enter a city.");
         }
-        if(city.length() > 50){
+        if (city.length() > 50) {
             errors.rejectValue("city", "error.home.city.too-long", "City can only be long 50 characters.");
         }
     }
 
-    public void validatePostalCodeLong(Long postalCode, Errors errors) {
+    void validatePostalCodeLong(Long postalCode, Errors errors) {
         if (isBlank(postalCode.toString())) {
             errors.rejectValue("postalCode", "error.home.postalCode.empty", "You must enter a postal code.");
         }
-        if(postalCode  > 10000000000L){
+        if (postalCode > 10000000000L) {
             errors.rejectValue("postalCode", "error.home.postalCode.too-long", "It is impossible to have that postal code. At least not in this universe.");
         }
     }
 
-    public void validateCountryString(String country, Errors errors) {
+    void validateCountryString(String country, Errors errors) {
         if (isBlank(country)) {
             errors.rejectValue("country", "error.home.country.empty", "You must enter a country.");
         }
-        if(country.length() > 50){
+        if (country.length() > 50) {
             errors.rejectValue("country", "error.home.description.too-long", "Country can only be long 50 characters.");
         }
     }
 
-    public void validateStreetString(String street, Errors errors) {
+    void validateStreetString(String street, Errors errors) {
         if (isBlank(street)) {
             errors.rejectValue("street", "error.home.street.empty", "You must enter a street.");
         }
-        if(street.length() > 60){
+        if (street.length() > 60) {
             errors.rejectValue("street", "error.home.description.too-long", "Street can only be long 60 characters.");
         }
     }

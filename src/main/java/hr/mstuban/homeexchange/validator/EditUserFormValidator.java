@@ -42,7 +42,6 @@ public class EditUserFormValidator extends NewUserFormValidator implements Valid
 
     }
 
-
     private void validateEditedUsername(String username, Errors errors, Long id) {
 
         User user = userService.getById(id);
